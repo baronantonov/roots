@@ -18,3 +18,8 @@ R-0016,P-0020,father-child,P-0018,biological-and-legal,C-0018,A-0014;A-0015,,IG-
 R-0017,P-0019,household,P-0018,cohabitation-or-kinship,C-0017,A-0014,,IG-USER-FATHER,hypothesis,medium,«Дед Степан» проживал совместно с Клавдией Ивановной Шепеленко и выехал вместе с ней в Самарканд после войны
 R-0018,P-0003,father-child,P-0021,biological-and-legal,C-0019,A-0001,,IG-USER-01,single-source,high,Заявлено старшим братом (P-0001); согласуется с фамилией Баронова и отчеством Вадимовна
 R-0019,P-0003,father-child,P-0022,biological-and-legal,C-0019,A-0001,,IG-USER-01,single-source,high,Заявлено старшим братом (P-0001); согласуется с фамилией Баронова и отчеством Вадимовна
+R-0020,P-0023,mother-child,P-0005,biological-and-legal,C-0030,A-0018;A-0019;A-0026,,IG-HIST-KIRISHI-RGIA;IG-USER-01;IG-KIRISHI-BRIDGEHEAD,corroborated,high,"Мать деда Валентина Васильевича, спасавшая сына в оккупированных Киришах; подлежит выверке по ЗАГС 1929 г."
+R-0021,P-0017,spouse,P-0023,biological-and-legal,C-0030,A-0018;A-0019;A-0026,,IG-HIST-KIRISHI-RGIA;IG-USER-01;IG-KIRISHI-BRIDGEHEAD,corroborated,high,Супружеская пара родителей Валентина Баронова в Киришах
+R-0022,P-0024,father-child,P-0017,biological-and-legal,C-0031,A-0018;A-0025;A-0027,,IG-HIST-KIRISHI-RGIA;IG-BESTUZHEV-SOLTSY;IG-TSGIA-SPB-SOLTSY,hypothesis,medium,Отец Василия Баронова по пореформенному приходу с. Сольцы
+R-0023,P-0025,father-child,P-0024,biological-and-legal,C-0032,A-0018;A-0025,,IG-HIST-KIRISHI-RGIA;IG-BESTUZHEV-SOLTSY,hypothesis,medium,"Крестьянин-собственник надельной земли 1861 г., отец P-0024"
+R-0024,P-0026,father-child,P-0025,biological-and-legal,C-0033,A-0025;A-0027,,IG-BESTUZHEV-SOLTSY;IG-TSGIA-SPB-SOLTSY,hypothesis,medium,Родоначальник прозвания Барон села Сольцы эпохи 1812 г.
