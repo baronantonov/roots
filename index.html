@@ -13,37 +13,36 @@
    1. DESIGN SYSTEM & TOKENS (Refactoring UI + Top-Design + Web Typography)
    ========================================================================== */
 :root {
-  /* Warm Archival Surfaces in Soft Harmonious Tones (Zero harsh black/white halation) */
-  --bg-app: #F7F5EE;           /* Soft warm linen paper background */
-  --bg-surface: #FFFFFF;       /* Clean warm white card surface */
-  --bg-elevated: #FAF8F2;      /* Gentle warm ivory cream */
-  --bg-subtle: #EDE8DE;        /* Soft warm stone / parchment tone */
-  --bg-glass: rgba(247, 245, 238, 0.94);
-  --bg-header: #EAE5DA;        /* Warm archival header replacing obsidian */
-  --bg-footer: #E6E0D3;        /* Warm archival footer replacing obsidian */
+  /* Clean, Pure Surfaces (Zero murky beige layers, zero visual noise) */
+  --bg-app: #FAF9F6;           /* Soft clean paper background */
+  --bg-surface: #FFFFFF;       /* Pure white card surface */
+  --bg-subtle: #F3F1EC;        /* Soft neutral fill / hover */
+  --bg-elevated: #FFFFFF;      /* Clean overlays */
+  --bg-header: #FFFFFF;        /* Crisp white header */
+  --bg-footer: #FAF9F6;        /* Clean archival footer */
 
-  /* Typography Ink Hierarchy (Warm charcoal/espresso, soft on the eyes) */
-  --ink-900: #2C2621;          /* Warm dark espresso ink */
-  --ink-700: #544C42;          /* Muted graphite */
-  --ink-500: #7A7062;          /* Neutral archival medium */
-  --ink-400: #9E9383;          /* Soft label gray */
-
-  /* Borders & Hairlines */
-  --border-subtle: #EAE4D8;
-  --border-default: #DCD4C5;
-  --border-strong: #B8AD9B;
+  /* Hairline Borders */
+  --border-subtle: #EFECE6;
+  --border-default: #E5E2DC;   /* Unified hairline border */
+  --border-strong: #CCC7BD;
   --border-dark: #8C806E;
 
-  /* Brand & Branch Accents (Muted soft archival tones) */
-  --accent-seal: #9E4330;       /* Muted Imperial Sealing Wax / Terracotta */
-  --accent-seal-hover: #7D3121;
-  --accent-seal-soft: #F9ECE8;
-  --accent-pat: #2B577D;        /* Soft Officer's Prussian Slate Blue */
+  /* Typography Ink Hierarchy */
+  --ink-900: #1C1917;          /* Crisp deep graphite */
+  --ink-700: #44403C;          /* Muted body text */
+  --ink-500: #78716C;          /* Secondary metadata */
+  --ink-400: #A8A29E;          /* Muted hints */
+
+  /* Brand & Branch Accents */
+  --accent-seal: #9E3A26;       /* Archival terracotta wax */
+  --accent-seal-hover: #832C1A;
+  --accent-seal-soft: #FAF0ED;
+  --accent-pat: #25527A;        /* Officer slate blue */
   --accent-pat-soft: #EDF3F8;
-  --accent-mat: #9E4330;        /* Soft Volga Terracotta */
-  --accent-mat-soft: #F9ECE8;
-  --accent-gold: #9E7430;       /* Soft Archival Honey Gold */
-  --accent-gold-soft: #FAF4E6;
+  --accent-mat: #9E3A26;        /* Volga terracotta */
+  --accent-mat-soft: #FAF0ED;
+  --accent-gold: #8C6A24;       /* Honey gold */
+  --accent-gold-soft: #FAF5E8;
 
   /* GPS Proof Status Tokens */
   --st-strong-fg: #1F6B3D;
@@ -67,18 +66,19 @@
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Elevation Shadow Scale */
-  --shadow-xs: 0 1px 2px rgba(22, 21, 19, 0.05);
-  --shadow-sm: 0 2px 8px rgba(22, 21, 19, 0.06), 0 1px 2px rgba(22, 21, 19, 0.04);
-  --shadow-md: 0 8px 24px rgba(22, 21, 19, 0.08), 0 2px 6px rgba(22, 21, 19, 0.04);
-  --shadow-lg: 0 16px 40px rgba(22, 21, 19, 0.12), 0 4px 12px rgba(22, 21, 19, 0.06);
-  --shadow-xl: 0 24px 60px rgba(22, 21, 19, 0.22);
+  /* Elevation Shadow Scale - Soft & Minimal */
+  --shadow-xs: 0 1px 2px rgba(28, 25, 23, 0.04);
+  --shadow-sm: 0 1px 3px rgba(28, 25, 23, 0.05), 0 1px 2px rgba(28, 25, 23, 0.03);
+  --shadow-md: 0 4px 16px rgba(28, 25, 23, 0.07);
+  --shadow-lg: 0 12px 32px rgba(28, 25, 23, 0.09);
+  --shadow-xl: 0 20px 48px rgba(28, 25, 23, 0.14);
 
   /* Radii */
+  --radius-xs: 4px;
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
 
   /* Custom Motion Curves (Top-Design) */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -107,12 +107,12 @@ html, body {
 }
 
 /* ==========================================================================
-   2. TOP ARCHIVAL HEADER & PRIMARY NAVIGATION (Compact, High-Density)
+   2. TOP ARCHIVAL HEADER & PRIMARY NAVIGATION (Clean, Light, Single Border)
    ========================================================================== */
 .app-header {
-  background: var(--bg-header);
+  background: #FFFFFF;
   border-bottom: 1px solid var(--border-default);
-  box-shadow: 0 1px 3px rgba(44, 38, 33, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   flex-shrink: 0;
   z-index: 200;
   position: relative;
@@ -128,7 +128,7 @@ html, body {
   box-sizing: border-box;
   margin: 0 auto;
   padding: 0 16px;
-  height: 52px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -147,20 +147,21 @@ html, body {
   flex-shrink: 0;
 }
 .brand-seal {
-  background: var(--accent-seal);
-  color: #FFFFFF;
-  padding: 3px 8px;
+  background: var(--bg-subtle);
+  color: var(--ink-700);
+  border: 1px solid var(--border-default);
+  padding: 2px 6px;
   border-radius: 4px;
   font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
 }
 .brand-title {
   font-family: var(--font-serif);
   font-weight: 700;
   font-size: 17px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--ink-900);
   white-space: nowrap;
 }
@@ -168,9 +169,6 @@ html, body {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--ink-500);
-  background: var(--bg-subtle);
-  padding: 1px 6px;
-  border-radius: 4px;
   white-space: nowrap;
 }
 
@@ -178,7 +176,7 @@ html, body {
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   overflow-x: auto;
   max-width: 100%;
   box-sizing: border-box;
@@ -190,12 +188,12 @@ html, body {
 .nav-tab-btn {
   appearance: none;
   background: transparent;
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--radius-sm);
-  padding: 7px 12px;
+  padding: 6px 11px;
   font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12.5px;
+  font-weight: 500;
   color: var(--ink-700);
   cursor: pointer;
   white-space: nowrap;
@@ -210,19 +208,17 @@ html, body {
   color: var(--ink-900);
 }
 .nav-tab-btn.active {
-  background: #FFFFFF;
+  background: var(--bg-subtle);
   color: var(--accent-seal);
   font-weight: 700;
-  box-shadow: 0 1px 4px rgba(44, 38, 33, 0.08);
-  border-color: var(--border-default);
 }
 .nav-count {
   font-family: var(--font-mono);
   font-size: 10px;
   padding: 1px 5px;
   border-radius: 8px;
-  background: var(--bg-subtle);
-  color: var(--ink-700);
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--ink-500);
 }
 .nav-tab-btn.active .nav-count {
   background: var(--accent-seal-soft);
@@ -236,37 +232,40 @@ html, body {
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
+  font-size: 12px;
+  color: var(--ink-500);
 }
-.stat-pill {
+.stat-item {
+  white-space: nowrap;
+}
+.stat-item strong {
+  color: var(--ink-900);
+  font-weight: 600;
+}
+.stat-dot-sep {
+  color: var(--border-strong);
+  user-select: none;
+}
+.stat-pill.gps {
   font-family: var(--font-mono);
-  font-size: 11.5px;
-  color: var(--ink-700);
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  padding: 3px 8px;
-  border-radius: 14px;
+  font-size: 11px;
+  background: var(--st-strong-bg);
+  border: 1px solid var(--st-strong-bd);
+  color: var(--st-strong-fg);
+  padding: 2px 7px;
+  border-radius: 12px;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-}
-.stat-pill strong {
-  color: var(--ink-900);
-  font-weight: 700;
-}
-.stat-pill.gps {
-  background: var(--st-strong-bg);
-  border-color: var(--st-strong-bd);
-  color: var(--st-strong-fg);
   font-weight: 700;
 }
 .status-dot {
   display: inline-block;
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #3B9654;
-  box-shadow: 0 0 6px rgba(59, 150, 84, 0.4);
+  background: #2E8540;
 }
 
 /* Branch tags for content */
@@ -277,8 +276,8 @@ html, body {
   background: var(--accent-pat-soft);
   color: var(--accent-pat);
   font-weight: 600;
-  font-size: 13px;
-  border: 1px solid rgba(30, 78, 121, 0.2);
+  font-size: 12.5px;
+  border: 1px solid rgba(37, 82, 122, 0.2);
 }
 .branch-tag-mat {
   display: inline-block;
@@ -287,28 +286,29 @@ html, body {
   background: var(--accent-mat-soft);
   color: var(--accent-mat);
   font-weight: 600;
-  font-size: 13px;
-  border: 1px solid rgba(140, 45, 25, 0.2);
+  font-size: 12.5px;
+  border: 1px solid rgba(158, 58, 38, 0.2);
 }
 
 /* ==========================================================================
-   3. MAIN WORKSPACE CONTAINER (100% Height, No Body Scroll)
+   3. MAIN WORKSPACE CONTAINER (100% Height, Flush, No Nested Boxes)
    ========================================================================== */
 .app-main {
   flex: 1;
+  min-height: 0;
   width: 100%;
-  height: calc(100vh - 53px);
+  height: calc(100vh - 49px);
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
 }
 
-/* TAB 1: MASTER-DETAIL INTERACTIVE TREE (Full Screen, Static, No Scroll) */
+/* TAB 1: MASTER-DETAIL INTERACTIVE TREE (Full Screen, Seamless Canvas) */
 #tab-tree.tab-panel {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding: 10px 14px;
+  padding: 0;
   overflow: hidden;
   display: none;
 }
@@ -318,125 +318,114 @@ html, body {
 
 .tree-workspace-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 420px;
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  gap: 0;
   height: 100%;
   align-items: stretch;
 }
 
-.canvas-stage-card {
-  height: 100%;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-}
-
-/* TABS 2–6: SCROLLABLE DOCUMENT / DOSSIER PANELS */
-.tab-panel.scrollable {
+/* Left Canvas Workspace: Solid, Calm, Uncluttered */
+.canvas-workspace {
   height: 100%;
   width: 100%;
-  box-sizing: border-box;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 24px 28px 60px;
-  display: none;
-}
-.tab-panel.scrollable.active {
-  display: block;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-app);
 }
 
-.tab-scroll-inner {
-  max-width: 1440px;
-  margin: 0 auto;
+/* SVG Viewport: Zero dot grid clutter */
+.canvas-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: grab;
+  position: relative;
+  background: var(--bg-app);
+  user-select: none;
+}
+.canvas-viewport:active {
+  cursor: grabbing;
 }
 
-.tab-panel {
-  display: none;
-  animation: fadeInPanel 0.25s var(--ease-out-quart);
-}
-.tab-panel.active {
-  display: block;
-}
-@keyframes fadeInPanel {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Top Control Bar inside Canvas Card */
-.canvas-header-bar {
-  padding: 12px 16px;
-  background: var(--bg-elevated);
-  border-bottom: 1px solid var(--border-default);
+/* Minimalist Floating Controls Over Canvas (Glassmorphism Pill) */
+.canvas-floating-bar {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  right: 14px;
+  z-index: 20;
+  pointer-events: none;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .branch-filter-pills {
-  display: flex;
+  pointer-events: auto;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-default);
+  border-radius: 20px;
+  padding: 3px;
+  box-shadow: var(--shadow-sm);
+  gap: 2px;
 }
 .filter-pill {
   appearance: none;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-radius: 20px;
-  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 16px;
+  padding: 5px 12px;
   font-family: var(--font-sans);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--ink-700);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   transition: all 0.15s ease;
 }
 .filter-pill:hover {
-  border-color: var(--ink-500);
   background: var(--bg-subtle);
+  color: var(--ink-900);
 }
 .filter-pill.active {
   background: var(--ink-900);
   color: #FFFFFF;
-  border-color: var(--ink-900);
+  font-weight: 600;
 }
 .filter-pill.pat.active {
   background: var(--accent-pat);
-  border-color: var(--accent-pat);
+  color: #FFFFFF;
 }
 .filter-pill.mat.active {
   background: var(--accent-mat);
-  border-color: var(--accent-mat);
+  color: #FFFFFF;
 }
 
 .canvas-right-tools {
-  display: flex;
+  pointer-events: auto;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
 }
 
-/* Quick Person Jump Select */
 .person-jump-select {
   appearance: none;
-  background: var(--bg-surface);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  padding: 6px 28px 6px 10px;
+  border-radius: 20px;
+  padding: 5px 26px 5px 12px;
   font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 500;
   color: var(--ink-900);
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2357534E' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -449,111 +438,107 @@ html, body {
 
 .view-mode-switch {
   display: inline-flex;
-  background: var(--bg-subtle);
-  padding: 3px;
-  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 2px;
+  border-radius: 20px;
   border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
 }
 .btn-mode {
   appearance: none;
   background: transparent;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 14px;
+  font-size: 11.5px;
+  font-weight: 500;
   color: var(--ink-700);
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
   transition: all 0.15s;
 }
 .btn-mode.active {
-  background: var(--bg-surface);
-  color: var(--accent-seal);
-  box-shadow: var(--shadow-xs);
+  background: var(--bg-subtle);
+  color: var(--ink-900);
+  font-weight: 700;
 }
 
 .zoom-btn-group {
   display: inline-flex;
   align-items: center;
-  background: var(--bg-surface);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  padding: 2px 4px;
   overflow: hidden;
 }
 .ctrl-btn {
   appearance: none;
   background: transparent;
   border: none;
-  border-right: 1px solid var(--border-subtle);
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 600;
   color: var(--ink-700);
   cursor: pointer;
   transition: background 0.12s;
 }
-.ctrl-btn:last-child { border-right: none; }
 .ctrl-btn:hover {
   background: var(--bg-subtle);
   color: var(--ink-900);
 }
 .zoom-indicator {
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 600;
-  color: var(--ink-700);
-  padding: 0 8px;
-  min-width: 48px;
+  color: var(--ink-500);
+  padding: 0 4px;
+  min-width: 42px;
   text-align: center;
 }
 
-/* SVG Viewport */
-.canvas-viewport {
-  flex: 1;
-  width: 100%;
-  overflow: hidden;
-  cursor: grab;
-  position: relative;
-  background-color: #FAF8F2;
-  background-image: 
-    radial-gradient(#DBD3C3 1.25px, transparent 1.25px),
-    radial-gradient(#E8E1D3 1.25px, #FAF8F2 1.25px);
-  background-size: 36px 36px;
-  background-position: 0 0, 18px 18px;
-  user-select: none;
+/* Subtle Floating Legend at Bottom-Left */
+.canvas-floating-legend {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  z-index: 15;
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-default);
+  border-radius: 16px;
+  padding: 4px 10px;
+  box-shadow: var(--shadow-xs);
+  font-size: 11px;
 }
-.canvas-viewport:active {
-  cursor: grabbing;
+.legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.legend-dot.strong { background: var(--st-strong-fg); }
+.legend-dot.corr { background: var(--st-corr-fg); }
+.legend-dot.single { background: var(--st-single-fg); }
+.legend-dot.hypo { background: var(--st-hypo-fg); }
+.legend-text {
+  font-size: 11px;
+  color: var(--ink-500);
+  margin-right: 2px;
 }
 
-/* Bottom Legend & Hint Bar inside Canvas Card */
-.canvas-footer-bar {
-  padding: 10px 16px;
-  background: var(--bg-elevated);
-  border-top: 1px solid var(--border-default);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  font-size: 12px;
-  color: var(--ink-700);
-}
-.legend-Inline {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-/* Alternative Chronological Grid View inside Stage Card */
+/* Alternative Chronological Grid View inside Workspace */
 .tree-grid-scroll {
   flex: 1;
   overflow-y: auto;
@@ -561,14 +546,47 @@ html, body {
   background: var(--bg-app);
 }
 
+/* TABS 2–6: SCROLLABLE DOCUMENT / DOSSIER PANELS */
+.tab-panel.scrollable {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 28px 24px 64px;
+  display: none;
+  background: var(--bg-app);
+}
+.tab-panel.scrollable.active {
+  display: block;
+}
+
+.tab-scroll-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.tab-panel {
+  display: none;
+  animation: fadeInPanel 0.2s var(--ease-out-quart);
+}
+.tab-panel.active {
+  display: block;
+}
+@keyframes fadeInPanel {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ==========================================================================
-   6. RIGHT DOSSIER INSPECTOR PANEL (Desktop Side-by-Side + Mobile Drawer)
+   6. RIGHT DOSSIER INSPECTOR PANEL (Docked Minimalist Sidebar)
    ========================================================================== */
 .inspector-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  background: #FFFFFF;
+  border: none;
+  border-left: 1px solid var(--border-default);
+  border-radius: 0;
+  box-shadow: none;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -693,17 +711,16 @@ html, body {
 /* ==========================================================================
    7. SVG CANVAS ELEMENTS & PERFECTED FOREIGNOBJECT CARDS
    ========================================================================== */
-.svg-gen-band {
-  fill: rgba(250, 248, 244, 0.52);
-  stroke: rgba(180, 170, 152, 0.45);
-  stroke-dasharray: 5, 5;
+.svg-gen-rule {
+  stroke: var(--border-default);
+  stroke-dasharray: 4, 4;
 }
 .svg-gen-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.08em;
-  font-weight: 700;
-  fill: #78716C;
+  font-weight: 600;
+  fill: #8C827A;
   text-transform: uppercase;
 }
 .svg-link-line {
@@ -738,61 +755,60 @@ html, body {
   height: 100%;
   box-sizing: border-box;
   background: #FFFFFF;
-  border: 1.5px solid #D5CCBC;
-  border-radius: 12px;
-  padding: 10px 12px;
+  border: 1px solid var(--border-default);
+  border-left: 4px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(22, 21, 19, 0.07), 0 1px 3px rgba(22, 21, 19, 0.04);
-  transition: transform 0.2s var(--ease-out-quart), box-shadow 0.2s var(--ease-out-quart), border-color 0.2s, opacity 0.25s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, opacity 0.2s;
   user-select: none;
   overflow: hidden;
   position: relative;
 }
 .canvas-node-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(140, 45, 25, 0.16), 0 2px 6px rgba(140, 45, 25, 0.08);
-  border-color: var(--accent-seal);
+  border-color: var(--ink-700);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
 }
 .canvas-node-card.selected {
   border-color: var(--accent-seal);
-  border-width: 2px;
-  box-shadow: 0 0 0 3px rgba(140, 45, 25, 0.22), 0 8px 26px rgba(140, 45, 25, 0.2);
+  box-shadow: 0 0 0 2px var(--accent-seal-soft), 0 4px 14px rgba(158, 58, 38, 0.14);
 }
 .canvas-node-card.dimmed {
-  opacity: 0.28;
-  filter: grayscale(40%);
+  opacity: 0.22;
+  filter: grayscale(70%);
 }
 
 /* Branch Card Accents */
 .canvas-node-card.pat {
-  background: linear-gradient(135deg, #FFFFFF 0%, #F2F7FB 100%);
-  border-left: 5px solid var(--accent-pat);
+  background: #FFFFFF;
+  border-left: 4px solid var(--accent-pat);
 }
 .canvas-node-card.mat {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FDF7F3 100%);
-  border-left: 5px solid var(--accent-mat);
+  background: #FFFFFF;
+  border-left: 4px solid var(--accent-mat);
 }
 .canvas-node-card.self {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FCF8EB 100%);
-  border-left: 5px solid var(--accent-gold);
+  background: #FFFFFF;
+  border-left: 4px solid var(--accent-gold);
 }
 
 /* Card Avatar */
 .card-avatar-wrap {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   flex-shrink: 0;
   border-radius: 50%;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #F4EFE6;
-  border: 2px solid #E2D9CC;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
 }
 .card-avatar-img {
   width: 100%;
@@ -940,6 +956,42 @@ html, body {
 .person-link-chip:hover {
   background: var(--accent-seal);
   color: #FFFFFF;
+}
+
+.doc-header {
+  margin-bottom: 24px;
+}
+.doc-header-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-seal);
+  background: var(--accent-seal-soft);
+  border: 1px solid rgba(158, 67, 48, 0.2);
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+.doc-header-title {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  margin: 0 0 10px;
+  color: var(--ink-900);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+.doc-header-desc {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-700);
+  margin: 0 0 18px;
+  max-width: 960px;
 }
 
 .section-card {
@@ -1531,10 +1583,10 @@ html, body {
 @media (max-width: 900px) {
   .header-main-row {
     height: auto;
-    padding: 7px 10px 5px;
+    padding: 6px 12px 5px;
     flex-direction: column;
     align-items: stretch;
-    gap: 6px;
+    gap: 5px;
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
@@ -1555,8 +1607,8 @@ html, body {
     flex-shrink: 0;
   }
   .brand-seal {
-    font-size: 10px;
-    padding: 2px 6px;
+    font-size: 9.5px;
+    padding: 1.5px 5px;
   }
   .brand-title {
     font-size: 14px;
@@ -1571,32 +1623,93 @@ html, body {
     scrollbar-width: none;
     max-width: 100%;
     box-sizing: border-box;
+    font-size: 11px;
   }
   .header-stats-strip::-webkit-scrollbar { display: none; }
-  .stat-pill {
-    font-size: 10px;
-    padding: 2px 5px;
-    white-space: nowrap;
-  }
-  .stat-pill-label {
-    display: none;
-  }
   .header-nav {
     width: 100%;
     max-width: 100%;
-    gap: 4px;
-    padding-bottom: 2px;
+    gap: 3px;
+    padding-bottom: 1px;
     box-sizing: border-box;
   }
   .nav-tab-btn {
     padding: 5px 8px;
-    font-size: 12px;
+    font-size: 11.5px;
   }
   .nav-count {
-    font-size: 9.5px;
+    font-size: 9px;
   }
   #tab-tree.tab-panel {
-    padding: 4px;
+    padding: 0;
+  }
+  .tree-workspace-grid {
+    grid-template-columns: 1fr;
+    height: 100%;
+  }
+  .canvas-workspace {
+    height: 100%;
+  }
+
+  /* Floating controls on tablet/mobile */
+  .canvas-floating-bar {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .branch-filter-pills {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+  }
+  .branch-filter-pills::-webkit-scrollbar { display: none; }
+  .filter-pill {
+    padding: 4px 9px;
+    font-size: 11px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .canvas-right-tools {
+    width: 100%;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .person-jump-select {
+    flex: 1;
+    min-width: 0;
+    height: 32px;
+    font-size: 11.5px;
+    padding: 4px 22px 4px 10px;
+  }
+  .view-mode-switch {
+    height: 32px;
+  }
+  .btn-mode {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  .zoom-btn-group {
+    height: 32px;
+  }
+  .ctrl-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+  }
+  .canvas-floating-legend {
+    bottom: 8px;
+    left: 8px;
+    font-size: 10px;
+    padding: 3px 8px;
+    gap: 6px;
+  }
+  .legend-text {
+    font-size: 10px;
   }
 }
 
@@ -1619,115 +1732,6 @@ html, body {
     color: var(--ink-500);
     text-align: center;
     margin-bottom: 4px;
-  }
-  .canvas-header-bar {
-    padding: 8px 10px;
-    gap: 6px;
-    flex-direction: column;
-    align-items: stretch;
-    background: var(--bg-elevated);
-  }
-  .canvas-right-tools {
-    display: flex !important;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    gap: 6px;
-    order: 1;
-  }
-  .view-mode-switch {
-    display: flex !important;
-    flex: 1;
-    min-width: 130px;
-    background: var(--bg-subtle);
-    padding: 2px;
-    border-radius: 6px;
-  }
-  .btn-mode {
-    flex: 1;
-    justify-content: center;
-    padding: 7px 10px;
-    font-size: 12px;
-    font-weight: 700;
-    border-radius: 4px;
-    text-align: center;
-  }
-  .btn-mode.active {
-    background: #FFFFFF;
-    color: var(--accent-seal);
-    box-shadow: 0 1px 4px rgba(44, 38, 33, 0.08);
-  }
-  .zoom-btn-group {
-    height: 32px;
-    flex-shrink: 0;
-    border-radius: 6px;
-  }
-  .ctrl-btn {
-    width: 30px;
-    height: 32px;
-    font-size: 13px;
-  }
-  .zoom-indicator {
-    padding: 0 4px;
-    font-size: 10.5px;
-    min-width: 38px;
-  }
-  .person-jump-select {
-    width: 100%;
-    height: 34px;
-    font-size: 12px;
-    padding: 5px 24px 5px 8px;
-    order: 2;
-    margin-top: 1px;
-  }
-  .branch-filter-pills {
-    display: flex !important;
-    order: 3;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: 5px;
-    padding-bottom: 2px;
-    scrollbar-width: none;
-  }
-  .branch-filter-pills::-webkit-scrollbar { display: none; }
-  .filter-pill {
-    padding: 5px 10px;
-    font-size: 11.5px;
-    font-weight: 600;
-    white-space: nowrap;
-    border-radius: 16px;
-    flex-shrink: 0;
-  }
-  .canvas-stage-card {
-    height: 100%;
-    min-height: 0;
-    max-height: none;
-    border-radius: 10px;
-  }
-  .canvas-footer-bar {
-    padding: 6px 10px;
-    font-size: 10.5px;
-    gap: 4px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .canvas-footer-hint {
-    display: none;
-  }
-  .legend-Inline {
-    display: flex;
-    gap: 5px;
-    overflow-x: auto;
-    width: 100%;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .legend-Inline::-webkit-scrollbar { display: none; }
-  .legend-Inline .badge {
-    font-size: 9.5px;
-    padding: 2px 5px;
-    white-space: nowrap;
   }
 
   /* Mode 2: Generation Grid in List Mode on Mobile */
@@ -1871,6 +1875,16 @@ html, body {
   .app-main {
     padding: 10px 8px 36px;
   }
+  .doc-header {
+    margin-bottom: 16px;
+  }
+  .doc-header-title {
+    font-size: 22px;
+  }
+  .doc-header-desc {
+    font-size: 13px;
+  }
+
   .section-card {
     padding: 14px 12px;
     border-radius: 10px;
@@ -2150,11 +2164,14 @@ html, body {
       </div>
 
       <div class="header-stats-strip">
-        <div class="stat-pill" title="Установленных персон в древе">👥 <strong>22</strong> <span class="stat-pill-label">персоны</span></div>
-        <div class="stat-pill" title="Поколений рода с XVIII века">⏳ <strong>7</strong> <span class="stat-pill-label">пок.</span></div>
-        <div class="stat-pill" title="Исследованных фамильных ветвей">🛡️ <strong>4</strong> <span class="stat-pill-label">рода</span></div>
-        <div class="stat-pill" title="Доказанных артефактов и сканов">📜 <strong>19</strong> <span class="stat-pill-label">арт.</span></div>
-        <div class="stat-pill gps" title="Стандарт доказанности GPS соблюдён на 100%"><span class="status-dot"></span>GPS 100%</div>
+        <span class="stat-item"><strong>22</strong> персоны</span>
+        <span class="stat-dot-sep">·</span>
+        <span class="stat-item"><strong>7</strong> пок.</span>
+        <span class="stat-dot-sep">·</span>
+        <span class="stat-item"><strong>4</strong> рода</span>
+        <span class="stat-dot-sep">·</span>
+        <span class="stat-item"><strong>19</strong> арт.</span>
+        <span class="stat-pill gps"><span class="status-dot"></span>GPS 100%</span>
       </div>
     </div>
 
@@ -2197,30 +2214,32 @@ html, body {
   <section class="tab-panel active" id="tab-tree">
     <div class="tree-workspace-grid">
 
-      <!-- ЛЕВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЙ ХОЛСТ / СЕТКА -->
-      <div class="canvas-stage-card">
-        <div class="canvas-header-bar">
+      <!-- ЛЕВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЙ ХОЛСТ С ПЛАВАЮЩИМИ КОНТРОЛАМИ -->
+      <div class="canvas-workspace">
+        
+        <!-- ПЛАВАЮЩИЙ ТУЛБАР ВЕРХНИЙ -->
+        <div class="canvas-floating-bar">
           <div class="branch-filter-pills">
             <button type="button" class="filter-pill active" id="filter-all" onclick="filterCanvasBranch('all')">Все персоны (22)</button>
-            <button type="button" class="filter-pill pat" id="filter-pat" onclick="filterCanvasBranch('pat')">⚓ Ветвь папы (Бароновы · Шепеленко)</button>
-            <button type="button" class="filter-pill mat" id="filter-mat" onclick="filterCanvasBranch('mat')">🌾 Ветвь мамы (Евдокимовы · Беловы)</button>
+            <button type="button" class="filter-pill pat" id="filter-pat" onclick="filterCanvasBranch('pat')">⚓ Ветвь папы</button>
+            <button type="button" class="filter-pill mat" id="filter-mat" onclick="filterCanvasBranch('mat')">🌾 Ветвь мамы</button>
           </div>
 
           <div class="canvas-right-tools">
             <select class="person-jump-select" id="person-jump-select" onchange="jumpToPerson(this.value)" aria-label="Быстрый переход к предку">
-              <option value="">🔍 Найти предка в древе...</option>
+              <option value="">🔍 Найти предка...</option>
             </select>
 
             <div class="view-mode-switch">
-              <button type="button" class="btn-mode active" id="btn-view-canvas" onclick="switchTreeView('canvas')">Схема</button>
-              <button type="button" class="btn-mode" id="btn-view-grid" onclick="switchTreeView('grid')">Список</button>
+              <button type="button" class="btn-mode active" id="btn-view-canvas" onclick="switchTreeView('canvas')" title="Интерактивная схема">Схема</button>
+              <button type="button" class="btn-mode" id="btn-view-grid" onclick="switchTreeView('grid')" title="Поколенный список">Список</button>
             </div>
 
             <div class="zoom-btn-group" id="canvas-zoom-controls">
               <button type="button" class="ctrl-btn" onclick="zoomCanvas(1.2)" title="Приблизить">+</button>
               <span class="zoom-indicator" id="zoom-level-text">82%</span>
               <button type="button" class="ctrl-btn" onclick="zoomCanvas(0.83)" title="Отдалить">−</button>
-              <button type="button" class="ctrl-btn" onclick="resetCanvasZoom(true)" title="Показать всё древо" style="width:auto;padding:0 10px;font-size:11.5px;">Сброс</button>
+              <button type="button" class="ctrl-btn" onclick="resetCanvasZoom(true)" title="Показать всё древо" style="font-size:11px;padding:0 7px;width:auto;">Сброс</button>
             </div>
           </div>
         </div>
@@ -2235,7 +2254,7 @@ html, body {
             </defs>
             <g id="canvas-pan-zoom-group">
               <!-- Стилизованная крона и ствол на фоне -->
-              <g id="canvas-tree-botany-group" opacity="0.11" stroke="#8C7A60" fill="none" stroke-linecap="round">
+              <g id="canvas-tree-botany-group" opacity="0.08" stroke="#8C7A60" fill="none" stroke-linecap="round">
                 <path d="M 1150 1700 C 1150 1560, 1150 1460, 1150 1350" stroke-width="14" />
                 <path d="M 1150 1350 C 900 1300, 600 1200, 480 1000" stroke-width="9" />
                 <path d="M 480 1000 C 350 900, 250 820, 180 740" stroke-width="5" />
@@ -2260,15 +2279,12 @@ html, body {
           <div class="gen-grid" id="gen-grid-container"></div>
         </div>
 
-        <div class="canvas-footer-bar">
-          <div class="legend-Inline">
-            <strong>Доказанность:</strong>
-            <span class="badge badge-strong">✓ В госархивах</span>
-            <span class="badge badge-corr">✓ Подтверждено</span>
-            <span class="badge badge-single">Из памяти семьи</span>
-            <span class="badge badge-hypo">Архивный поиск</span>
-          </div>
-          <span class="canvas-footer-hint">💡 Перетаскивайте карту мышью или пальцем · Нажмите на карточку для открытия досье</span>
+        <!-- ПЛАВАЮЩАЯ МИНИ-ЛЕГЕНДА -->
+        <div class="canvas-floating-legend">
+          <span class="legend-dot strong"></span><span class="legend-text">В архивах</span>
+          <span class="legend-dot corr"></span><span class="legend-text">Подтверждено</span>
+          <span class="legend-dot single"></span><span class="legend-text">Память семьи</span>
+          <span class="legend-dot hypo"></span><span class="legend-text">Поиск</span>
         </div>
       </div>
 
@@ -2619,14 +2635,14 @@ html, body {
   <section class="tab-panel scrollable" id="tab-surnames">
     <div class="tab-scroll-inner">
       <!-- ГЛАВНЫЙ БАННЕР РАЗДЕЛА «О ФАМИЛИЯХ» -->
-    <div class="surname-hero-banner" style="background:linear-gradient(135deg, #FAF7F0 0%, #F1ECE0 100%); border:1px solid var(--border-default); border-left:5px solid var(--accent-seal); border-radius:var(--radius-lg); padding:26px 24px; margin-bottom:22px; color:var(--ink-900); box-shadow:var(--shadow-sm);">
-      <div style="display:inline-block; font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent-seal); background:var(--accent-seal-soft); border:1px solid rgba(158,67,48,0.25); padding:3px 10px; border-radius:20px; margin-bottom:12px;">
+    <div class="doc-header">
+      <div class="doc-header-kicker">
         🏛️ Научно-исследовательский раздел · Ономастика & Антропонимика
       </div>
-      <h2 style="font-family:var(--font-serif); font-size:28px; margin:0 0 10px; color:var(--ink-900); font-weight:700; letter-spacing:0.02em; line-height:1.2;">
+      <h2 class="doc-header-title">
         О фамилиях: происхождение и тайны четырёх родов
       </h2>
-      <p style="font-size:14.5px; line-height:1.65; color:var(--ink-700); margin:0 0 18px; max-width:980px;">
+      <p class="doc-header-desc">
         Историко-лингвистическая и архивная реконструкция происхождения фамилий <b>Евдокимовых</b>, <b>Бароновых</b>, <b>Шепеленко</b> и <b>Беловых</b>. Синтез классической восточнославянской ономастики (Б. О. Унбегаун, Ю. А. Федосюк, В. А. Никонов, А. В. Суперанская, Ю. К. Редько) с первичными архивными фондами РГВИА, Национального архива Республики Татарстан (НА РТ) и Государственного архива Костанайской области (ГАКО).
       </p>
 
@@ -2640,8 +2656,7 @@ html, body {
       </div>
     </div>
 
-    <div class="section-card">
-      <div class="surname-grid">
+    <div class="surname-grid">
         <!-- 1. ЕВДОКИМОВ -->
         <div class="surname-card" id="surname-evdokimov">
           <div class="surname-kicker">🌾 Ветвь мамы · с. Никольское (Жукотино / Галактионово) Чистопольского уезда</div>
@@ -2687,7 +2702,6 @@ html, body {
           </div>
         </div>
       </div>
-    </div>
 
     <div class="section-card">
       <h2>Новые архивные находки по однофамильцам и родственникам в с. Жукотино и г. Кустанае</h2>
@@ -2763,61 +2777,61 @@ html, body {
       </div>
     </div>
 
-    <div class="section-card">
-      <h2>Глубокое архивное расследование по линии Бароновых (Петродворец — Стрельна — РГВИА)</h2>
-      <p class="section-sub">Реконструкция места службы деда — майора Валентина Васильевича Баронова (1929 г.р.) в Петродворце и Стрельне и полный разбор всех 22 архивных карточек «Баронов Василий» в Российском государственном военно-историческом архиве (РГВИА).</p>
-      <div class="surname-grid">
-        <div class="surname-card pat">
-          <div class="surname-kicker">⚓ Гарнизон Петродворец — Стрельна · 1958–1984 гг.</div>
-          <h3 class="surname-title">Автомобильный батальон в Петродворце (в/ч 52611) и дом 1958 года на ул. Лодыгина, 10</h3>
-          <div class="surname-etym">
-            <ul>
-              <li><b>471-й отдельный автомобильный батальон ЛенВО (в/ч 52611, г. Петродворец):</b> Основная кадровая автомобильная часть Петродворцового гарнизона дислоцировалась в исторических казармах <b>лейб-гвардии Конно-гренадерского полка</b> в Петергофе (Конно-Гренадерская ул. / ул. Морского Десанта). Батальон («ленинградский автобат») обеспечивал воинские и топливно-наливные перевозки Ленинградского военного округа (весной 1984 г., уже после выхода майора <b>В. В. Баронова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span> в запас по возрасту, часть была переброшена в Афганистан под номером в/ч пп 25766).</li>
-              <li><b>Военная автобаза МО СССР в Орловских конюшнях Стрельны:</b> В самом посёлке Стрельна (на территории бывшего Конного двора усадьбы графа А. Ф. Орлова — <b>Фронтовая ул., д. 2</b>, Орловский парк) с 1950-х до начала 2000-х гг. действовала военная автобаза Министерства обороны СССР — всего в <b>600 метрах пешком</b> от дома семьи Бароновых!</li>
-              <li><b>Паспорт дома семьи (р.п. Стрельна, ул. Лодыгина, д. 10/8, лит. А):</b> По техническому реестру Санкт-Петербурга трёхэтажный кирпичный дом на 27 квартир (3 подъезда) построен в <b>1958 году</b> для офицерского и ведомственного состава гарнизона — ровно за 3 года до рождения сына Вадима (22.08.1961). Домовые книги с 1958 г. хранятся в <b>ЦГА СПб (ф. Р-7965)</b>.</li>
-            </ul>
-          </div>
+    <div class="doc-header" style="margin-top:40px;">
+      <h2 class="doc-header-title">Глубокое архивное расследование по линии Бароновых (Петродворец — Стрельна — РГВИА)</h2>
+      <p class="doc-header-desc">Реконструкция места службы деда — майора Валентина Васильевича Баронова (1929 г.р.) в Петродворце и Стрельне и полный разбор всех 22 архивных карточек «Баронов Василий» в Российском государственном военно-историческом архиве (РГВИА).</p>
+    </div>
+    <div class="surname-grid">
+      <div class="surname-card pat">
+        <div class="surname-kicker">⚓ Гарнизон Петродворец — Стрельна · 1958–1984 гг.</div>
+        <h3 class="surname-title">Автомобильный батальон в Петродворце (в/ч 52611) и дом 1958 года на ул. Лодыгина, 10</h3>
+        <div class="surname-etym">
+          <ul>
+            <li><b>471-й отдельный автомобильный батальон ЛенВО (в/ч 52611, г. Петродворец):</b> Основная кадровая автомобильная часть Петродворцового гарнизона дислоцировалась в исторических казармах <b>лейб-гвардии Конно-гренадерского полка</b> в Петергофе (Конно-Гренадерская ул. / ул. Морского Десанта). Батальон («ленинградский автобат») обеспечивал воинские и топливно-наливные перевозки Ленинградского военного округа (весной 1984 г., уже после выхода майора <b>В. В. Баронова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span> в запас по возрасту, часть была переброшена в Афганистан под номером в/ч пп 25766).</li>
+            <li><b>Военная автобаза МО СССР в Орловских конюшнях Стрельны:</b> В самом посёлке Стрельна (на территории бывшего Конного двора усадьбы графа А. Ф. Орлова — <b>Фронтовая ул., д. 2</b>, Орловский парк) с 1950-х до начала 2000-х гг. действовала военная автобаза Министерства обороны СССР — всего в <b>600 метрах пешком</b> от дома семьи Бароновых!</li>
+            <li><b>Паспорт дома семьи (р.п. Стрельна, ул. Лодыгина, д. 10/8, лит. А):</b> По техническому реестру Санкт-Петербурга трёхэтажный кирпичный дом на 27 квартир (3 подъезда) построен в <b>1958 году</b> для офицерского и ведомственного состава гарнизона — ровно за 3 года до рождения сына Вадима (22.08.1961). Домовые книги с 1958 г. хранятся в <b>ЦГА СПб (ф. Р-7965)</b>.</li>
+          </ul>
         </div>
+      </div>
 
-        <div class="surname-card pat">
-          <div class="surname-kicker">⭐ ПРОРЫВ: РОДИНА ДЕДА — КИРИШИ (СЕЛО СОЛЬЦЫ) · ФОНДЫ РГИА, ЦГИА И ЦГА СПб</div>
-          <h3 class="surname-title">Кириши (Новоладожский уезд) и триумф Петроградского кандидата РГВИА (A-0017)</h3>
-          <div class="surname-etym">
-            <div style="background:rgba(212,163,89,0.12); border:1px solid rgba(212,163,89,0.3); border-radius:8px; padding:12px 14px; margin-bottom:12px;">
-              <div style="font-weight:700; color:var(--gold-600); font-size:13px; margin-bottom:4px;">📍 Точная биографическая локализация деда Валентина Васильевича (01.05.1929):</div>
-              <p style="margin:0; font-size:13.5px; line-height:1.55; color:var(--ink-800);">Дед родился в <b>посёлке Кириши</b>. До сентября 1931 года Кириши являлись <b>селом Сольцы</b> (и смежной деревней Кириши) — центром Солецкой волости Новоладожского уезда Санкт-Петербургской (Петроградской) губернии, а в 1927–1931 гг. входили в Андреевский район Ленобласти. Приход — церковь Рождества Богородицы села Сольцы (1853 г.).</p>
+      <div class="surname-card pat">
+        <div class="surname-kicker">⭐ ПРОРЫВ: РОДИНА ДЕДА — КИРИШИ (СЕЛО СОЛЬЦЫ) · ФОНДЫ РГИА, ЦГИА И ЦГА СПб</div>
+        <h3 class="surname-title">Кириши (Новоладожский уезд) и триумф Петроградского кандидата РГВИА (A-0017)</h3>
+        <div class="surname-etym">
+          <div style="background:var(--accent-pat-soft); border:1px solid rgba(30,78,121,0.2); border-radius:8px; padding:12px 14px; margin-bottom:12px;">
+            <div style="font-weight:700; color:var(--accent-pat); font-size:13px; margin-bottom:4px;">📍 Точная биографическая локализация деда Валентина Васильевича (01.05.1929):</div>
+            <p style="margin:0; font-size:13.5px; line-height:1.55; color:var(--ink-800);">Дед родился в <b>посёлке Кириши</b>. До сентября 1931 года Кириши являлись <b>селом Сольцы</b> (и смежной деревней Кириши) — центром Солецкой волости Новоладожского уезда Санкт-Петербургской (Петроградской) губернии, а в 1927–1931 гг. входили в Андреевский район Ленобласти. Приход — церковь Рождества Богородицы села Сольцы (1853 г.).</p>
+          </div>
+          <p style="margin:0 0 8px;">Это открытие мгновенно расставляет приоритеты среди 22 записей РГВИА на имя <b>«Баронов Василий»</b> и открывает прямую дорогу в федеральные архивы Санкт-Петербурга:</p>
+          <ul>
+            <li><b>⭐ АБСОЛЮТНЫЙ ФАВОРИТ № 1 (Петроградская губерния — скан <code>[A-0017]</code>):</b> <b>Рядовой 4-й роты 54-го пех. Минского полка Баронов Василий, 1886 г.р.</b>, уроженец <b>Петроградской губернии</b> (лагерь Терезиенштадт, Австрия). На момент рождения сына Валентина 1 мая 1929 года в селе Сольцы (Киришах) ему было <b>ровно 43 года</b>! Редчайшая орфография фамилии через «о» и точное совпадение губернии и возраста делают его главным кандидатом в прадеды.</li>
+            <li><b>Кандидат № 2 (Офицерско-туркестанская ветвь — скан <code>[A-0016]</code>):</b> <b>Поручик (капитан) Баронов Василий Александрович</b> — 7-й Туркестанский стр. полк, Георгиевский кавалер (11.10.1917, Петроград), выпускник Киевского военного училища 1914 г. Сохраняется как запасная династическая гипотеза.</li>
+            <li><b>🏛️ РГИА (Российский государственный исторический архив, Заневский пр., 36, <code>rgia.su</code>):</b> В открытом доступе находится <b>фонд 577, опись 35</b> — выкупные дела временнообязанных крестьян селений Солецкой волости Новоладожского уезда (село Сольцы, деревни Кириши, Плавница) 1861–1890 гг. с пофамильными списками домохозяев и наделами. Подготовлен готовый запрос: <a href="queries/06_rgia_baronov_vykupnye_dela.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">06_rgia_baronov_vykupnye_dela.md ↗</a>.</li>
+            <li><b>⛪ ЦГИА СПб (Псковская ул., 18, <code>spbarchives.ru</code>):</b> <b>Фонд 19, описи 125–127</b> — оцифрованные метрические книги церкви Рождества Богородицы с. Сольцы (Кириши) на рождение Василия Баронова (ок. 1880–1886 гг.). Готовый запрос: <a href="queries/07_cgia_spb_metriki_kirishi_soltsy.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">07_cgia_spb_metriki_kirishi_soltsy.md ↗</a>.</li>
+            <li><b>📑 ЦГА СПб (Варшавская ул., 3 bis, <code>spbarchives.ru</code>):</b> <b>Фонд Р-6143</b> — актовая запись ЗАГС о рождении Валентина Васильевича от 01.05.1929 по Андреевскому району Ленобласти. Готовый запрос: <a href="queries/08_cga_spb_zags_kirishi_valentin_1929.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">08_cga_spb_zags_kirishi_valentin_1929.md ↗</a>.</li>
+            <li><b>🎖️ ЦАМО РФ (г. Подольск):</b> Запрос на УПК майора В. В. Баронова дополнен точным местом рождения: <a href="queries/01_camo_rf_baronov_upk.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">01_camo_rf_baronov_upk.md ↗</a>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="surname-card pat" style="grid-column: 1 / -1; background: var(--bg-surface); border: 1px solid var(--border-default); border-top: 4px solid var(--accent-pat);">
+        <div class="surname-kicker" style="color:var(--accent-pat);">🎖️ Великая Отечественная война & Офицерская юность · 1941–1948 гг. [A-0019]</div>
+        <h3 class="surname-title" style="color:var(--ink-900);">Киришский плацдарм, оккупация и поступление в военное автомобильное училище (1948 г.)</h3>
+        <div class="surname-etym" style="color:var(--ink-700);">
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-top:12px;">
+            <div style="background:var(--bg-subtle); border:1px solid var(--border-default); border-radius:8px; padding:16px;">
+              <div style="font-weight:700; color:var(--accent-seal); font-size:13.5px; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                <span>🔥</span> Детство в немецкой оккупации (1941–1943 гг.):
+              </div>
+              <p style="margin:0 0 8px; font-size:13px; line-height:1.55; color:var(--ink-700);">Дед встретил войну 12-летним подростком (род. 01.05.1929). В сентябре 1941 года вермахт захватил Кириши, образовав <b>Киришский плацдарм</b> (ожесточённые позиционные бои шли до 4 октября 1943 г.).</p>
+              <p style="margin:0; font-size:13px; line-height:1.55; color:#7D4B12; background:#FCF8EE; border:1px solid #EADBBA; border-radius:6px; padding:8px 10px;"><i>«О детстве рассказывал, как жили в оккупации немецких войск во время войны, мальчишки пекли в костре очистки от картошки»</i> — подлинная семейная память о жестоком голоде и подвиге выживания детей войны.</p>
             </div>
-            <p style="margin:0 0 8px;">Это открытие мгновенно расставляет приоритеты среди 22 записей РГВИА на имя <b>«Баронов Василий»</b> и открывает прямую дорогу в федеральные архивы Санкт-Петербурга:</p>
-            <ul>
-              <li><b>⭐ АБСОЛЮТНЫЙ ФАВОРИТ № 1 (Петроградская губерния — скан <code>[A-0017]</code>):</b> <b>Рядовой 4-й роты 54-го пех. Минского полка Баронов Василий, 1886 г.р.</b>, уроженец <b>Петроградской губернии</b> (лагерь Терезиенштадт, Австрия). На момент рождения сына Валентина 1 мая 1929 года в селе Сольцы (Киришах) ему было <b>ровно 43 года</b>! Редчайшая орфография фамилии через «о» и точное совпадение губернии и возраста делают его главным кандидатом в прадеды.</li>
-              <li><b>Кандидат № 2 (Офицерско-туркестанская ветвь — скан <code>[A-0016]</code>):</b> <b>Поручик (капитан) Баронов Василий Александрович</b> — 7-й Туркестанский стр. полк, Георгиевский кавалер (11.10.1917, Петроград), выпускник Киевского военного училища 1914 г. Сохраняется как запасная династическая гипотеза.</li>
-              <li><b>🏛️ РГИА (Российский государственный исторический архив, Заневский пр., 36, <code>rgia.su</code>):</b> В открытом доступе находится <b>фонд 577, опись 35</b> — выкупные дела временнообязанных крестьян селений Солецкой волости Новоладожского уезда (село Сольцы, деревни Кириши, Плавница) 1861–1890 гг. с пофамильными списками домохозяев и наделами. Подготовлен готовый запрос: <a href="queries/06_rgia_baronov_vykupnye_dela.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">06_rgia_baronov_vykupnye_dela.md ↗</a>.</li>
-              <li><b>⛪ ЦГИА СПб (Псковская ул., 18, <code>spbarchives.ru</code>):</b> <b>Фонд 19, описи 125–127</b> — оцифрованные метрические книги церкви Рождества Богородицы с. Сольцы (Кириши) на рождение Василия Баронова (ок. 1880–1886 гг.). Готовый запрос: <a href="queries/07_cgia_spb_metriki_kirishi_soltsy.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">07_cgia_spb_metriki_kirishi_soltsy.md ↗</a>.</li>
-              <li><b>📑 ЦГА СПб (Варшавская ул., 3 bis, <code>spbarchives.ru</code>):</b> <b>Фонд Р-6143</b> — актовая запись ЗАГС о рождении Валентина Васильевича от 01.05.1929 по Андреевскому району Ленобласти. Готовый запрос: <a href="queries/08_cga_spb_zags_kirishi_valentin_1929.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">08_cga_spb_zags_kirishi_valentin_1929.md ↗</a>.</li>
-              <li><b>🎖️ ЦАМО РФ (г. Подольск):</b> Запрос на УПК майора В. В. Баронова дополнен точным местом рождения: <a href="queries/01_camo_rf_baronov_upk.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">01_camo_rf_baronov_upk.md ↗</a>.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="surname-card pat" style="grid-column: 1 / -1; background: linear-gradient(135deg, #FAF7F0 0%, #F2ECE0 100%); color: var(--ink-900); border: 1px solid var(--border-default); border-top: 4px solid var(--accent-pat);">
-          <div class="surname-kicker" style="color:var(--accent-pat);">🎖️ Великая Отечественная война & Офицерская юность · 1941–1948 гг. [A-0019]</div>
-          <h3 class="surname-title" style="color:var(--ink-900);">Киришский плацдарм, оккупация и поступление в военное автомобильное училище (1948 г.)</h3>
-          <div class="surname-etym" style="color:var(--ink-700);">
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-top:12px;">
-              <div style="background:#FFFFFF; border:1px solid var(--border-default); border-radius:8px; padding:16px; box-shadow:0 1px 3px rgba(44,38,33,0.04);">
-                <div style="font-weight:700; color:var(--accent-seal); font-size:13.5px; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
-                  <span>🔥</span> Детство в немецкой оккупации (1941–1943 гг.):
-                </div>
-                <p style="margin:0 0 8px; font-size:13px; line-height:1.55; color:var(--ink-700);">Дед встретил войну 12-летним подростком (род. 01.05.1929). В сентябре 1941 года вермахт захватил Кириши, образовав <b>Киришский плацдарм</b> (ожесточённые позиционные бои шли до 4 октября 1943 г.).</p>
-                <p style="margin:0; font-size:13px; line-height:1.55; color:#7D4B12; background:#FCF8EE; border:1px solid #EADBBA; border-radius:6px; padding:8px 10px;"><i>«О детстве рассказывал, как жили в оккупации немецких войск во время войны, мальчишки пекли в костре очистки от картошки»</i> — подлинная семейная память о жестоком голоде и подвиге выживания детей войны.</p>
+            <div style="background:var(--bg-subtle); border:1px solid var(--border-default); border-radius:8px; padding:16px;">
+              <div style="font-weight:700; color:var(--accent-pat); font-size:13.5px; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                <span>🎓</span> 1948 год — старт военной службы в автоучилище:
               </div>
-              <div style="background:#FFFFFF; border:1px solid var(--border-default); border-radius:8px; padding:16px; box-shadow:0 1px 3px rgba(44,38,33,0.04);">
-                <div style="font-weight:700; color:var(--accent-pat); font-size:13.5px; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
-                  <span>🎓</span> 1948 год — старт военной службы в автоучилище:
-                </div>
-                <p style="margin:0 0 8px; font-size:13px; line-height:1.55; color:var(--ink-700);">В 1948 году в возрасте 19 лет Валентин Васильевич поступил в <b>военное автомобильное училище</b> (1-е Ленинградское Краснознаменное военно-автомобильное училище / РВАТУ), начав путь кадрового офицера автомобильных войск ВС СССР (выпуск лейтенантом в 1951 г.).</p>
-                <p style="margin:0; font-size:13px; line-height:1.55; color:#1C4E72; background:#EEF4F9; border:1px solid #C9DEEE; border-radius:6px; padding:8px 10px;"><b>Ключ к ЦАМО РФ:</b> Год поступления на службу (1948) и пункт анкеты офицера <i>«Находился ли на оккупированной территории в период ВОВ»</i> дают архивистам 100% точность поиска личного дела и УПК!</p>
-              </div>
+              <p style="margin:0 0 8px; font-size:13px; line-height:1.55; color:var(--ink-700);">В 1948 году в возрасте 19 лет Валентин Васильевич поступил в <b>военное автомобильное училище</b> (1-е Ленинградское Краснознаменное военно-автомобильное училище / РВАТУ), начав путь кадрового офицера автомобильных войск ВС СССР (выпуск лейтенантом в 1951 г.).</p>
+              <p style="margin:0; font-size:13px; line-height:1.55; color:#1C4E72; background:#EEF4F9; border:1px solid #C9DEEE; border-radius:6px; padding:8px 10px;"><b>Ключ к ЦАМО РФ:</b> Год поступления на службу (1948) и пункт анкеты офицера <i>«Находился ли на оккупированной территории в период ВОВ»</i> дают архивистам 100% точность поиска личного дела и УПК!</p>
             </div>
           </div>
         </div>
@@ -4131,9 +4145,9 @@ function renderSvgCanvas() {
   const bandsEl = document.getElementById("canvas-generation-bands");
   if (bandsEl) {
     bandsEl.innerHTML = GEN_BANDS.map(b => `
-      <g>
-        <rect class="svg-gen-band" x="20" y="${b.y}" width="2760" height="${b.h}" rx="8" ry="8"/>
-        <text class="svg-gen-label" x="38" y="${b.y + 24}">${b.label}</text>
+      <g class="svg-gen-group">
+        <line class="svg-gen-rule" x1="20" y1="${b.y}" x2="2780" y2="${b.y}" stroke-width="1"/>
+        <text class="svg-gen-label" x="28" y="${b.y + 18}">${b.label}</text>
       </g>
     `).join("");
   }
