@@ -1737,6 +1737,39 @@ html, body {
   }
 }
 
+
+.surname-quick-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 0 2px;
+  scrollbar-width: none;
+}
+.surname-quick-nav::-webkit-scrollbar { display: none; }
+.s-nav-btn {
+  appearance: none;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: #FFFFFF;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.s-nav-btn:hover, .s-nav-btn:active {
+  background: #FFFFFF;
+  color: var(--ink-900);
+  border-color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
 /* Surname Onomastics Cards */
 .surname-grid {
   display: grid;
@@ -1815,6 +1848,12 @@ html, body {
         <span class="branch-tag-mat">Ветвь мамы</span> — волжские крестьяне села Никольское (Жукотино) Казанской губернии, герои Первой мировой войны (127-й Путивльский полк), Пермь и Крым;
         <span class="branch-tag-pat">Ветвь папы</span> — переселенцы Столыпинской реформы 1912 года из Харьковской губернии в Кустанай, послевоенный Самарканд и офицерский гарнизон Петродворца и Стрельны.
       </p>
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button type="button" onclick="activateTab('tab-surnames')" class="hero-chip-btn" style="appearance:none;background:rgba(140,45,25,0.08);border:1.5px solid rgba(140,45,25,0.35);color:var(--accent-seal);padding:8px 16px;border-radius:24px;font-family:var(--font-sans);font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(140,45,25,0.08);transition:all 0.15s ease;">
+          <span>📖 Раздел «О фамилиях» (Евдокимовы · Бароновы · Шепеленко · Беловы)</span>
+          <span style="font-size:14px;">→</span>
+        </button>
+      </div>
     </div>
     <div class="kpi-grid">
       <div class="kpi-card" onclick="activateTab('tab-tree')">
@@ -1825,13 +1864,13 @@ html, body {
         <div class="kpi-val">22</div>
         <div class="kpi-lbl">Установленных персоны в древе</div>
       </div>
+      <div class="kpi-card" onclick="activateTab('tab-surnames')" style="border-left:4px solid var(--accent-seal);background:linear-gradient(135deg, #FFFFFF 0%, #FDF7F3 100%);">
+        <div class="kpi-val" style="color:var(--accent-seal);">4 рода</div>
+        <div class="kpi-lbl" style="font-weight:700;color:var(--ink-900);">📖 Раздел «О фамилиях» (этимология & архивы) →</div>
+      </div>
       <div class="kpi-card" onclick="activateTab('tab-scans')">
         <div class="kpi-val">11</div>
         <div class="kpi-lbl">Подлинных сканов и документов</div>
-      </div>
-      <div class="kpi-card" onclick="activateTab('tab-nest')">
-        <div class="kpi-val">13</div>
-        <div class="kpi-lbl">Детей в гнезде Агриппины</div>
       </div>
     </div>
   </div>
@@ -1844,21 +1883,21 @@ html, body {
       <span>🌳 Интерактивное древо</span>
       <span class="tab-count">22</span>
     </button>
+    <button class="tab-btn" data-tab="tab-surnames" id="tab-btn-surnames">
+      <span>📖 О фамилиях</span>
+      <span class="tab-count">4 рода</span>
+    </button>
+    <button class="tab-btn" data-tab="tab-scans">
+      <span>📜 Архивные сканы</span>
+      <span class="tab-count">11 сканов</span>
+    </button>
     <button class="tab-btn" data-tab="tab-nest">
       <span>🏡 Семейное гнездо Агриппины</span>
       <span class="tab-count">13 детей</span>
     </button>
-    <button class="tab-btn" data-tab="tab-scans">
-      <span>📜 Архивные сканы и реликвии</span>
-      <span class="tab-count">11 сканов</span>
-    </button>
     <button class="tab-btn" data-tab="tab-geo">
       <span>🗺️ География и летопись</span>
       <span class="tab-count">1800–1988</span>
-    </button>
-    <button class="tab-btn" data-tab="tab-surnames">
-      <span>📖 Происхождение фамилий</span>
-      <span class="tab-count">4 рода</span>
     </button>
     <button class="tab-btn" data-tab="tab-queue">
       <span>🔍 План поиска и база фактов</span>
@@ -2270,27 +2309,32 @@ html, body {
        ВКЛАДКА 6: ПРОИСХОЖДЕНИЕ ФАМИЛИЙ И НОВЫЕ АРХИВНЫЕ НАХОДКИ
        ==================================================================== -->
   <section class="tab-panel" id="tab-surnames">
-    <!-- НАУЧНО-ОНОМАСТИЧЕСКИЙ ГЕРОЙ-БАННЕР -->
-    <div style="background:linear-gradient(135deg, rgba(30,41,59,0.95), rgba(15,23,42,0.98)), url('photos/gwar-pow-card-30587701-front.jpg') center/cover; border:1px solid rgba(212,163,89,0.35); border-radius:12px; padding:28px 24px; margin-bottom:24px; color:#F1F5F9; box-shadow:0 8px 24px rgba(0,0,0,0.18);">
-      <div style="display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#D4A359; background:rgba(212,163,89,0.15); border:1px solid rgba(212,163,89,0.35); padding:3px 10px; border-radius:20px; margin-bottom:12px;">
-        🏛️ Научная ономастика & антропонимика древа
+    <!-- ГЛАВНЫЙ БАННЕР РАЗДЕЛА «О ФАМИЛИЯХ» -->
+    <div style="background:linear-gradient(135deg, rgba(30,41,59,0.96), rgba(15,23,42,0.98)), url('photos/gwar-pow-card-30587701-front.jpg') center/cover; border:1px solid rgba(212,163,89,0.35); border-radius:12px; padding:26px 22px; margin-bottom:20px; color:#F1F5F9; box-shadow:0 8px 24px rgba(0,0,0,0.18);">
+      <div style="display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#D4A359; background:rgba(212,163,89,0.15); border:1px solid rgba(212,163,89,0.35); padding:3px 10px; border-radius:20px; margin-bottom:10px;">
+        🏛️ Научно-исследовательский раздел · Ономастика & Антропонимика
       </div>
-      <h2 style="font-family:'Cinzel','Trajan Pro',serif; font-size:24px; margin:0 0 10px; color:#FFFFFF; font-weight:700; letter-spacing:0.5px;">
-        Тайна четырёх фамилий: от греческих святых до засечных беломестцев и офицерских династий
+      <h2 style="font-family:'Cinzel','Trajan Pro',serif; font-size:26px; margin:0 0 10px; color:#FFFFFF; font-weight:700; letter-spacing:0.5px; line-height:1.2;">
+        О фамилиях: происхождение и тайны четырёх родов
       </h2>
-      <p style="font-size:14.5px; line-height:1.65; color:#CBD5E1; margin:0; max-width:960px;">
-        Глубокая историко-лингвистическая и архивная реконструкция происхождения фамилий <b>Евдокимовых</b>, <b>Бароновых</b>, <b>Шепеленко</b> и <b>Беловых</b>. Синтез классической восточнославянской ономастики (Б. О. Унбегаун, Ю. А. Федосюк, В. А. Никонов, А. В. Суперанская) с первичными архивными делами РГВИА, Национального архива Республики Татарстан (НА РТ) и Государственного архива Костанайской области (ГАКО).
-      </p>
-    </div>
-    <div class="section-card">
-      <h2>Ономастика и происхождение родовых фамилий</h2>
-      <p class="section-sub">
-        Историко-лингвистическая и архивная реконструкция происхождения четырёх фамилий древа по трудам классиков русской и восточнославянской антропонимики (Б. О. Унбегаун, Ю. А. Федосюк, В. А. Никонов, А. В. Суперанская, Ю. К. Редько) и первичным архивным фондам РГВИА, НА РТ и ГАКО.
+      <p style="font-size:14.5px; line-height:1.65; color:#CBD5E1; margin:0 0 16px; max-width:960px;">
+        Историко-лингвистическая и архивная реконструкция происхождения фамилий <b>Евдокимовых</b>, <b>Бароновых</b>, <b>Шепеленко</b> и <b>Беловых</b>. Синтез классической восточнославянской ономастики (Б. О. Унбегаун, Ю. А. Федосюк, В. А. Никонов, А. В. Суперанская, Ю. К. Редько) с первичными архивными фондами РГВИА, Национального архива Республики Татарстан (НА РТ) и Государственного архива Костанайской области (ГАКО).
       </p>
 
+      <!-- Интерактивная навигация по фамилиям -->
+      <div class="surname-quick-nav">
+        <button type="button" class="s-nav-btn" onclick="scrollToSurname('evdokimov')">🌾 Евдокимовы (мама)</button>
+        <button type="button" class="s-nav-btn" onclick="scrollToSurname('baronov')">⚓ Бароновы (папа)</button>
+        <button type="button" class="s-nav-btn" onclick="scrollToSurname('shepelenko')">🐎 Шепеленко (папа)</button>
+        <button type="button" class="s-nav-btn" onclick="scrollToSurname('belov')">🛡️ Беловы (мама)</button>
+        <button type="button" class="s-nav-btn" onclick="scrollToSurname('baronov-table')">📜 Матрица 17 Бароновых (РГВИА)</button>
+      </div>
+    </div>
+
+    <div class="section-card">
       <div class="surname-grid">
         <!-- 1. ЕВДОКИМОВ -->
-        <div class="surname-card">
+        <div class="surname-card" id="surname-evdokimov">
           <div class="surname-kicker">🌾 Ветвь мамы · с. Никольское (Жукотино / Галактионово) Чистопольского уезда</div>
           <h3 class="surname-title">Евдокимовы (и поволжский дублет «Ефтикимовы»)</h3>
           <div class="surname-etym">
@@ -2301,7 +2345,7 @@ html, body {
         </div>
 
         <!-- 2. БАРОНОВ -->
-        <div class="surname-card pat">
+        <div class="surname-card pat" id="surname-baronov">
           <div class="surname-kicker">⚓ Ветвь папы · Офицерская династия (Самарканд → Стрельна / Петродворец)</div>
           <h3 class="surname-title">Бароновы (три исторических канала образования)</h3>
           <div class="surname-etym">
@@ -2315,7 +2359,7 @@ html, body {
         </div>
 
         <!-- 3. ШЕПЕЛЕНКО -->
-        <div class="surname-card pat">
+        <div class="surname-card pat" id="surname-shepelenko">
           <div class="surname-kicker">⚓ Ветвь папы · Слобожанские переселенцы 1912 г. (Харьков → Кустанай → Самарканд)</div>
           <h3 class="surname-title">Шепеленко (казачья и войсковая традиция Слобожанщины)</h3>
           <div class="surname-etym">
@@ -2325,7 +2369,7 @@ html, body {
         </div>
 
         <!-- 4. БЕЛОВ -->
-        <div class="surname-card">
+        <div class="surname-card" id="surname-belov">
           <div class="surname-kicker">🌾 Ветвь мамы · с. Никольское / Жукотино (Галактионово) Чистопольского уезда</div>
           <h3 class="surname-title">Беловы (род прабабушки Агриппины Александровны)</h3>
           <div class="surname-etym">
@@ -2442,7 +2486,7 @@ html, body {
     </div>
 
     <!-- ИНТЕРАКТИВНАЯ ТАБЛИЦА ВСЕХ 17 ЗАПИСЕЙ «БАРОНОВ ВАСИЛИЙ» В РГВИА -->
-    <div class="section-card">
+    <div class="section-card" id="surname-baronov-table">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
         <div>
           <h2 style="margin:0 0 4px;">Сводная матрица всех 17 персоналий «Баронов Василий» в РГВИА</h2>
@@ -4084,6 +4128,17 @@ const BARONOV_GWAR_RECORDS = [
     scanId: null
   }
 ];
+
+
+function scrollToSurname(surnameKey) {
+  activateTab("tab-surnames");
+  setTimeout(() => {
+    const el = document.getElementById("surname-" + surnameKey) || document.getElementById(surnameKey);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, 80);
+}
 
 function renderBaronovTable(filter = "") {
   const tbody = document.getElementById("baronov-table-body");
