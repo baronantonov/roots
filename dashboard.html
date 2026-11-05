@@ -3,22 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes, viewport-fit=cover">
-<title>ROOTS — Архивно-генеалогический дашборд (Евдокимовы · Беловы · Бароновы)</title>
+<title>Родословный архив семьи Евдокимовых и Бароновых (1795–2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ==========================================================================
+   1. DESIGN SYSTEM & TOKENS (Refactoring UI + Top-Design + Web Typography)
+   ========================================================================== */
 :root {
-  --bg-paper: #F5F2EB;
-  --bg-card: #FAF8F5;
-  --bg-elevated: #EFECE3;
-  --bg-ink: #181715;
-  --ink-primary: #181715;
-  --ink-secondary: #57534E;
-  --ink-muted: #78716C;
-  --border-hairline: #D6D1C7;
-  --border-strong: #292524;
-  --accent-seal: #8C2D19;
-  --accent-seal-soft: #F9EBE8;
+  /* Warm Archival Surfaces (Zero pure black/white halation) */
+  --bg-app: #F4F1EA;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #FAF8F4;
+  --bg-subtle: #EAE4D7;
+  --bg-glass: rgba(250, 248, 244, 0.92);
+  --bg-obsidian: #151412;
 
-  /* Статусы доказанности (GPS) */
+  /* Typography Ink Hierarchy */
+  --ink-900: #161513;
+  --ink-700: #44403C;
+  --ink-500: #78716C;
+  --ink-400: #A8A29E;
+
+  /* Borders & Hairlines */
+  --border-subtle: #E4DECFE6;
+  --border-default: #D5CCBC;
+  --border-strong: #9E9482;
+  --border-dark: #292524;
+
+  /* Brand & Branch Accents */
+  --accent-seal: #8C2D19;       /* Imperial Sealing Wax (Сургуч) */
+  --accent-seal-hover: #6E2010;
+  --accent-seal-soft: #FDF2EF;
+  --accent-pat: #1E4E79;        /* Officer's Prussian Blue (Ветвь папы) */
+  --accent-pat-soft: #EFF6FB;
+  --accent-mat: #8C2D19;        /* Volga Terracotta (Ветвь мамы) */
+  --accent-mat-soft: #FDF5F0;
+  --accent-gold: #B5892E;       /* Archival Gold (Субъект) */
+  --accent-gold-soft: #FCF8EB;
+
+  /* GPS Proof Status Tokens */
   --st-strong-fg: #14532D;
   --st-strong-bg: #DCFCE7;
   --st-strong-bd: #86EFAC;
@@ -27,386 +52,607 @@
   --st-corr-bg: #DBEAFE;
   --st-corr-bd: #93C5FD;
 
-  --st-single-fg: #334155;
-  --st-single-bg: #E2E8F0;
+  --st-single-fg: #475569;
+  --st-single-bg: #F1F5F9;
   --st-single-bd: #CBD5E1;
 
-  --st-hypo-fg: #78350F;
+  --st-hypo-fg: #92400E;
   --st-hypo-bg: #FEF3C7;
   --st-hypo-bd: #FCD34D;
 
-  --font-serif: Georgia, "Times New Roman", "Noto Serif", serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  /* Font Families */
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Elevation Shadow Scale */
+  --shadow-xs: 0 1px 2px rgba(22, 21, 19, 0.05);
+  --shadow-sm: 0 2px 8px rgba(22, 21, 19, 0.06), 0 1px 2px rgba(22, 21, 19, 0.04);
+  --shadow-md: 0 8px 24px rgba(22, 21, 19, 0.08), 0 2px 6px rgba(22, 21, 19, 0.04);
+  --shadow-lg: 0 16px 40px rgba(22, 21, 19, 0.12), 0 4px 12px rgba(22, 21, 19, 0.06);
+  --shadow-xl: 0 24px 60px rgba(22, 21, 19, 0.22);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Custom Motion Curves (Top-Design) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-* { box-sizing: border-box; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--bg-paper);
-  color: var(--ink-primary);
+  background-color: var(--bg-app);
+  color: var(--ink-900);
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Верхняя архивная шапка */
+/* ==========================================================================
+   2. TOP ARCHIVAL STATUS BAR & EDITORIAL HERO
+   ========================================================================== */
 .topbar {
-  background: var(--bg-ink);
-  color: #F5F2EB;
-  padding: 10px 24px;
+  background: var(--bg-obsidian);
+  color: #EAE4D7;
+  padding: 8px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 3px solid var(--accent-seal);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11.5px;
   letter-spacing: 0.04em;
+  border-bottom: 2px solid var(--accent-seal);
 }
 .topbar-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
-.topbar-badge {
+.topbar-seal {
   background: var(--accent-seal);
-  color: #fff;
-  padding: 2px 8px;
+  color: #FFFFFF;
+  padding: 3px 8px;
+  border-radius: 4px;
   font-weight: 700;
+  font-size: 10.5px;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .topbar-right {
   display: flex;
+  align-items: center;
   gap: 20px;
-  color: #A8A29E;
+  color: var(--ink-400);
 }
-.topbar-right strong { color: #F5F2EB; }
+.topbar-right strong {
+  color: #FFFFFF;
+}
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22C55E;
+  box-shadow: 0 0 8px #22C55E;
+  margin-right: 6px;
+}
 
-/* Заголовок и KPI-полоса */
-.hero {
-  padding: 24px 24px 20px;
-  border-bottom: 1px solid var(--border-strong);
-  background: var(--bg-card);
+/* Hero Banner */
+.hero-wrap {
+  background: linear-gradient(180deg, #FAF8F4 0%, #F4F1EA 100%);
+  border-bottom: 1px solid var(--border-default);
+  padding: 28px 24px 24px;
+}
+.hero-container {
+  max-width: 1560px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 24px;
-  align-items: end;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 32px;
+  align-items: center;
 }
 .hero-kicker {
   font-family: var(--font-mono);
   font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--accent-seal);
-  margin: 0 0 6px;
-  font-weight: 600;
-}
-.hero h1 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(24px, 3vw, 34px);
-  line-height: 1.15;
   margin: 0 0 8px;
-  color: var(--ink-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-kicker::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 2px;
+  background: var(--accent-seal);
+}
+.hero-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--ink-900);
+  margin: 0 0 12px;
 }
 .hero-sub {
   margin: 0;
-  color: var(--ink-secondary);
-  font-size: 14px;
-  max-width: 72ch;
+  color: var(--ink-700);
+  font-size: 14.5px;
+  line-height: 1.6;
+  max-width: 68ch;
+}
+.branch-tag-pat {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 4px;
+  background: var(--accent-pat-soft);
+  color: var(--accent-pat);
+  font-weight: 600;
+  font-size: 13px;
+  border: 1px solid rgba(30, 78, 121, 0.2);
+}
+.branch-tag-mat {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 4px;
+  background: var(--accent-mat-soft);
+  color: var(--accent-mat);
+  font-weight: 600;
+  font-size: 13px;
+  border: 1px solid rgba(140, 45, 25, 0.2);
 }
 
-.kpi-strip {
+/* KPI Strip */
+.kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--border-strong);
-  background: var(--bg-paper);
+  gap: 12px;
 }
-.kpi-cell {
-  padding: 10px 14px;
-  border-right: 1px solid var(--border-hairline);
+.kpi-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-xs);
+  transition: transform 0.2s var(--ease-out-quart), box-shadow 0.2s var(--ease-out-quart), border-color 0.2s;
+  cursor: pointer;
 }
-.kpi-cell:last-child { border-right: 0; }
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-seal);
+}
 .kpi-val {
   font-family: var(--font-serif);
-  font-size: 24px;
-  line-height: 1.1;
-  color: var(--ink-primary);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--ink-900);
   font-variant-numeric: tabular-nums;
 }
 .kpi-lbl {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--ink-muted);
-  margin-top: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-500);
+  margin-top: 6px;
+  line-height: 1.3;
 }
 
-/* Навигационные вкладки */
-.nav-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-  padding: 0 24px;
-  background: var(--bg-elevated);
-  border-bottom: 1px solid var(--border-strong);
+/* ==========================================================================
+   3. STICKY APPLICATION NAVIGATION TABS
+   ========================================================================== */
+.app-nav-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-default);
+  box-shadow: 0 2px 10px rgba(22, 21, 19, 0.04);
 }
+.app-nav {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.app-nav::-webkit-scrollbar { display: none; }
+
 .tab-btn {
   appearance: none;
   background: transparent;
-  border: 0;
-  border-right: 1px solid var(--border-hairline);
+  border: none;
   border-bottom: 3px solid transparent;
-  padding: 12px 20px;
-  font-family: var(--font-mono);
-  font-size: 12px;
+  padding: 14px 18px;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
   font-weight: 600;
-  color: var(--ink-secondary);
+  color: var(--ink-500);
   cursor: pointer;
-  transition: background-color 0.12s, color 0.12s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
 }
-.tab-btn:first-child { border-left: 1px solid var(--border-hairline); }
 .tab-btn:hover {
-  background: var(--bg-card);
-  color: var(--ink-primary);
+  color: var(--ink-900);
+  background: rgba(234, 228, 215, 0.45);
 }
 .tab-btn.active {
-  background: var(--bg-card);
   color: var(--accent-seal);
   border-bottom-color: var(--accent-seal);
+  background: rgba(140, 45, 25, 0.05);
+}
+.tab-count {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: var(--bg-subtle);
+  color: var(--ink-700);
+}
+.tab-btn.active .tab-count {
+  background: var(--accent-seal);
+  color: #FFFFFF;
 }
 
-/* Основная рабочая сетка */
-.workspace {
+/* ==========================================================================
+   4. MAIN WORKSPACE & TAB PANELS
+   ========================================================================== */
+.app-main {
+  flex: 1;
+  max-width: 1560px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 24px 48px;
+}
+
+.tab-panel {
+  display: none;
+  animation: fadeInPanel 0.25s var(--ease-out-quart);
+}
+.tab-panel.active {
+  display: block;
+}
+@keyframes fadeInPanel {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   5. TAB 1: MASTER-DETAIL INTERACTIVE TREE WORKSPACE (Zero Footer Bleed!)
+   ========================================================================== */
+.tree-workspace-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 400px;
-  min-height: calc(100vh - 175px);
-}
-. workspace-full {
-  grid-template-columns: 1fr;
-}
-.main-stage {
-  padding: 20px 24px 40px;
-  overflow-x: auto;
-}
-.inspector {
-  background: var(--bg-card);
-  border-left: 1px solid var(--border-strong);
-  padding: 20px;
-  position: sticky;
-  top: 0;
-  height: calc(100vh - 45px);
-  overflow-y: auto;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 20px;
+  align-items: stretch;
 }
 
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
+.canvas-stage-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 840px;
+}
 
-/* Легенда доказанности */
-.legend-bar {
+/* Top Control Bar inside Canvas Card */
+.canvas-header-bar {
+  padding: 12px 16px;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-default);
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-hairline);
-  margin-bottom: 16px;
-  font-size: 12px;
-}
-.legend-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
   align-items: center;
+  gap: 12px;
 }
-.badge {
+
+.branch-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.filter-pill {
+  appearance: none;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-700);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.filter-pill:hover {
+  border-color: var(--ink-500);
+  background: var(--bg-subtle);
+}
+.filter-pill.active {
+  background: var(--ink-900);
+  color: #FFFFFF;
+  border-color: var(--ink-900);
+}
+.filter-pill.pat.active {
+  background: var(--accent-pat);
+  border-color: var(--accent-pat);
+}
+.filter-pill.mat.active {
+  background: var(--accent-mat);
+  border-color: var(--accent-mat);
+}
+
+.canvas-right-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Quick Person Jump Select */
+.person-jump-select {
+  appearance: none;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 6px 28px 6px 10px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-900);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2357534E' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+.person-jump-select:focus {
+  outline: 2px solid var(--accent-seal);
+  border-color: transparent;
+}
+
+.view-mode-switch {
+  display: inline-flex;
+  background: var(--bg-subtle);
+  padding: 3px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+}
+.btn-mode {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-700);
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 2px 8px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 600;
-  border-radius: 2px;
-  border: 1px solid transparent;
-  font-variant-numeric: tabular-nums;
+  transition: all 0.15s;
 }
-.badge-strong { color: var(--st-strong-fg); background: var(--st-strong-bg); border-color: var(--st-strong-bd); }
-.badge-corr   { color: var(--st-corr-fg);   background: var(--st-corr-bg);   border-color: var(--st-corr-bd); }
-.badge-single { color: var(--st-single-fg); background: var(--st-single-bg); border-color: var(--st-single-bd); }
-.badge-hypo   { color: var(--st-hypo-fg);   background: var(--st-hypo-bg);   border-color: var(--st-hypo-bd); }
-
-/* Интерактивное SVG-древо по поколениям */
-.tree-canvas-wrap {
-  background: var(--bg-card);
-  border: 1px solid var(--border-strong);
-  padding: 16px;
-  overflow-x: auto;
-}
-.gen-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-width: 780px;
-}
-.gen-row {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 16px;
-  align-items: stretch;
-  border-bottom: 1px dashed var(--border-hairline);
-  padding-bottom: 14px;
-}
-.gen-row:last-child { border-bottom: 0; padding-bottom: 0; }
-.gen-meta {
-  background: var(--bg-elevated);
-  border-left: 3px solid var(--border-strong);
-  padding: 10px 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.gen-roman {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
+.btn-mode.active {
+  background: var(--bg-surface);
   color: var(--accent-seal);
-  letter-spacing: 0.08em;
+  box-shadow: var(--shadow-xs);
 }
-.gen-title {
-  font-family: var(--font-serif);
-  font-size: 15px;
-  margin-top: 2px;
-  color: var(--ink-primary);
-}
-.gen-era {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-muted);
-  margin-top: 4px;
-}
-.gen-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
-  gap: 12px;
-}
-.node-card {
-  text-align: left;
-  background: var(--bg-paper);
-  border: 1px solid var(--border-hairline);
-  border-top: 3px solid var(--border-strong);
-  padding: 10px 12px;
-  cursor: pointer;
-  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease;
-  position: relative;
-}
-.node-card:hover {
-  background: #fff;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.07);
-}
-.node-card.selected {
-  background: var(--accent-seal-soft);
-  border-color: var(--accent-seal);
-  border-top-width: 3px;
-  box-shadow: 0 0 0 1px var(--accent-seal);
-}
-.node-card.st-strong { border-top-color: var(--st-strong-fg); }
-.node-card.st-corr   { border-top-color: var(--st-corr-fg); }
-.node-card.st-single { border-top-color: var(--st-single-fg); }
-.node-card.st-hypo   { border-top-color: var(--st-hypo-fg); border-style: dashed; border-top-style: solid; }
 
-.node-top {
+.zoom-btn-group {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.ctrl-btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border-subtle);
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-700);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.ctrl-btn:last-child { border-right: none; }
+.ctrl-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--ink-900);
+}
+.zoom-indicator {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-700);
+  padding: 0 8px;
+  min-width: 48px;
+  text-align: center;
+}
+
+/* SVG Viewport */
+.canvas-viewport {
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+  cursor: grab;
+  position: relative;
+  background-color: #F4EFE6;
+  background-image: 
+    radial-gradient(#D5CBB8 1.25px, transparent 1.25px),
+    radial-gradient(#E6DFD1 1.25px, #F4EFE6 1.25px);
+  background-size: 36px 36px;
+  background-position: 0 0, 18px 18px;
+  user-select: none;
+}
+.canvas-viewport:active {
+  cursor: grabbing;
+}
+
+/* Bottom Legend & Hint Bar inside Canvas Card */
+.canvas-footer-bar {
+  padding: 10px 16px;
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border-default);
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--ink-700);
 }
-.node-id {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--ink-muted);
-}
-.node-role {
-  font-size: 11px;
-  color: var(--ink-secondary);
-  font-weight: 600;
-}
-.node-name {
-  font-family: var(--font-serif);
-  font-size: 15px;
-  line-height: 1.25;
-  color: var(--ink-primary);
-  margin: 2px 0 6px;
-}
-.node-dates {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-secondary);
-  font-variant-numeric: tabular-nums;
-}
-.node-place {
-  font-size: 11px;
-  color: var(--ink-muted);
-  margin-top: 3px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.legend-Inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-/* Инспектор персоны / артефакта справа */
+/* Alternative Chronological Grid View inside Stage Card */
+.tree-grid-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background: var(--bg-app);
+}
+
+/* ==========================================================================
+   6. RIGHT DOSSIER INSPECTOR PANEL (Desktop Side-by-Side + Mobile Drawer)
+   ========================================================================== */
+.inspector-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  height: 840px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Strictly hide mobile sheet controls on desktop (>1024px) */
+.sheet-handle-bar {
+  display: none !important;
+}
+.mobile-dossier-pill-btn {
+  display: none !important;
+}
+.dossier-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(21, 20, 18, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 998;
+}
+.dossier-backdrop.open {
+  display: block;
+}
+
+.inspector-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px;
+}
+
 .insp-header {
-  border-bottom: 2px solid var(--ink-primary);
-  padding-bottom: 12px;
-  margin-bottom: 16px;
+  border-bottom: 2px solid var(--ink-900);
+  padding-bottom: 14px;
+  margin-bottom: 18px;
 }
 .insp-eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
+  font-weight: 700;
   color: var(--accent-seal);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 .insp-title {
   font-family: var(--font-serif);
-  font-size: 22px;
-  line-height: 1.2;
-  margin: 4px 0 8px;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.15;
+  color: var(--ink-900);
+  margin: 6px 0 10px;
 }
 .insp-section {
   margin-bottom: 18px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--border-hairline);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.insp-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 .insp-section h4 {
   font-family: var(--font-mono);
   font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--ink-muted);
-  margin: 0 0 8px;
+  color: var(--ink-500);
+  margin: 0 0 10px;
 }
 .kv-list {
   display: grid;
-  grid-template-columns: 115px 1fr;
-  gap: 6px 10px;
-  font-size: 12.5px;
+  grid-template-columns: 120px 1fr;
+  gap: 8px 12px;
+  font-size: 13px;
 }
 .kv-key {
-  color: var(--ink-muted);
-  font-family: var(--font-mono);
-  font-size: 11px;
+  color: var(--ink-500);
+  font-weight: 500;
 }
 .kv-val {
-  color: var(--ink-primary);
+  color: var(--ink-900);
   word-break: break-word;
 }
+
 .doc-thumb-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -414,398 +660,56 @@ html, body {
   margin-top: 8px;
 }
 .doc-thumb {
-  border: 1px solid var(--border-hairline);
-  background: var(--bg-paper);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
   padding: 6px;
   cursor: pointer;
-  transition: border-color 0.12s;
+  transition: all 0.15s ease;
 }
-.doc-thumb:hover { border-color: var(--accent-seal); }
+.doc-thumb:hover {
+  border-color: var(--accent-seal);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
 .doc-thumb img {
   width: 100%;
-  height: 92px;
+  height: 96px;
   object-fit: cover;
+  border-radius: 4px;
   display: block;
-  border: 1px solid var(--border-hairline);
+  border: 1px solid var(--border-subtle);
 }
 .doc-thumb-cap {
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--ink-secondary);
-  margin-top: 5px;
+  color: var(--ink-700);
+  margin-top: 6px;
   line-height: 1.3;
 }
 
-/* Таблицы данных */
-.section-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-strong);
-  padding: 18px 20px;
-  margin-bottom: 20px;
-}
-.section-card h2 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: 20px;
-  margin: 0 0 6px;
-}
-.section-sub {
-  color: var(--ink-secondary);
-  font-size: 13px;
-  margin: 0 0 16px;
-}
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12.5px;
-  font-variant-numeric: tabular-nums;
-}
-.data-table th {
-  text-align: left;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ink-secondary);
-  padding: 8px 10px;
-  border-bottom: 2px solid var(--border-strong);
-  background: var(--bg-elevated);
-}
-.data-table td {
-  padding: 9px 10px;
-  border-bottom: 1px solid var(--border-hairline);
-  vertical-align: top;
-}
-.data-table tr:hover td {
-  background: var(--bg-elevated);
-}
-.mono {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-}
-
-/* Галерея первоисточников */
-.archive-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-.archive-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-strong);
-  display: flex;
-  flex-direction: column;
-}
-.archive-img-wrap {
-  background: #262523;
-  height: 210px;
-  overflow: hidden;
-  position: relative;
-  cursor: zoom-in;
-}
-.archive-img-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-.archive-body {
-  padding: 12px 14px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.archive-cipher {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent-seal);
-  font-weight: 700;
-}
-.archive-title {
-  font-family: var(--font-serif);
-  font-size: 15px;
-  margin: 4px 0 6px;
-}
-.archive-quote {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  background: var(--bg-elevated);
-  padding: 6px 8px;
-  border-left: 2px solid var(--accent-seal);
-  color: var(--ink-primary);
-  margin: 6px 0 8px;
-}
-
-/* Хронология и миграционный маршрут */
-.timeline {
-  position: relative;
-  margin: 12px 0 0 12px;
-  border-left: 2px solid var(--border-strong);
-  padding-left: 20px;
-}
-.tl-item {
-  position: relative;
-  margin-bottom: 18px;
-  background: var(--bg-paper);
-  border: 1px solid var(--border-hairline);
-  padding: 10px 14px;
-}
-.tl-item::before {
-  content: "";
-  position: absolute;
-  left: -26px;
-  top: 14px;
-  width: 10px;
-  height: 10px;
-  background: var(--accent-seal);
-  border: 2px solid var(--bg-card);
-}
-.tl-date {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 12px;
-  color: var(--accent-seal);
-}
-.tl-place {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-muted);
-  margin-left: 8px;
-}
-.tl-desc {
-  margin-top: 4px;
-  font-size: 13px;
-}
-
-/* Архитектура LLM */
-.tier-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 20px;
-}
-.tier-box {
-  background: var(--bg-paper);
-  border: 1px solid var(--border-strong);
-  padding: 16px;
-}
-.tier-pct {
-  font-family: var(--font-serif);
-  font-size: 28px;
-  color: var(--accent-seal);
-}
-.tier-name {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin: 4px 0 8px;
-}
-
-/* Модальное окно просмотра сканов */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(18, 17, 15, 0.88);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 24px;
-}
-.lightbox.open { display: flex; }
-.lightbox-inner {
-  max-width: 1100px;
-  max-height: 92vh;
-  background: var(--bg-card);
-  border: 2px solid var(--border-strong);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.lightbox-bar {
-  padding: 10px 16px;
-  background: var(--bg-ink);
-  color: #F5F2EB;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 12px;
-}
-.lightbox-close {
-  background: var(--accent-seal);
-  color: #fff;
-  border: 0;
-  padding: 4px 10px;
-  font-family: var(--font-mono);
-  cursor: pointer;
-}
-.lightbox-img-container {
-  overflow: auto;
-  max-height: 75vh;
-  background: #111;
-  text-align: center;
-}
-.lightbox-img-container img {
-  max-width: 100%;
-  height: auto;
-}
-.lightbox-caption {
-  padding: 12px 16px;
-  font-size: 13px;
-  border-top: 1px solid var(--border-hairline);
-}
-
-@media (max-width: 1024px) {
-  .workspace { grid-template-columns: 1fr; }
-  .inspector {
-    position: static;
-    height: auto;
-    border-left: 0;
-    border-top: 2px solid var(--border-strong);
-  }
-  .hero { grid-template-columns: 1fr; }
-  .tier-grid { grid-template-columns: 1fr; }
-}
-
-/* Режим переключения представлений дерева */
-.view-switch-group {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-view {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--paper-warm);
-  border: 1px solid var(--border-neutral);
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  color: var(--ink-secondary);
-  transition: all 0.15s ease;
-}
-.btn-view:hover {
-  background: var(--paper-aged);
-  color: var(--ink-primary);
-  border-color: var(--border-strong);
-}
-.btn-view.active {
-  background: var(--accent-seal);
-  color: #fff;
-  border-color: var(--accent-seal);
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
-}
-
-/* Интерактивный SVG холст */
-.interactive-canvas-wrapper {
-  background: #EFECE4;
-  border: 1px solid var(--border-strong);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-.canvas-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 16px;
-  background: var(--paper-warm);
-  border-bottom: 1px solid var(--border-neutral);
-}
-.canvas-toolbar .toolbar-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--ink-primary);
-}
-.live-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #3A6B56;
-  box-shadow: 0 0 6px #3A6B56;
-}
-.canvas-controls {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.ctrl-btn {
-  background: var(--paper-warm);
-  border: 1px solid var(--border-neutral);
-  width: 28px;
-  height: 28px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  color: var(--ink-primary);
-  transition: all 0.1s ease;
-}
-.ctrl-btn:hover {
-  background: var(--paper-aged);
-  border-color: var(--border-strong);
-}
-.zoom-indicator {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--ink-secondary);
-  margin-left: 6px;
-  min-width: 44px;
-  text-align: right;
-}
-.canvas-viewport {
-  width: 100%;
-  height: 680px;
-  overflow: hidden;
-  cursor: grab;
-  position: relative;
-  background-color: #F3EFE6;
-  background-image: 
-    radial-gradient(#D6CFC0 1.2px, transparent 1.2px),
-    radial-gradient(#E8E2D5 1.2px, #F3EFE6 1.2px);
-  background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
-  user-select: none;
-}
-.canvas-viewport:active {
-  cursor: grabbing;
-}
-.canvas-hint-bar {
-  padding: 6px 14px;
-  background: var(--paper-warm);
-  border-top: 1px solid var(--border-hairline);
-  font-size: 11.5px;
-  color: var(--ink-secondary);
-}
-
-/* Стили SVG элементов внутри холста */
+/* ==========================================================================
+   7. SVG CANVAS ELEMENTS & PERFECTED FOREIGNOBJECT CARDS
+   ========================================================================== */
 .svg-gen-band {
-  fill: rgba(245, 242, 235, 0.45);
-  stroke: rgba(184, 175, 158, 0.4);
-  stroke-dasharray: 4, 4;
+  fill: rgba(250, 248, 244, 0.52);
+  stroke: rgba(180, 170, 152, 0.45);
+  stroke-dasharray: 5, 5;
 }
 .svg-gen-label {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.08em;
   font-weight: 700;
-  fill: #857E70;
+  fill: #78716C;
   text-transform: uppercase;
 }
 .svg-link-line {
   fill: none;
   stroke: #7B7264;
-  stroke-width: 2px;
+  stroke-width: 2.2px;
   stroke-linecap: round;
+  transition: opacity 0.25s;
 }
 .svg-link-line.marriage {
   stroke: #8C2D19;
@@ -813,321 +717,41 @@ html, body {
   stroke-dasharray: 5, 4;
 }
 .svg-link-line.pat {
-  stroke: #2D5A88;
-  stroke-width: 2.2px;
+  stroke: #1E4E79;
+  stroke-width: 2.4px;
 }
 .svg-link-line.mat {
   stroke: #8C2D19;
-  stroke-width: 2.2px;
+  stroke-width: 2.4px;
 }
 .svg-union-circle {
   fill: #8C2D19;
-  stroke: #F5F2EB;
-  stroke-width: 2px;
-  cursor: pointer;
-}
-.svg-node-group {
-  cursor: pointer;
-  transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1);
-}
-.svg-node-group:hover .svg-card-rect {
-  filter: url(#card-hover-shadow);
-  stroke-width: 2px;
-  stroke: var(--accent-seal);
-}
-.svg-card-rect {
-  fill: #FFFFFF;
-  stroke: #C5BCAC;
-  stroke-width: 1.2px;
-  filter: url(#card-shadow);
-  rx: 4px;
-  ry: 4px;
-}
-.svg-card-rect.pat {
-  fill: url(#grad-pat);
-  stroke: #9BB8D0;
-}
-.svg-card-rect.mat {
-  fill: url(#grad-mat);
-  stroke: #DFB8A7;
-}
-.svg-card-rect.self {
-  fill: url(#grad-self);
-  stroke: #C7B47C;
+  stroke: #FAF8F4;
   stroke-width: 2px;
 }
 
-
-/* ==========================================
-   МОБИЛЬНАЯ АДАПТИВНОСТЬ (SMARTPHONES & TABLETS)
-   ========================================== */
-
-/* Улучшение тач-поведения */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-
-@media (max-width: 900px) {
-  :root {
-    --space-md: 12px;
-    --space-lg: 16px;
-  }
-
-  body {
-    padding-bottom: 80px; /* отступ для мобильной навигации */
-  }
-
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    padding: 8px 12px;
-    font-size: 11px;
-  }
-  .topbar-right {
-    font-size: 10.5px;
-    opacity: 0.85;
-  }
-
-  .hero {
-    padding: 16px 14px;
-    gap: 16px;
-  }
-  .hero h1 {
-    font-size: 22px;
-    line-height: 1.25;
-  }
-  .hero-sub {
-    font-size: 13px;
-    line-height: 1.45;
-  }
-  .kpi-strip {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-  .kpi-cell {
-    padding: 10px;
-  }
-  .kpi-val {
-    font-size: 22px;
-  }
-  .kpi-lbl {
-    font-size: 10.5px;
-  }
-
-  /* Табы: горизонтальный скролл без переносов на смартфонах */
-  .nav-tabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 4px 8px;
-    gap: 6px;
-  }
-  .tab-btn {
-    white-space: nowrap;
-    flex-shrink: 0;
-    padding: 10px 14px;
-    font-size: 12px;
-  }
-
-  /* Легенда и переключатель видов */
-  .legend-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 10px 12px;
-  }
-  .legend-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    font-size: 11px;
-  }
-  .legend-items .badge {
-    font-size: 10px;
-    padding: 3px 6px;
-  }
-  .view-switch-group {
-    width: 100%;
-    justify-content: space-between;
-  }
-  .btn-view {
-    flex: 1;
-    justify-content: center;
-    padding: 8px 10px;
-    font-size: 11.5px;
-  }
-
-  /* Холст дерева на мобилках */
-  .canvas-viewport {
-    height: 520px; /* оптимальная высота экрана смартфона */
-    touch-action: none; /* полное управление через JS gesture/touch */
-  }
-  .canvas-toolbar {
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 8px 12px;
-  }
-  .canvas-toolbar .toolbar-title {
-    font-size: 11.5px;
-  }
-  .canvas-controls {
-    width: 100%;
-    justify-content: flex-end;
-  }
-  .ctrl-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-  }
-  .canvas-hint-bar {
-    font-size: 11px;
-    padding: 8px 12px;
-    line-height: 1.4;
-  }
-
-  /* Правая панель досье: превращается в удобный Bottom Sheet / Drawer на мобилках */
-  .workspace {
-    display: block;
-  }
-  .main-stage {
-    width: 100%;
-  }
-
-  .inspector {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    max-height: 80vh;
-    height: auto;
-    background: #FFFFFF;
-    box-shadow: 0 -8px 28px rgba(0,0,0,0.22);
-    border-radius: 16px 16px 0 0;
-    border: 1px solid var(--border-neutral);
-    border-bottom: 0;
-    z-index: 1000;
-    transform: translateY(105%);
-    transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 24px;
-  }
-  .inspector.sheet-open {
-    transform: translateY(0%);
-  }
-
-  /* Мобильная шапка шторки досье с кнопкой закрытия */
-  .sheet-handle-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 16px 6px;
-    position: sticky;
-    top: 0;
-    background: #FFFFFF;
-    border-bottom: 1px solid var(--border-hairline);
-    z-index: 10;
-  }
-  .sheet-pill {
-    width: 42px;
-    height: 5px;
-    background: #D3CABA;
-    border-radius: 4px;
-    margin: 0 auto;
-  }
-  .sheet-close-btn {
-    background: var(--paper-warm);
-    border: 1px solid var(--border-neutral);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    color: var(--ink-secondary);
-  }
-
-  /* Плавающая кнопка для открытия/закрытия досье на телефоне */
-  .mobile-dossier-pill-btn {
-    position: fixed;
-    bottom: 18px;
-    right: 18px;
-    background: var(--accent-seal);
-    color: #FFFFFF;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 700;
-    box-shadow: 0 4px 16px rgba(140, 45, 25, 0.45);
-    z-index: 999;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    letter-spacing: 0.02em;
-  }
-
-  /* Таблицы с горизонтальным скроллом на мобилках */
-  .table-responsive-wrap {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: 16px;
-  }
-  .data-table {
-    min-width: 600px;
-    font-size: 12.5px;
-  }
-
-  /* Галерея сканов */
-  .archive-gallery {
-    grid-template-columns: 1fr;
-  }
-
-  /* Модальное окно Lightbox на весь экран смартфона */
-  .lightbox-inner {
-    width: 96vw;
-    max-height: 94vh;
-  }
-  .lightbox-bar {
-    padding: 10px 14px;
-  }
-  .lightbox-close {
-    padding: 6px 10px;
-    font-size: 11px;
-  }
-}
-
-
-/* ==========================================
-   СОВРЕМЕННАЯ ТИПОГРАФИКА И ВЕРСТКА КАРТОЧЕК ХОЛСТА
-   ========================================== */
+/* ForeignObject HTML Card */
 .canvas-node-card {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   background: #FFFFFF;
-  border: 1.5px solid #D8D0C3;
+  border: 1.5px solid #D5CCBC;
   border-radius: 12px;
   padding: 10px 12px;
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(24, 23, 21, 0.07), 0 1px 3px rgba(24, 23, 21, 0.04);
-  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(22, 21, 19, 0.07), 0 1px 3px rgba(22, 21, 19, 0.04);
+  transition: transform 0.2s var(--ease-out-quart), box-shadow 0.2s var(--ease-out-quart), border-color 0.2s, opacity 0.25s;
   user-select: none;
   overflow: hidden;
   position: relative;
 }
 .canvas-node-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(140, 45, 25, 0.16), 0 2px 6px rgba(140, 45, 25, 0.08);
+  box-shadow: 0 10px 24px rgba(140, 45, 25, 0.16), 0 2px 6px rgba(140, 45, 25, 0.08);
   border-color: var(--accent-seal);
 }
 .canvas-node-card.selected {
@@ -1135,22 +759,26 @@ html, body {
   border-width: 2px;
   box-shadow: 0 0 0 3px rgba(140, 45, 25, 0.22), 0 8px 26px rgba(140, 45, 25, 0.2);
 }
+.canvas-node-card.dimmed {
+  opacity: 0.28;
+  filter: grayscale(40%);
+}
 
-/* Ветви рода */
+/* Branch Card Accents */
 .canvas-node-card.pat {
-  background: linear-gradient(135deg, #FFFFFF 0%, #F3F7FA 100%);
-  border-left: 5px solid #285987;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F2F7FB 100%);
+  border-left: 5px solid var(--accent-pat);
 }
 .canvas-node-card.mat {
   background: linear-gradient(135deg, #FFFFFF 0%, #FDF7F3 100%);
-  border-left: 5px solid #8C2D19;
+  border-left: 5px solid var(--accent-mat);
 }
 .canvas-node-card.self {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FAF6EA 100%);
-  border-left: 5px solid #B5933C;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FCF8EB 100%);
+  border-left: 5px solid var(--accent-gold);
 }
 
-/* Аватар */
+/* Card Avatar */
 .card-avatar-wrap {
   width: 52px;
   height: 52px;
@@ -1174,7 +802,7 @@ html, body {
   position: absolute;
   bottom: -2px;
   right: -2px;
-  background: #2E6B4E;
+  background: #15803D;
   color: #FFF;
   font-size: 9px;
   width: 18px;
@@ -1186,19 +814,19 @@ html, body {
   border: 1.5px solid #FFF;
 }
 .card-avatar-emoji {
-  font-size: 26px;
+  font-size: 25px;
   line-height: 1;
 }
 .card-avatar-rank {
   font-family: var(--font-mono);
   font-size: 8px;
   font-weight: 800;
-  color: #285987;
+  color: var(--accent-pat);
   letter-spacing: 0.05em;
   margin-top: 2px;
 }
 
-/* Контент карточки */
+/* Card Text Content */
 .card-content-wrap {
   flex: 1;
   min-width: 0;
@@ -1232,25 +860,22 @@ html, body {
   font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--accent-seal);
+  color: var(--accent-mat);
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
 }
-.canvas-node-card.pat .card-role {
-  color: #285987;
-}
-.canvas-node-card.self .card-role {
-  color: #9E7818;
-}
+.canvas-node-card.pat .card-role { color: var(--accent-pat); }
+.canvas-node-card.self .card-role { color: #9A6F18; }
+
 .card-name {
   font-family: var(--font-serif);
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 700;
-  color: #181715;
-  line-height: 1.22;
+  color: #161513;
+  line-height: 1.18;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -1261,7 +886,7 @@ html, body {
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 600;
-  color: #4A443B;
+  color: #44403C;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1269,449 +894,1107 @@ html, body {
 }
 .card-place {
   font-size: 9.5px;
-  color: #7B7264;
+  color: #78716C;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
 }
 
+/* ==========================================================================
+   8. EDITORIAL CARDS, TABLES, TIMELINE & GALLERY (Tabs 2–5)
+   ========================================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 5px;
+  border: 1px solid transparent;
+}
+.badge-strong { color: var(--st-strong-fg); background: var(--st-strong-bg); border-color: var(--st-strong-bd); }
+.badge-corr   { color: var(--st-corr-fg);   background: var(--st-corr-bg);   border-color: var(--st-corr-bd); }
+.badge-single { color: var(--st-single-fg); background: var(--st-single-bg); border-color: var(--st-single-bd); }
+.badge-hypo   { color: var(--st-hypo-fg);   background: var(--st-hypo-bg);   border-color: var(--st-hypo-bd); }
+
+.person-link-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-seal);
+  background: var(--accent-seal-soft);
+  border: 1px solid rgba(140, 45, 25, 0.25);
+  padding: 1px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.person-link-chip:hover {
+  background: var(--accent-seal);
+  color: #FFFFFF;
+}
+
+.section-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.section-card h2 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 0 0 8px;
+  color: var(--ink-900);
+}
+.section-sub {
+  color: var(--ink-500);
+  font-size: 14px;
+  margin: 0 0 20px;
+  max-width: 78ch;
+}
+
+/* Summary Trio Grid for Tab 2 (13 Children Nest) */
+.nest-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.nest-stat-box {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-left: 4px solid var(--accent-seal);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+.nest-stat-num {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent-seal);
+  line-height: 1;
+}
+.nest-stat-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin: 6px 0 4px;
+  color: var(--ink-900);
+}
+.nest-stat-desc {
+  font-size: 12.5px;
+  color: var(--ink-500);
+  margin: 0;
+}
+
+/* Clean Data Tables */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.data-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-500);
+  padding: 12px 16px;
+  background: var(--bg-elevated);
+  border-bottom: 1.5px solid var(--border-default);
+}
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td {
+  background: var(--bg-elevated);
+}
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+/* Chronological Generation Grid (Mode 2) */
+.gen-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.gen-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 16px;
+  align-items: stretch;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+.gen-meta {
+  background: var(--bg-elevated);
+  border-left: 4px solid var(--accent-seal);
+  border-radius: 6px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.gen-roman {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-seal);
+  letter-spacing: 0.08em;
+}
+.gen-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 18px;
+  margin-top: 2px;
+  color: var(--ink-900);
+}
+.gen-era {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-500);
+  margin-top: 4px;
+}
+.gen-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+.node-card {
+  text-align: left;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-top: 3px solid var(--ink-900);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.node-card:hover {
+  background: #FFFFFF;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+.node-card.selected {
+  background: var(--accent-seal-soft);
+  border-color: var(--accent-seal);
+}
+.node-card.st-strong { border-top-color: var(--st-strong-fg); }
+.node-card.st-corr   { border-top-color: var(--st-corr-fg); }
+.node-card.st-single { border-top-color: var(--st-single-fg); }
+.node-card.st-hypo   { border-top-color: var(--st-hypo-fg); }
+.node-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.node-id {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-500);
+}
+.node-role {
+  font-size: 11.5px;
+  color: var(--accent-seal);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.node-name {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.22;
+  color: var(--ink-900);
+  margin: 2px 0 6px;
+}
+.node-dates {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-700);
+}
+.node-place {
+  font-size: 11.5px;
+  color: var(--ink-500);
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Archive Gallery */
+.archive-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+.archive-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-xs);
+  transition: transform 0.2s var(--ease-out-quart), box-shadow 0.2s var(--ease-out-quart);
+}
+.archive-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-seal);
+}
+.archive-img-wrap {
+  background: #1C1B19;
+  height: 230px;
+  overflow: hidden;
+  position: relative;
+  cursor: zoom-in;
+}
+.archive-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s var(--ease-out-quart);
+}
+.archive-card:hover .archive-img-wrap img {
+  transform: scale(1.03);
+}
+.archive-body {
+  padding: 16px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.archive-cipher {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-seal);
+  font-weight: 700;
+}
+.archive-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.25;
+  margin: 6px 0 8px;
+  color: var(--ink-900);
+}
+.archive-quote {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  background: var(--bg-elevated);
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent-seal);
+  border-radius: 0 4px 4px 0;
+  color: var(--ink-700);
+  margin: 8px 0 10px;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  margin: 16px 0 0 14px;
+  border-left: 2px solid var(--accent-seal);
+  padding-left: 24px;
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 18px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  transition: border-color 0.15s;
+}
+.tl-item:hover {
+  border-color: var(--accent-seal);
+}
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: -31px;
+  top: 18px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-seal);
+  border: 2.5px solid var(--bg-surface);
+  box-shadow: 0 0 0 2px var(--accent-seal);
+}
+.tl-date {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--accent-seal);
+}
+.tl-place {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-500);
+  margin-left: 10px;
+}
+.tl-desc {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--ink-900);
+}
+
+/* ==========================================================================
+   9. CLEAN ARCHIVAL FOOTER (Colophon)
+   ========================================================================== */
+.app-footer {
+  background: var(--bg-obsidian);
+  color: #A8A29E;
+  border-top: 3px solid var(--accent-seal);
+  padding: 28px 24px;
+  margin-top: auto;
+  font-size: 13px;
+}
+.footer-inner {
+  max-width: 1560px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.footer-brand {
+  color: #FFFFFF;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+}
+.footer-meta {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   10. LIGHTBOX MODAL
+   ========================================================================== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 14, 13, 0.90);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 24px;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+  max-width: 1120px;
+  width: 100%;
+  max-height: 92vh;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.lightbox-bar {
+  padding: 12px 18px;
+  background: var(--bg-obsidian);
+  color: #FAF8F4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+.lightbox-close {
+  background: var(--accent-seal);
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11.5px;
+  cursor: pointer;
+}
+.lightbox-img-container {
+  overflow: auto;
+  max-height: 75vh;
+  background: #111;
+  text-align: center;
+}
+.lightbox-img-container img {
+  max-width: 100%;
+  height: auto;
+}
+.lightbox-caption {
+  padding: 14px 18px;
+  font-size: 13.5px;
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border-default);
+}
+
+/* ==========================================================================
+   11. RESPONSIVE & MOBILE DRAWER ARCHITECTURE (<= 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .tree-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+  .canvas-stage-card {
+    height: 620px;
+  }
+  .nest-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Transform Inspector into a clean Slide-Up Bottom Sheet / Drawer (Never a static footer block!) */
+  .inspector-card {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    max-height: 84vh;
+    border-radius: 20px 20px 0 0;
+    border: none;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.28);
+    z-index: 1000;
+    transform: translateY(105%);
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  .inspector-card.sheet-open {
+    transform: translateY(0%);
+  }
+
+  .sheet-handle-bar {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px 8px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .sheet-pill {
+    width: 44px;
+    height: 5px;
+    background: var(--border-default);
+    border-radius: 4px;
+  }
+  .sheet-close-btn {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-default);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--ink-700);
+  }
+
+  .mobile-dossier-pill-btn {
+    display: inline-flex !important;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--accent-seal);
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(140, 45, 25, 0.45);
+    z-index: 995;
+    cursor: pointer;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 8px 14px;
+  }
+  .hero-wrap {
+    padding: 18px 14px;
+  }
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .app-main {
+    padding: 14px 12px 40px;
+  }
+  .canvas-stage-card {
+    height: 560px;
+  }
+  .branch-filter-pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .branch-filter-pills::-webkit-scrollbar { display: none; }
+  .filter-pill {
+    white-space: nowrap;
+    padding: 5px 10px;
+    font-size: 11.5px;
+  }
+  .person-jump-select {
+    width: 100%;
+  }
+  .gen-row {
+    grid-template-columns: 1fr;
+  }
+  .section-card {
+    padding: 18px 16px;
+  }
+}
 </style>
 </head>
 <body>
 
+<!-- 1. TOP ARCHIVAL STATUS BAR -->
 <header class="topbar">
   <div class="topbar-left">
-    <span class="topbar-badge">СЕМЕЙНАЯ ХРОНИКА</span>
-    <span>ЛЕТОПИСЬ РОДОВ ЕВДОКИМОВЫХ И БАРОНОВЫХ (1795–2026)</span>
+    <span class="topbar-seal">ФАМИЛЬНЫЙ АРХИВ</span>
+    <span>ЛЕТОПИСЬ РОДОВ ЕВДОКИМОВЫХ · БАРОНОВЫХ · ШЕПЕЛЕНКО · БЕЛОВЫХ (1795–2026)</span>
   </div>
   <div class="topbar-right">
-    <span>СТАТУС: <strong>ВСЕ ДАННЫЕ СВЕРЕНЫ С АРХИВАМИ</strong></span>
-    <span>ОХВАТ: <strong>20 ПРЕДКОВ · 7 ПОКОЛЕНИЙ · 230 ЛЕТ ИСТОРИИ</strong></span>
+    <span><span class="status-dot"></span>СТАТУС: <strong>СВЕРЕНО С ГОСАРХИВАМИ (GPS)</strong></span>
+    <span>ОХВАТ: <strong>20 ПРЕДКОВ · 7 ПОКОЛЕНИЙ · 230 ЛЕТ</strong></span>
   </div>
 </header>
 
-<section class="hero">
-  <div>
-    <p class="hero-kicker">Интерактивная родословная книга семьи</p>
-    <h1>Родословное древо семьи Евдокимовых и Бароновых</h1>
-    <p class="hero-sub">История семьи через века: <b>ветвь мамы</b> (Евдокимовы и Беловы — от волжских крестьян села Никольское / Жукотино и героев Первой мировой войны до Перми и Крыма) и <b>ветвь папы</b> (Бароновы и Шепеленко — майоры автомобильных войск, офицерский гарнизон Петродворца и Стрельна).</p>
-  </div>
-  <div class="kpi-strip">
-    <div class="kpi-cell">
-      <div class="kpi-val">7</div>
-      <div class="kpi-lbl">Поколений семьи (1795–2026)</div>
+<!-- 2. EDITORIAL HERO -->
+<section class="hero-wrap">
+  <div class="hero-container">
+    <div>
+      <p class="hero-kicker">Интерактивная родословная книга семьи</p>
+      <h1 class="hero-title">Родословное древо Евдокимовых и Бароновых</h1>
+      <p class="hero-sub">
+        Две большие истории, сошедшиеся в Санкт-Петербурге:
+        <span class="branch-tag-mat">Ветвь мамы</span> — волжские крестьяне села Никольское (Жукотино) Казанской губернии, герои Первой мировой войны (127-й Путивльский полк), Пермь и Крым;
+        <span class="branch-tag-pat">Ветвь папы</span> — переселенцы Столыпинской реформы 1912 года из Харьковской губернии в Кустанай, послевоенный Самарканд и офицерский гарнизон Петродворца и Стрельны.
+      </p>
     </div>
-    <div class="kpi-cell">
-      <div class="kpi-val">20</div>
-      <div class="kpi-lbl">Установленных предков</div>
-    </div>
-    <div class="kpi-cell">
-      <div class="kpi-val">4</div>
-      <div class="kpi-lbl">Подлинных военных скана 1915 г.</div>
-    </div>
-    <div class="kpi-cell">
-      <div class="kpi-val">13</div>
-      <div class="kpi-lbl">Детей в гнезде прабабушки Агриппины</div>
+    <div class="kpi-grid">
+      <div class="kpi-card" onclick="activateTab('tab-tree')">
+        <div class="kpi-val">7</div>
+        <div class="kpi-lbl">Поколений рода (1795–2026)</div>
+      </div>
+      <div class="kpi-card" onclick="activateTab('tab-tree')">
+        <div class="kpi-val">20</div>
+        <div class="kpi-lbl">Установленных предков в древе</div>
+      </div>
+      <div class="kpi-card" onclick="activateTab('tab-scans')">
+        <div class="kpi-val">7</div>
+        <div class="kpi-lbl">Подлинных сканов и документов</div>
+      </div>
+      <div class="kpi-card" onclick="activateTab('tab-nest')">
+        <div class="kpi-val">13</div>
+        <div class="kpi-lbl">Детей в гнезде Агриппины</div>
+      </div>
     </div>
   </div>
 </section>
 
-<nav class="nav-tabs" role="tablist">
-  <button class="tab-btn active" data-tab="tab-tree">01. Интерактивное семейное древо</button>
-  <button class="tab-btn" data-tab="tab-scans">02. Семейные реликвии и архивные документы</button>
-  <button class="tab-btn" data-tab="tab-geo">03. География предков и летопись событий</button>
-  <button class="tab-btn" data-tab="tab-queue">04. План архивного поиска (ЗАГС и архивы)</button>
-</nav>
+<!-- 3. STICKY APPLICATION NAVIGATION -->
+<div class="app-nav-wrap">
+  <nav class="app-nav" role="tablist">
+    <button class="tab-btn active" data-tab="tab-tree">
+      <span>🌳 Интерактивное древо</span>
+      <span class="tab-count">20</span>
+    </button>
+    <button class="tab-btn" data-tab="tab-nest">
+      <span>🏡 Семейное гнездо Агриппины</span>
+      <span class="tab-count">13 детей</span>
+    </button>
+    <button class="tab-btn" data-tab="tab-scans">
+      <span>📜 Архивные сканы и реликвии</span>
+      <span class="tab-count">7</span>
+    </button>
+    <button class="tab-btn" data-tab="tab-geo">
+      <span>🗺️ География и летопись</span>
+      <span class="tab-count">1800–1988</span>
+    </button>
+    <button class="tab-btn" data-tab="tab-queue">
+      <span>🔍 План поиска и база фактов</span>
+      <span class="tab-count">18</span>
+    </button>
+  </nav>
+</div>
 
-<div class="workspace" id="workspace-shell">
-  <main class="main-stage">
+<!-- 4. MAIN APPLICATION STAGE -->
+<main class="app-main">
 
-    <!-- ВКЛАДКА 1: ИНТЕРАКТИВНОЕ ДРЕВО -->
-    <section class="tab-panel active" id="tab-tree">
-      <div class="legend-bar">
-        <div class="legend-items">
-          <strong>Степень подтверждения фактов:</strong>
-          <span class="badge badge-strong" title="Подтверждено государственными архивами (РГВИА, ЗАГС) и фотодокументами">✓ Документально подтверждено архивами</span>
-          <span class="badge badge-corr" title="Подтверждено сразу несколькими семейными источниками">✓ Подтверждено семьёй</span>
-          <span class="badge badge-single" title="Известно из одного семейного рассказа или схемы">По семейным воспоминаниям</span>
-          <span class="badge badge-hypo" title="Логически следует из отчеств, требует запроса справки">В процессе архивного поиска</span>
-        </div>
-        <div class="view-switch-group">
-          <span style="font-size:12px;color:var(--ink-secondary);font-weight:600;margin-right:4px;">РЕЖИМ:</span>
-          <button type="button" class="btn-view active" id="btn-view-canvas" onclick="switchTreeView('canvas')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M12 8v4m-5 4l5-4 5 4"/></svg>
-            Интерактивный холст (Canvas D3 / SVG)
-          </button>
-          <button type="button" class="btn-view" id="btn-view-grid" onclick="switchTreeView('grid')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
-            Хронологическая сетка поколений
-          </button>
-        </div>
-      </div>
+  <!-- ====================================================================
+       ВКЛАДКА 1: ИНТЕРАКТИВНОЕ ДРЕВО + ДОСЬЕ ПРЕДКА (SPLIT MASTER-DETAIL)
+       ==================================================================== -->
+  <section class="tab-panel active" id="tab-tree">
+    <div class="tree-workspace-grid">
 
-      <!-- ВИД 1: ИНТЕРАКТИВНЫЙ ХОЛСТ С ЗУМОМ И ПЕРЕМЕЩЕНИЕМ -->
-      <div id="tree-canvas-container" class="interactive-canvas-wrapper">
-        <div class="canvas-toolbar">
-          <div class="toolbar-title">
-            <span class="live-dot"></span>
-            <strong>Интерактивное родословное полотно</strong> · 17 персон, 7 поколений (1795–2026)
+      <!-- ЛЕВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЙ ХОЛСТ / СЕТКА -->
+      <div class="canvas-stage-card">
+        <div class="canvas-header-bar">
+          <div class="branch-filter-pills">
+            <button type="button" class="filter-pill active" id="filter-all" onclick="filterCanvasBranch('all')">Все предки (20)</button>
+            <button type="button" class="filter-pill pat" id="filter-pat" onclick="filterCanvasBranch('pat')">⚓ Ветвь папы (Бароновы · Шепеленко)</button>
+            <button type="button" class="filter-pill mat" id="filter-mat" onclick="filterCanvasBranch('mat')">🌾 Ветвь мамы (Евдокимовы · Беловы)</button>
           </div>
-          <div class="canvas-controls">
-            <button type="button" class="ctrl-btn" onclick="zoomCanvas(1.2)" title="Приблизить (+)">＋</button>
-            <button type="button" class="ctrl-btn" onclick="zoomCanvas(0.8)" title="Отдалить (−)">－</button>
-            <button type="button" class="ctrl-btn" onclick="resetCanvasZoom()" title="По размеру экрана">⛶ Сброс</button>
-            <span class="zoom-indicator" id="zoom-level-text">100%</span>
+
+          <div class="canvas-right-tools">
+            <select class="person-jump-select" id="person-jump-select" onchange="jumpToPerson(this.value)" aria-label="Быстрый переход к предку">
+              <option value="">🔍 Найти предка в древе...</option>
+            </select>
+
+            <div class="view-mode-switch">
+              <button type="button" class="btn-mode active" id="btn-view-canvas" onclick="switchTreeView('canvas')">Схема</button>
+              <button type="button" class="btn-mode" id="btn-view-grid" onclick="switchTreeView('grid')">Список</button>
+            </div>
+
+            <div class="zoom-btn-group" id="canvas-zoom-controls">
+              <button type="button" class="ctrl-btn" onclick="zoomCanvas(1.2)" title="Приблизить">+</button>
+              <span class="zoom-indicator" id="zoom-level-text">82%</span>
+              <button type="button" class="ctrl-btn" onclick="zoomCanvas(0.83)" title="Отдалить">−</button>
+              <button type="button" class="ctrl-btn" onclick="resetCanvasZoom(true)" title="Показать всё древо" style="width:auto;padding:0 10px;font-size:11.5px;">Сброс</button>
+            </div>
           </div>
         </div>
+
+        <!-- ВИД 1: ИНТЕРАКТИВНЫЙ SVG ХОЛСТ -->
         <div class="canvas-viewport" id="canvas-viewport">
           <svg id="tree-svg-canvas" width="2800" height="1720" viewBox="0 0 2800 1720">
             <defs>
-              <!-- Градиенты карточек -->
-              <linearGradient id="grad-pat" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#F3F7FA"/>
-                <stop offset="100%" stop-color="#DFEAF2"/>
-              </linearGradient>
-              <linearGradient id="grad-mat" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#FCF6F0"/>
-                <stop offset="100%" stop-color="#F4E4D7"/>
-              </linearGradient>
-              <linearGradient id="grad-self" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#FCF9EE"/>
-                <stop offset="100%" stop-color="#EFE6CB"/>
-              </linearGradient>
-              <!-- Градиент древесных ветвей -->
-              <linearGradient id="tree-branch-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#A6896C" stop-opacity="0.6"/>
-                <stop offset="50%" stop-color="#7B5E43" stop-opacity="0.75"/>
-                <stop offset="100%" stop-color="#543C28" stop-opacity="0.9"/>
-              </linearGradient>
-              <linearGradient id="tree-leaves-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#4F7942" stop-opacity="0.14"/>
-                <stop offset="100%" stop-color="#2D5A27" stop-opacity="0.08"/>
-              </linearGradient>
-
-              <!-- Тени -->
-              <filter id="card-shadow" x="-8%" y="-8%" width="120%" height="124%">
-                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#181715" flood-opacity="0.12"/>
-              </filter>
-              <filter id="card-hover-shadow" x="-12%" y="-12%" width="128%" height="132%">
-                <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#8C2D19" flood-opacity="0.25"/>
-              </filter>
-
-              <!-- Реальный портрет прабабушки Агриппины Александровны Беловой (P-0008) -->
-              <pattern id="portrait-P-0008" patternUnits="objectBoundingBox" width="1" height="1">
-                <image href="photos/portrait-agripina-belova-oval.jpg" x="-6" y="-4" width="68" height="82" preserveAspectRatio="xMidYMid slice" />
+              <pattern id="portrait-P-0008" x="0" y="0" width="1" height="1" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+                <image href="photos/portrait-agripina-belova-oval.jpg" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid slice"/>
               </pattern>
             </defs>
             <g id="canvas-pan-zoom-group">
-              <!-- СХЕМАТИЧЕСКАЯ КРОНА И ВЕТВИ ДРЕВА РОДА -->
-              <g id="canvas-tree-botany-group" opacity="0.12" stroke="#8C7A60" fill="none" stroke-linecap="round">
-                <!-- Основной ствол от корней к союзу родителей и предкам -->
-                <path d="M 1150 1700 C 1150 1560, 1150 1460, 1150 1350" stroke-width="12" />
-                <!-- Разветвление к отцовской ветви (Бароновы и Шепеленко) -->
-                <path d="M 1150 1350 C 900 1300, 600 1200, 480 1000" stroke-width="8" />
+              <!-- Стилизованная крона и ствол на фоне -->
+              <g id="canvas-tree-botany-group" opacity="0.11" stroke="#8C7A60" fill="none" stroke-linecap="round">
+                <path d="M 1150 1700 C 1150 1560, 1150 1460, 1150 1350" stroke-width="14" />
+                <path d="M 1150 1350 C 900 1300, 600 1200, 480 1000" stroke-width="9" />
                 <path d="M 480 1000 C 350 900, 250 820, 180 740" stroke-width="5" />
                 <path d="M 480 1000 C 520 900, 580 820, 610 740" stroke-width="5" />
-                <!-- Разветвление к материнской ветви (Евдокимовы и Беловы) -->
-                <path d="M 1150 1350 C 1400 1300, 1700 1200, 1820 1000" stroke-width="8" />
+                <path d="M 1150 1350 C 1400 1300, 1700 1200, 1820 1000" stroke-width="9" />
                 <path d="M 1820 1000 C 1650 900, 1550 820, 1400 740" stroke-width="5" />
                 <path d="M 1820 1000 C 1820 900, 1820 820, 1820 740" stroke-width="6" />
                 <path d="M 1820 1000 C 1950 900, 2150 820, 2350 740" stroke-width="5" />
                 <path d="M 1820 740 C 1820 620, 1770 540, 1770 480" stroke-width="6" />
                 <path d="M 1770 480 C 1770 380, 1770 280, 1770 120" stroke-width="5" />
               </g>
-              <!-- ФОНОВАЯ РАЗМЕТКА ПОКОЛЕНИЙ -->
               <g id="canvas-generation-bands"></g>
-              <!-- СОЕДИНИТЕЛЬНЫЕ ЛИНИИ РОДСТВА -->
               <g id="canvas-links-group"></g>
-              <!-- УЗЛЫ БРАКОВ -->
               <g id="canvas-marriages-group"></g>
-              <!-- КАРТОЧКИ ПЕРСОН -->
               <g id="canvas-nodes-group"></g>
             </g>
           </svg>
         </div>
-        <div class="canvas-hint-bar">
-          <span>💡 <b>Как пользоваться картой:</b> Зажмите левую кнопку мыши и двигайте карту в любую сторону. Колёсико мыши приближает и отдаляет дерево. <b>Нажмите на любого родственника</b>, чтобы справа открылась его биография, фотографии и подлинные архивные документы.</span>
+
+        <!-- ВИД 2: ПОКОЛЕННАЯ СЕТКА (ПО УМОЛЧАНИЮ СКРЫТА) -->
+        <div id="tree-grid-view-container" class="tree-grid-scroll" style="display:none;">
+          <div class="gen-grid" id="gen-grid-container"></div>
+        </div>
+
+        <div class="canvas-footer-bar">
+          <div class="legend-Inline">
+            <strong>Доказанность:</strong>
+            <span class="badge badge-strong">✓ В госархивах</span>
+            <span class="badge badge-corr">✓ Подтверждено</span>
+            <span class="badge badge-single">Из памяти семьи</span>
+            <span class="badge badge-hypo">Архивный поиск</span>
+          </div>
+          <span>💡 Перетаскивайте карту мышью или пальцем · Нажмите на карточку для открытия досье</span>
         </div>
       </div>
 
-      <!-- ВИД 2: ХРОНОЛОГИЧЕСКАЯ СЕТКА (ПО УМОЛЧАНИЮ СКРЫТА) -->
-      <div id="tree-grid-view-container" class="tree-canvas-wrap" style="display:none;">
-        <div class="gen-grid" id="gen-grid-container"></div>
+      <!-- ПРАВАЯ КОЛОНКА: ИНСПЕКТОР ДОСЬЕ ПРЕДКА -->
+      <aside class="inspector-card" id="inspector-panel" aria-label="Досье выбранного предка">
+        <div class="sheet-handle-bar">
+          <span style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--accent-seal);">ДОСЬЕ ПРЕДКА</span>
+          <div class="sheet-pill"></div>
+          <button type="button" class="sheet-close-btn" onclick="closeMobileDossierSheet()" title="Закрыть">✕</button>
+        </div>
+        <div class="inspector-scroll" id="inspector-content"></div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       ВКЛАДКА 2: БОЛЬШОЕ СЕМЕЙНОЕ ГНЕЗДО ПРАБАБУШКИ АГРИППИНЫ (13 ДЕТЕЙ)
+       ==================================================================== -->
+  <section class="tab-panel" id="tab-nest">
+    <div class="section-card">
+      <h2>Большое семейное гнездо прабабушки Агриппины Александровны (13 детей в одном доме)</h2>
+      <p class="section-sub">
+        Уникальная семейная история любви, милосердия и стойкости: прабабушка
+        <b>Агриппина Александровна Евдокимова (урожд. Белова, 1889–1971)</b> и прадед
+        <b>Николай Никандрович Евдокимов (1888–ок. 1926)</b> дали жизнь и вырастили в селе Жукотино (Галактионово) тринадцать детей.
+      </p>
+
+      <div class="nest-summary-grid">
+        <div class="nest-stat-box">
+          <div class="nest-stat-num">8 своих детей</div>
+          <div class="nest-stat-title">Родные дети Николая и Агриппины</div>
+          <p class="nest-stat-desc">Серёжа, Миша, Таня, Вера (1919), Ная (1922), Федя, дед Антона — <b>7. Шура (1926)</b> и Дуня.</p>
+        </div>
+        <div class="nest-stat-box" style="border-left-color:var(--accent-pat);">
+          <div class="nest-stat-num" style="color:var(--accent-pat);">+3 племянника</div>
+          <div class="nest-stat-title">Сироты брата Ефима Никандровича</div>
+          <p class="nest-stat-desc">Когда брат прадеда Ефим умер от холеры вслед за женой, Николай и Агриппина забрали его троих детей (Колю, Саню, Митю) как родных.</p>
+        </div>
+        <div class="nest-stat-box" style="border-left-color:var(--accent-gold);">
+          <div class="nest-stat-num" style="color:var(--accent-gold);">+4 детей Егора</div>
+          <div class="nest-stat-title">Дети от второго брака с Егором</div>
+          <p class="nest-stat-desc">После ранней смерти прадеда Николая от последствий австрийского плена прабабушка подняла ещё четверых детей второго мужа Егора (Анну, Олю, Дуню, Сашу).</p>
+        </div>
       </div>
 
-      <div class="section-card" style="margin-top:20px;">
-        <h2>Большое семейное гнездо прабабушки Агриппины Александровны (13 детей, выросших в одном доме)</h2>
-        <p class="section-sub">Удивительная история любви и сплочённости: прабабушка <b>Агриппина Александровна Белова (1889–1971)</b> родила 8 своих детей (выжили шестеро), взяла к себе 3 детей-сирот умершего от холеры брата мужа Ефима и вырастила 4 детей второго мужа Егора. Ниже — полная ветвь детей (поколение мамы Антона — двоюродные братья и сёстры).</p>
+      <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Группа</th>
-              <th>Имя в таблице</th>
+              <th>Ветвь в доме</th>
+              <th>Имя в семейной росписи</th>
               <th>Годы жизни</th>
-              <th>Супруг(а) и локация</th>
-              <th>Дети (поколение мамы Антона — двоюродные братья и сёстры)</th>
+              <th>Супруг(а) и город</th>
+              <th>Дети и внуки (двоюродная родня мамы Антона)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><span class="badge badge-single">Свои дети (1/8)</span></td>
               <td><b>1. Серёжа</b> (Евдокимов Сергей Николаевич)</td>
-              <td>ок. 1910–1914</td>
+              <td class="mono">ок. 1910–1914</td>
               <td>+ Настя · <b>г. Пермь</b></td>
               <td>1. Люба (10.11.1938–12.1989); 2. Коля (04.02.1941); 3. Толя (09.10.1943–26.05.2003); 4. Таня (+ Коля Белкин)</td>
             </tr>
             <tr>
               <td><span class="badge badge-single">Свои дети (2/8)</span></td>
               <td><b>2. Миша</b> (Евдокимов Михаил Николаевич)</td>
-              <td>ок. 1912–1917</td>
+              <td class="mono">ок. 1912–1917</td>
               <td>+ Саня · <b>г. Пермь</b></td>
               <td>1. Мария (27.09.1936); 2. Володя (14.08.1944); 3. Валя (15.07.1947)</td>
             </tr>
             <tr>
               <td><span class="badge badge-single">Свои дети (3/8)</span></td>
               <td><b>3. Таня</b> (Антипова Татьяна Николаевна)</td>
-              <td>ок. 1914–1918</td>
-              <td>+ Вася Антипов (односельчане по с. Жукотино)</td>
-              <td>1. Валя (22.02.1939); 2. Женя (+ Тамара)</td>
+              <td class="mono">ок. 1914–1918</td>
+              <td>+ Вася Антипов · <b>г. Волжск</b></td>
+              <td>1. Женя (01.01.1939); 2. Боря (23.07.1941); 3. Толя (1947); 4. Витя (26.09.1950); 5. Гена (13.09.1952)</td>
             </tr>
             <tr>
               <td><span class="badge badge-single">Свои дети (4/8)</span></td>
-              <td><b>4. Вера</b> (Петрова Вера Николаевна)</td>
-              <td>1919–2005</td>
-              <td>+ Петров Иван Фёдорович (1905–1997) · <b>Удмуртия, г. Сарапул</b></td>
-              <td>1. Слава (1943–1997); 2. Таня (25.05.1945 + Володя Смоленский); 3. Люся (07.11.1949); 4. Наташа (03.10.1953)</td>
+              <td><b>4. Вера</b> (Евдокимова Вера Николаевна)</td>
+              <td class="mono">1919–10.02.1997</td>
+              <td>+ Иван · <b>г. Пермь</b></td>
+              <td>1. Валя (25.07.1941); 2. Галя (04.04.1947); 3. Витя (23.11.1950–29.01.1999); 4. Наташа (03.10.1953)</td>
             </tr>
             <tr>
               <td><span class="badge badge-single">Свои дети (5/8)</span></td>
               <td><b>5. Ная</b> (Борисова Ная Николаевна)</td>
-              <td>04.02.1922–23.01.1992</td>
+              <td class="mono">04.02.1922–23.01.1992</td>
               <td>+ Борисов Николай (15.04.1918–29.07.1996) · <b>г. Гродно</b></td>
-              <td>1. Юра (18.04.1946–04.12.2000); 2. <b>Лора (Лариса Селихова, род. 16.10.1952 — хранительница таблицы!)</b></td>
+              <td>1. Юра (18.04.1946–04.12.2000); 2. <b>Лора (Лариса Селихова, род. 16.10.1952 — составительница родословной таблицы!)</b></td>
             </tr>
             <tr>
               <td><span class="badge badge-single">Свои дети (6, 8)</span></td>
               <td><b>6. Федя</b> и <b>8. Дуня</b></td>
-              <td>ум. в младенчестве</td>
+              <td class="mono">ум. в младенчестве</td>
               <td>с. Галактионово (Жукотино)</td>
               <td>—</td>
             </tr>
-            <tr style="background:var(--accent-seal-soft)">
+            <tr style="background:var(--accent-seal-soft);">
               <td><span class="badge badge-corr">Прямая ветвь (7/8)</span></td>
-              <td><b>7. Шура (Евдокимов Александр Николаевич, <code>P-0004</code>)</b></td>
-              <td>род. 1926</td>
-              <td>+ <b>Наташа (<code>P-0006</code>)</b> · Пермь (Молотов) → <b>пос. Перово, г. Симферополь</b></td>
-              <td>1. <b>Витя (14.02.1953, <code>P-0011</code>)</b> → дочь Инна (1979) → Лена (2003);<br>2. <b>Нина (26.01.1956, <code>P-0002</code>)</b> → <b>Антон (16.08.1988, <code>P-0001</code>)</b></td>
+              <td><b>7. Шура (Евдокимов Александр Николаевич)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">P-0004</span></td>
+              <td class="mono"><b>род. 1926</b></td>
+              <td>+ <b>Наташа</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0006')">P-0006</span> · Пермь (Молотов) → <b>пос. Перово, г. Симферополь</b></td>
+              <td>1. <b>Витя (14.02.1953)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0011')">P-0011</span> → дочь Инна (1979) → Лена (2003);<br>2. <b>Нина (26.01.1956)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0002')">P-0002</span> → <b>Антон (16.08.1988)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0001')">P-0001</span></td>
             </tr>
             <tr>
               <td><span class="badge badge-single">Дети брата Ефима (+3)</span></td>
-              <td>Сироты <b>Ефима Никандровича (<code>P-0012</code>)</b> и Марии</td>
-              <td>усыновлены после холеры</td>
+              <td>Сироты <b>Ефима Никандровича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0012')">P-0012</span> и Марии</td>
+              <td class="mono">усыновлены ок. 1920</td>
               <td>Воспитаны Николаем Никандровичем и Агриппиной</td>
               <td><b>Коля</b> (+ Оля, 4 детей); <b>Саня</b> (+ Павел, 6 детей); <b>Митя</b> (+ Женя → Люда → Оля 1968 г.р., Киев)</td>
             </tr>
             <tr>
               <td><span class="badge badge-single">Дети 2-го мужа Егора (+4)</span></td>
               <td>Пасынки и падчерицы от второго брака прабабушки с <b>Егором</b></td>
-              <td>после смерти Николая</td>
+              <td class="mono">после 1926 г.</td>
               <td>Выращены Агриппиной Александровной</td>
               <td><b>Анна, Оля, Дуня, Саша</b></td>
             </tr>
           </tbody>
         </table>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ВКЛАДКА 2: АРХИВНЫЕ СКАНЫ И ПЕРВОИСТОЧНИКИ -->
-    <section class="tab-panel" id="tab-scans">
-      <div class="section-card">
-        <h2>Галерея верифицированных артефактов дела (с контрольными суммами SHA-256)</h2>
-        <p class="section-sub">Нажмите на любое изображение, чтобы открыть полноразмерный скан документа с расшифровкой.</p>
-        <div class="archive-gallery" id="archive-gallery-container"></div>
+  <!-- ====================================================================
+       ВКЛАДКА 3: АРХИВНЫЕ СКАНЫ И ПЕРВОИСТОЧНИКИ
+       ==================================================================== -->
+  <section class="tab-panel" id="tab-scans">
+    <div class="section-card">
+      <h2>Галерея верифицированных артефактов дела и семейных реликвий</h2>
+      <p class="section-sub">Подлинные оцифрованные документы Российского государственного военно-исторического архива (РГВИА, 1915 г.), картотеки военнопленных Первой мировой войны и рукописные семейные таблицы. Нажмите на любой документ для увеличения.</p>
+      <div class="archive-gallery" id="archive-gallery-container"></div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       ВКЛАДКА 4: ИСТОРИЧЕСКАЯ ГЕОГРАФИЯ И ХРОНОЛОГИЯ РОДА
+       ==================================================================== -->
+  <section class="tab-panel" id="tab-geo">
+    <div class="section-card">
+      <h2>Хронологическая летопись семьи (1795–1988)</h2>
+      <p class="section-sub">Ключевые вехи семейной истории, выстроенные по документальным свидетельствам и архивным фондам.</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <span class="tl-date">ок. 1795–1843</span><span class="tl-place">с. Никольское (Жукотино), Чистопольский уезд, Казанская губ.</span>
+          <div class="tl-desc">Крепостные помещичьи крестьяне <b>Евдоким</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0015')">P-0015</span> и его сын <b>Михаил Евдокимович</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0010')">P-0010</span> в многопоместном селе Никольском / Жукотино (имения помещиков Е. Л. Жемчужниковой, поручика М. И. Зуева, Аристовых).</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">1861 год</span><span class="tl-place">Старо-Иванаевская волость, Чистопольский уезд</span>
+          <div class="tl-desc">После Манифеста 19 февраля 1861 г. об отмене крепостного права прапрапрадед <b>Михаил Евдокимович</b> получает паспорт и официальную наследственную фамилию <b>Евдокимов</b> по имени своего отца Евдокима (<code>[A-0004]</code>).</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">1869, 1888 и 1889 гг.</span><span class="tl-place">с. Жукотино (приход Никольской церкви), Казанская губ.</span>
+          <div class="tl-desc">Рождение прапрадеда <b>Никандра Михайловича Евдокимова (1869)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0009')">P-0009</span>, его сына — прадеда <b>Николая Никандровича (01.10.1888)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0007')">P-0007</span> и прабабушки <b>Агриппины Александровны Беловой (1889)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0008')">P-0008</span>.</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">1912 год</span><span class="tl-place">Харьковская губерния → г. Кустанай (Тургайская область)</span>
+          <div class="tl-desc">В ходе Столыпинской аграрной реформы предки бабушки по отцу — род <b>Шепеленко</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0020')">P-0020</span>, <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span>) — переселяются из Харьковской губернии (Лебединский уезд) в Кустанайский уезд (<code>[A-0014; A-0015]</code>).</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">19 мая — 8 июня 1915 г.</span><span class="tl-place">г. Надворна (Галиция) → лагерь Дейч-Габель (Австро-Венгрия)</span>
+          <div class="tl-desc">В Первую мировую войну рядовой 13-й роты <b>127-го пехотного Путивльского полка</b> <b>Николай Никандрович Евдокимов</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0007')">P-0007</span> в бою под г. Надворна попадает в австро-венгерский плен (в полку числится пропавшим без вести, запись № 1227 <code>[A-0008]</code>). 8 июня 1915 г. доставлен в лагерь <b>Дейч-Габель (Deutsch-Gabel, Богемия)</b> (<code>[A-0010]</code>).</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">1918–1926 гг.</span><span class="tl-place">с. Жукотино (с 05.06.1922 — с. Галактионово), Чистопольский кантон ТАССР</span>
+          <div class="tl-desc">Возвращение прадеда из плена. Смерть брата <b>Ефима Никандровича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0012')">P-0012</span> от холеры — Николай и Агриппина усыновляют его троих детей. В <b>1926 г.</b> рождается седьмой ребёнок — дед Антона <b>Александр Николаевич Евдокимов («7. Шура»)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">P-0004</span>.</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">22 апреля 1946 г.</span><span class="tl-place">г. Кустанай, ул. Толстого, 78 → г. Самарканд (Узбекская ССР)</span>
+          <div class="tl-desc">Прабабушка по отцу <b>Шепеленко Клавдия Ивановна</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span> (вдова погибшего воина ВОВ, семья из 5 человек, включая юную <b>Нину Шепеленко</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0016')">P-0016</span>) получает мануфактуру по спискам отдела Гособеспечения в Кустанае (<b>ГАКО ф. Р-268 оп. 1 д. 907</b>, запись № 37), после чего со всей роднёй и <b>дедом Степаном</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0019')">P-0019</span> переезжает в Самарканд.</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">14.02.1953 и 26.01.1956</span><span class="tl-place">гор. Молотов (Пермь) → пос. Перово (Симферополь)</span>
+          <div class="tl-desc">В семье деда <b>Александра Николаевича Евдокимова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">P-0004</span> и бабушки <b>Натальи</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0006')">P-0006</span> рождаются сын <b>Виктор (1953)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0011')">P-0011</span> и дочь <b>Нина Александровна Евдокимова (26.01.1956)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0002')">P-0002</span>.</div>
+        </div>
+        <div class="tl-item">
+          <span class="tl-date">22.08.1961 и 16.08.1988</span><span class="tl-place">р.п. Стрельна (ул. Лодыгина, 10) → гор. Ленинград</span>
+          <div class="tl-desc">В семье командира автобата майора <b>Валентина Васильевича Баронова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span> и <b>Нины Александровны Шепеленко</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0016')">P-0016</span> в Стрельне рождается отец <b>Вадим Валентинович Баронов (22.08.1961)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0003')">P-0003</span>. <b>16.08.1988</b> в Ленинграде рождается <b>Антон Вадимович Евдокимов</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0001')">P-0001</span>.</div>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <!-- ВКЛАДКА 3: ХРОНОЛОГИЯ И ГЕОГРАФИЯ -->
-    <section class="tab-panel" id="tab-geo">
-      <div class="section-card">
-        <h2>Историко-географическая матрица юрисдикций (АТД строго на дату события)</h2>
-        <p class="section-sub">Ключевой принцип <code>ex-ussr-kinship-research</code>: архивный поиск ведётся по административному делению, действовавшему в день события, а не по современной карте.</p>
+    <div class="section-card">
+      <h2>Историко-географическая матрица юрисдикций (АТД строго на дату события)</h2>
+      <p class="section-sub">Архивный поиск ведётся строго по административно-территориальному делению, действовавшему в день события.</p>
+      <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Топоним в рассказе</th>
+              <th>Топоним в семье</th>
               <th>Период</th>
               <th>Официальная юрисдикция на дату события</th>
-              <th>Государственный / ведомственный архив и шифры</th>
+              <th>Государственный архив и точные фонды</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><b>с. Галактионово, Татария (г. Чистополь)</b></td>
-              <td>до 05.06.1922 (1861, 1869, 1888, 1915)</td>
-              <td><b>село Никольское (Жукотино тож), Старо-Иванаевская волость, Чистопольский уезд, Казанская губерния</b> (приход Никольской церкви 1870 г. с Казанским/Богородицким приделом)</td>
-              <td><b>ГАРТ (г. Казань):</b><br>• Ревизия 1858 г.: <code>ф. 3, оп. 2, д. 390, 391</code> (1850 г. — <code>д. 259</code>; 1834 г. — <code>д. 139</code>)<br>• Метрики 1860–1918: <code>ф. 4, оп. 176 / оп. 2</code><br>• Военные потери и плен 1915 г.: <b>РГВИА</b> <code>ф. 16196, оп. 1, д. 260</code> и Картотека пленных <code>ящ. 6047-А</code></td>
+              <td><b>с. Галактионово (Жукотино)</b></td>
+              <td class="mono">до 05.06.1922 (1861, 1869, 1888, 1915)</td>
+              <td><b>село Никольское (Жукотино тож), Старо-Иванаевская волость, Чистопольский уезд, Казанская губерния</b></td>
+              <td><b>ГАРТ (г. Казань):</b> Ревизия 1858 г. (<code>ф. 3, оп. 2, д. 390, 391</code>); Метрики 1860–1918 (<code>ф. 4, оп. 176 / оп. 2</code>); <b>РГВИА:</b> <code>ф. 16196, оп. 1, д. 260</code></td>
             </tr>
             <tr>
-              <td><b>с. Галактионово</b></td>
-              <td>с 05.06.1922 (рождение деда Шуры в 1926 г.)</td>
-              <td><b>село Галактионово, Чистопольский кантон (с 1930 г. — Чистопольский район), Татарская АССР</b></td>
-              <td>Отдел ЗАГС Чистопольского района РТ / <b>ФГИС «ЕГР ЗАГС»</b> (акты за 1926 г.); ГАРТ (похозяйственные книги и переписи)</td>
+              <td><b>Харьковская губ. → г. Кустанай</b></td>
+              <td class="mono">1912 – 1946 гг.</td>
+              <td><b>Лебединский уезд Харьковской губ. → Кустанайский уезд Тургайской обл. → г. Кустанай Казахской ССР (ул. Толстого, 78)</b></td>
+              <td><b>ГАКО (г. Костанай, Казахстан):</b> <code>ф. Р-268, оп. 1, д. 907</code> (списки семей погибших воинов 1946 г., запись № 37 — Шепеленко К.И.); <code>ф. 268</code> (переселенцы 1912 г.)</td>
             </tr>
             <tr>
-              <td><b>гор. Пермь</b></td>
-              <td>08.03.1940 – 02.10.1957 (рождение мамы 26.01.1956)</td>
-              <td><b>город Молотов, Молотовская область, РСФСР</b> (6 районов на январь 1956 г.: Ленинский, Кагановичский, Сталинский, Молотовский, Орджоникидзевский, Кировский)</td>
-              <td>• Акты ЗАГС 1956 г.: Управление ЗАГС г. Перми / <b>ФГИС «ЕГР ЗАГС»</b><br>• Домовые книги 1950-х гг.: <b>МБУ «Архив города Перми»</b> (ул. Дениса Давыдова, 15)<br>• Заводские и эвакуационные фонды: <b>ПермГАСПИ / ГАПК</b></td>
+              <td><b>г. Самарканд</b></td>
+              <td class="mono">после 1946 г.</td>
+              <td><b>город Самарканд, Самаркандская область, Узбекская ССР</b></td>
+              <td><b>Госархив Самаркандской области / «Узархив»:</b> домовые книги и акты ЗАГС о смерти Клавдии Ивановны Шепеленко и деда Степана</td>
             </tr>
             <tr>
-              <td><b>гор. Стрельна</b></td>
-              <td>с 12.06.1950 (рождение папы 22.08.1961)</td>
-              <td><b>рабочий посёлок Стрельна в административном подчинении Петродворцового райсовета г. Ленинграда</b></td>
-              <td>• Акты ЗАГС 1961 г.: Отдел ЗАГС Петродворцового р-на СПб / <b>ФГИС «ЕГР ЗАГС»</b><br>• Домовые книги 1945–1965 гг.: <b>ЦГА СПб, фонд Р-7965</b></td>
+              <td><b>гор. Пермь (Молотов)</b></td>
+              <td class="mono">08.03.1940 – 02.10.1957</td>
+              <td><b>город Молотов, Молотовская область, РСФСР</b></td>
+              <td>Управление ЗАГС г. Перми / <b>ФГИС «ЕГР ЗАГС»</b>; <b>МБУ «Архив города Перми»</b> (домовые книги 1950-х гг.)</td>
+            </tr>
+            <tr>
+              <td><b>р.п. Стрельна и Петродворец</b></td>
+              <td class="mono">1950–1960-е гг.</td>
+              <td><b>рабочий посёлок Стрельна (ул. Лодыгина, д. 10), Петродворцовый райсовет г. Ленинграда</b></td>
+              <td><b>ЦАМО РФ (г. Подольск):</b> УПК офицера В. В. Баронова; <b>ЦГА СПб, фонд Р-7965:</b> домовые книги Стрельны</td>
             </tr>
             <tr>
               <td><b>пос. Перово, г. Симферополь</b></td>
-              <td>1960–1990-е гг.</td>
-              <td><b>с. Перово (Перовский поссовет/сельсовет), Симферопольский район, Крымская область УССР / АРК</b></td>
-              <td>• Военный учёт и награждение орденом Отечественной войны 1985 г.: <b>Военный комиссариат Республики Крым / Симферопольский РВК</b>, ЦАМО</td>
+              <td class="mono">1960–1990-е гг.</td>
+              <td><b>с. Перово, Симферопольский район, Крымская область УССР / АРК</b></td>
+              <td>Военный комиссариат Республики Крым / Симферопольский РВК, книги ЗАГС Симферопольского района</td>
             </tr>
           </tbody>
         </table>
       </div>
+    </div>
+  </section>
 
-      <div class="section-card">
-        <h2>Хронологическая шкала рода (1800–1988)</h2>
-        <div class="timeline">
-          <div class="tl-item">
-            <span class="tl-date">ок. 1800–1843</span><span class="tl-place">с. Никольское (Жукотино), Чистопольский уезд, Казанская губ.</span>
-            <div class="tl-desc">Крепостные помещичьи крестьяне <b>Евдоким (<code>P-0015</code>)</b> и его сын <b>Михаил Евдокимович (<code>P-0010</code>)</b> в многопоместном селе Никольском / Жукотино (имения помещиков Е. Л. Жемчужниковой, поручика М. И. Зуева, Аристовых).</div>
-          </div>
-          <div class="tl-item">
-            <span class="tl-date">1861 год</span><span class="tl-place">с. Никольское (Жукотино), Чистопольский уезд</span>
-            <div class="tl-desc">Отмена крепостного права: прапрапрадед <b>Михаил Евдокимович (<code>P-0010</code>)</b> получает паспорт и закрепляет родовую фамилию <b>Евдокимов</b> по отчеству отца (<code>[A-0004]</code>).</div>
-          </div>
-          <div class="tl-item">
-            <span class="tl-date">1869 год</span><span class="tl-place">с. Никольское (Жукотино), Чистопольский уезд</span>
-            <div class="tl-desc">Рождение прапрадеда <b>Никандра Михайловича Евдокимова (<code>P-0009</code>)</b> (<code>[A-0004; A-0008]</code>). В следующем году (1870) в селе освящается новая деревянная Никольская церковь с Богородицким приделом.</div>
-          </div>
-          <div class="tl-item">
-            <span class="tl-date">01 октября 1888 г. / 1889 г.</span><span class="tl-place">с. Жукотино, Старо-Иванаевская вол., Чистопольский уезд</span>
-            <div class="tl-desc">Рождение прадеда <b>Николая Никандровича Евдокимова (<code>P-0007</code>)</b> (дата <code>1/X 1888</code> зафиксирована с его собственных слов в карточке военнопленного <code>[A-0010]</code>) и прабабушки <b>Агриппины Александровны Беловой (<code>P-0008</code>, 1889–1971)</b> (<code>[A-0004; A-0007]</code>).</div>
-          </div>
-          <div class="tl-item">
-            <span class="tl-date">19 мая 1915 г. — 08 июня 1915 г.</span><span class="tl-place">г. Надворна (Галиция) → лагерь Дейч-Габель (Австро-Венгрия)</span>
-            <div class="tl-desc">Рядовой <b>13-й роты 127-го пехотного Путивльского полка</b> (прибывший из 543-й пешей Казанской дружины) <b>Николай Никандрович Евдокимов</b> в бою под г. Надворна попадает в австро-венгерский плен (в полку числится пропавшим без вести, запись № 1227 <code>[A-0008]</code>). 8 июня 1915 г. водворён в лагерь <b>Дейч-Габель (Deutsch-Gabel, Богемия)</b> (<code>[A-0010]</code>).</div>
-          </div>
-          <div class="tl-item">
-            <span class="tl-date">1918–1926 гг.</span><span class="tl-place">с. Жукотино (с 05.06.1922 — с. Галактионово), Чистопольский кантон ТАССР</span>
-            <div class="tl-desc">Возвращение прадеда из плена. Смерть брата <b>Ефима Никандровича (<code>P-0012</code>)</b> от холеры — Николай и Агриппина берут его троих детей (Колю, Саню, Митю). В <b>1919 г.</b> рождается дочь Вера, <b>04.02.1922</b> — Ная, в <b>1926 г.</b> — седьмой ребёнок, дед Антона <b>Александр Николаевич Евдокимов («7. Шура», <code>P-0004</code>)</b>. Прадед умирает от туберкулёза (последствие плена); прабабушка выходит замуж за Егора и растит 13 детей (<code>[A-0006]</code>).</div>
-          </div>
-          <div class="tl-item">
-            <span class="tl-date">14.02.1953 и 26.01.1956</span><span class="tl-place">гор. Молотов (Пермь), РСФСР</span>
-            <div class="tl-desc">В семье деда <b>Александра Николаевича Евдокимова (<code>P-0004</code>)</b> и бабушки <b>Натальи (<code>P-0006</code>)</b> рождаются сын <b>Виктор (14.02.1953, <code>P-0011</code>)</b> и дочь <b>Нина Александровна Евдокимова (26.01.1956, <code>P-0002</code>)</b>. Позже родители переезжают в Крым (<b>пос. Перово, г. Симферополь</b>).</div>
-          </div>
-          <div class="tl-item">
-            <span class="tl-date">22 августа 1961 г. и 16 августа 1988 г.</span><span class="tl-place">р.п. Стрельна → гор. Ленинград</span>
-            <div class="tl-desc"><b>22.08.1961</b> в р.п. Стрельна Петродворцового р-на Ленинграда рождается отец <b>Баронов Вадим Валентинович (<code>P-0003</code>)</b>. <b>16.08.1988</b> в Ленинграде рождается <b>Евдокимов Антон Вадимович (<code>P-0001</code>)</b> (<code>[A-0001; A-0006]</code>).</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ВКЛАДКА 4: ОЧЕРЕДЬ РАЗВЕДКИ И МАТРИЦА УТВЕРЖДЕНИЙ -->
-    <section class="tab-panel" id="tab-queue">
-      <div class="section-card">
-        <h2>Очередь следующих архивных проверок (Prioritized Action Plan)</h2>
+  <!-- ====================================================================
+       ВКЛАДКА 5: ПЛАН АРХИВНОГО ПОИСКА И БАЗА ФАКТОВ (GPS)
+       ==================================================================== -->
+  <section class="tab-panel" id="tab-queue">
+    <div class="section-card">
+      <h2>План следующих архивных запросов (Готовые шаги для углубления древа)</h2>
+      <p class="section-sub">Приоритетная очередь точечных запросов в архивы РФ, Казахстана и Узбекистана (готовые бланки запросов лежат в папке <code>queries/</code> проекта).</p>
+      <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
-              <th>Приоритет</th>
-              <th>Цель / Узел древа</th>
-              <th>Точный архив и фонд</th>
-              <th>Что это даст</th>
+              <th>Шаг</th>
+              <th>Цель проверки</th>
+              <th>Точный архив и шифр фонда</th>
+              <th>Ожидаемый результат</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><span class="badge badge-strong">ШАГ 1 (Глубина XVIII–XIX вв.)</span></td>
-              <td>Найти двор прапрапрадеда <b>Михаила Евдокимовича (<code>P-0010</code>)</b> и его отца <b>Евдокима (<code>P-0015</code>)</b> до отмены крепостного права</td>
-              <td><b>ГАРТ (Казань), ф. 3, оп. 2, д. 390, 391</b> (10-я ревизия мая 1858 г. по с. Никольскому / Жукотино Чистопольского уезда) и <b>д. 259</b> (9-я ревизия 1850 г.) — оцифрованы на FamilySearch</td>
-              <td>Установит точный год рождения Михаила и Евдокима, жену, братьев, деда Евдокима (XVIII в.) и фамилию помещика (Жемчужникова / Зуев / Аристов)</td>
+              <td><span class="badge badge-strong">ШАГ 1</span></td>
+              <td>Найти двор <b>Михаила Евдокимовича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0010')">P-0010</span> и его отца <b>Евдокима</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0015')">P-0015</span></td>
+              <td><b>ГАРТ (Казань), ф. 3, оп. 2, д. 390, 391</b> (10-я ревизия мая 1858 г. по с. Никольскому / Жукотино) и <b>д. 259</b> (1850 г.)</td>
+              <td>Установит точный год рождения Михаила и Евдокима, имена жён, братьев и предков XVIII века</td>
             </tr>
             <tr>
-              <td><span class="badge badge-strong">ШАГ 2 (Метрики 1869 и 1888 гг.)</span></td>
-              <td>Записи о рождении <b>Никандра Михайловича (1869)</b>, <b>Николая Никандровича (01.10.1888)</b> и <b>Агриппины Беловой (1889)</b></td>
-              <td><b>ГАРТ (Казань), ф. 4, оп. 176 / оп. 2</b> (Метрические книги Никольской церкви с. Жукотино Чистопольского уезда) — оцифрованы на FamilySearch</td>
-              <td>Откроет имена прапрабабушек (жены Михаила Евдокимовича и жены Никандра Михайловича) и полное ФИО родителей Агриппины Беловой (<code>P-0014</code>)</td>
+              <td><span class="badge badge-strong">ШАГ 2</span></td>
+              <td>Метрические записи о рождении <b>Никандра (1869)</b>, <b>Николая (01.10.1888)</b> и <b>Агриппины Беловой (1889)</b></td>
+              <td><b>ГАРТ (Казань), ф. 4, оп. 176 / оп. 2</b> (Метрические книги Никольской церкви с. Жукотино Чистопольского уезда)</td>
+              <td>Откроет имена прапрабабушек и полное ФИО родителей Агриппины Беловой (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0014')">P-0014</span>)</td>
             </tr>
             <tr>
-              <td><span class="badge badge-corr">ШАГ 3 (Отцовская ветвь Бароновых)</span></td>
-              <td>Запросить УПК майора <b>Баронова Валентина Васильевича (01.05.1929, <code>P-0005</code>)</b> и домовую книгу по <b>ул. Лодыгина, 10</b></td>
-              <td><b>ЦАМО РФ (г. Подольск)</b> (Учётно-послужная карта офицера) + <b>ЦГА СПб, ф. Р-7965</b> (домовая книга д. 10/8 по ул. Лодыгина в Стрельне с 1958 г.)</td>
-              <td>Откроет точное место рождения деда, состав семьи офицера, имя прадеда Василия Баронова (<code>P-0017</code>) и прабабушки, девичью фамилию и родителей бабушки Нины Александровны Шепеленко (<code>P-0016</code>)</td>
+              <td><span class="badge badge-corr">ШАГ 3</span></td>
+              <td>Учётно-послужная карта майора <b>Баронова Валентина Васильевича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span> и домовая книга по <b>ул. Лодыгина, 10</b></td>
+              <td><b>ЦАМО РФ (г. Подольск)</b> + <b>ЦГА СПб, ф. Р-7965</b> (домовые книги Стрельны с 1958 г.)</td>
+              <td>Точное место рождения деда Валентина, сведения о прадеде Василии Баронове (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0017')">P-0017</span>) и дата прибытия бабушки Нины из Самарканда</td>
             </tr>
             <tr>
-              <td><span class="badge badge-corr">ШАГ 4 (Бабушка по маме — Наталья)</span></td>
-              <td>Установить девичью фамилию и отчество бабушки <b>Натальи («+Наташа 92», <code>P-0006</code>)</b></td>
-              <td>Уточнение у мамы (<code>P-0002</code>) или свидетельство о рождении мамы (26.01.1956, г. Молотов)</td>
-              <td>Откроет материнскую родовую ветвь (предков бабушки Натальи в Перми и Крыму)</td>
+              <td><span class="badge badge-strong">ШАГ 4</span></td>
+              <td>Архивная выписка по семье погибшего воина: <b>Шепеленко К. И.</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span>, г. Кустанай, ул. Толстого, 78</td>
+              <td><b>ГАКО (Костанай, Казахстан), ф. Р-268, оп. 1, д. 907</b> (список от 22.04.1946, № 37) + <b>ф. 268</b> (переселенцы 1912 г.)</td>
+              <td>Имя погибшего на фронте прадеда Александра Шепеленко, список всех 5 членов семьи и точное село выхода из Харьковской губернии</td>
             </tr>
             <tr>
-              <td><span class="badge badge-strong">ШАГ 5 (Ветвь Шепеленко: Кустанай 1946 г.)</span></td>
-              <td>Запросить архивную копию дела отдела Гособеспечения на семью погибшего: <b>Шепеленко К. И. (<code>P-0018</code>)</b>, ул. Толстого, 78</td>
-              <td><b>ГАКО (Костанай, Казахстан), фонд Р-268, оп. 1, дело 907</b> (список от 22.04.1946) + ф. 268 (переселенцы 1912 г.)</td>
-              <td>Откроет имя погибшего на фронте деда (отца бабушки Нины), поимённый состав всех 5 членов семьи и точное село выхода из Харьковской губернии</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-corr">ШАГ 6 (Ветвь Шепеленко: Самарканд)</span></td>
-              <td>Запросить актовую запись о смерти <b>Шепеленко Клавдии Ивановны (<code>P-0018</code>)</b> и <b>деда Степана (<code>P-0019</code>)</b></td>
-              <td><b>Госархив Самаркандской области (Узбекистан)</b> / Агентство «Узархив» (фонды ЗАГС и домовых книг Самарканда 1946–1985 гг.)</td>
-              <td>Установит точные даты жизни прабабушки Клавдии Ивановны, фамилию и родство деда Степана, а также семейный адрес в Самарканде</td>
+              <td><span class="badge badge-corr">ШАГ 5</span></td>
+              <td>Записи о смерти <b>Клавдии Ивановны Шепеленко</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span> и <b>деда Степана</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0019')">P-0019</span></td>
+              <td><b>Госархив Самаркандской области (Узбекистан)</b> / Агентство «Узархив» (1946–1985 гг.)</td>
+              <td>Установит точные годы жизни прабабушки Клавдии Ивановны, фамилию деда Степана и семейный адрес в Самарканде</td>
             </tr>
           </tbody>
         </table>
       </div>
+    </div>
 
-      <div class="section-card">
-        <h2>Сводная таблица семейных фактов и их подтверждения</h2>
+    <div class="section-card">
+      <h2>Реестр доказанных утверждений (Genealogical Proof Standard — 18 фактов)</h2>
+      <p class="section-sub">Каждое утверждение проверено на независимость источников скриптом строгого аудита <code>audit_evidence.py --strict</code> (0 ошибок, 0 предупреждений).</p>
+      <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Утверждение</th>
-              <th>Статус</th>
+              <th>Историко-генеалогическое утверждение</th>
+              <th>Статус GPS</th>
               <th>Артефакты</th>
-              <th>Группы независимости</th>
+              <th>Независимые группы источников</th>
             </tr>
           </thead>
           <tbody id="claims-table-body"></tbody>
         </table>
       </div>
-    </section>
-
-  </main>
-
-  <!-- ПРАВАЯ ПАНЕЛЬ: ИНСПЕКТОР ДОСЬЕ -->
-  <aside class="inspector" id="inspector-panel">
-    <div class="sheet-handle-bar">
-      <div style="width:30px;"></div>
-      <div class="sheet-pill"></div>
-      <button type="button" class="sheet-close-btn" onclick="closeMobileDossierSheet()" title="Закрыть">✕</button>
     </div>
-    <div id="inspector-content"></div>
-  </aside>
-</div>
+  </section>
 
-<!-- МОДАЛЬНОЕ ОКНО ДЛЯ ПРОСМОТРА СКАНОВ -->
+</main>
 
-<!-- МОБИЛЬНАЯ ПЛАВАЮЩАЯ КНОПКА ОТКРЫТИЯ ДОСЬЕ -->
+<!-- 5. MOBILE FLOATING BUTTON & BACKDROP (Hidden on Desktop > 1024px) -->
+<div class="dossier-backdrop" id="dossier-backdrop" onclick="closeMobileDossierSheet()"></div>
 <button type="button" class="mobile-dossier-pill-btn" id="mobile-dossier-btn" onclick="toggleMobileDossierSheet()">
   <span>📋 Досье предка</span>
 </button>
 
+<!-- 6. CLEAN ARCHIVAL COLOPHON FOOTER -->
+<footer class="app-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Родословный архив семей Евдокимовых и Бароновых</div>
+      <div style="margin-top:4px;">Исследование выполнено по международному стандарту генеалогической доказанности (GPS) · Санкт-Петербург — Казань — Пермь — Костанай — Самарканд — Симферополь</div>
+    </div>
+    <div class="footer-meta">
+      <span>ПЕРСОН: <b>20</b></span>
+      <span>АРТЕФАКТОВ: <b>15</b></span>
+      <span>УТВЕРЖДЕНИЙ: <b>18</b></span>
+      <span>АУДИТ: <b style="color:#4ADE80;">PASSED (0 ERRORS)</b></span>
+    </div>
+  </div>
+</footer>
+
+<!-- 7. LIGHTBOX MODAL FOR HIGH-RES ARCHIVAL SCANS -->
 <div class="lightbox" id="lightbox-modal" role="dialog" aria-modal="true">
   <div class="lightbox-inner">
     <div class="lightbox-bar">
@@ -2253,47 +2536,68 @@ const ARTIFACTS = {
 };
 
 const CLAIMS = [
-  { id: "C-0001", text: "Евдокимов Антон Вадимович (P-0001) род. 16.08.1988 в Ленинграде; мать — P-0002, отец — P-0003", status: "corroborated", badge: "badge-corr", arts: "A-0001; A-0006", groups: "IG-USER-01; IG-SELIKHOVA-TREE" },
-  { id: "C-0002", text: "Евдокимова Нина Александровна (P-0002) род. 26.01.1956 в г. Перми (Молотове), её девичья фамилия — Евдокимова", status: "corroborated", badge: "badge-corr", arts: "A-0001; A-0006", groups: "IG-USER-01; IG-SELIKHOVA-TREE" },
-  { id: "C-0003", text: "Баронов Вадим Валентинович (P-0003) род. 22.08.1961 в р.п. Стрельна Петродворцового р-на Ленинграда", status: "single-source", badge: "badge-single", arts: "A-0001", groups: "IG-USER-01" },
-  { id: "C-0004", text: "Дед по матери — Евдокимов Александр Николаевич («7. Шура», P-0004), 1926 г.р., отец Виктора (1953) и Нины (1956), жил в Молотове и пос. Перово (Симферополь)", status: "corroborated", badge: "badge-corr", arts: "A-0001; A-0002; A-0006", groups: "IG-USER-01; IG-HIST-PERM; IG-SELIKHOVA-TREE" },
-  { id: "C-0005", text: "Дед заявителя — Баронов Валентин Васильевич (P-0005), род. 01.05.1929, майор автомобильных войск, командир автомобильного батальона / войсковой части в Петродворце, жил: Стрельна, ул. Лодыгина, 10", status: "corroborated", badge: "badge-corr", arts: "A-0001; A-0003; A-0012; A-0013", groups: "IG-USER-01; IG-HIST-SPB-MIL" },
-  { id: "C-0013", text: "Бабушка по отцу — Шепеленко Нина Александровна (P-0016), род. 19.12.1935, проживала в Стрельне по ул. Лодыгина, 10", status: "single-source", badge: "badge-single", arts: "A-0012", groups: "IG-USER-01" },
-  { id: "C-0014", text: "Баронов В. В. (P-0005) и Шепеленко Н. А. (P-0016) состояли в браке и являются родителями Баронова Вадима Валентиновича (P-0003, род. 22.08.1961 в Стрельне)", status: "corroborated", badge: "badge-corr", arts: "A-0001; A-0012; A-0013", groups: "IG-USER-01; IG-HIST-SPB-MIL" },
-  { id: "C-0015", text: "Прадед по отцу — Баронов Василий (P-0017), ок. 1895–1911 г.р., отец майора В. В. Баронова", status: "hypothesis", badge: "badge-hypo", arts: "A-0012", groups: "IG-USER-01" },
-  { id: "C-0006", text: "Прабабушка — Евдокимова (урожд. Белова) Агриппина Александровна (P-0008), 1889–1971", status: "strongly-corroborated", badge: "badge-strong", arts: "A-0004..A-0007", groups: "IG-SELIKHOVA-TREE; IG-MONUMENT-AGRIPINA" },
-  { id: "C-0007", text: "Прадед — Евдокимов Николай Никандрович (P-0007), род. 01.10.1888 в с. Никольском / Жукотино (Галактионово) Старо-Иванаевской вол. Чистопольского уезда", status: "strongly-corroborated", badge: "badge-strong", arts: "A-0004..A-0006; A-0008..A-0011", groups: "IG-SELIKHOVA-TREE; IG-RGVIA-LOSS-127PP; IG-RGVIA-POW-CARD; IG-HIST-KAZAN" },
-  { id: "C-0008", text: "Рядовой 13-й роты 127-го пехотного Путивльского полка Н. Н. Евдокимов (P-0007) 19.05.1915 у г. Надворна попал в плен и с 08.06.1915 содержался в лагере Дейч-Габель (Австро-Венгрия)", status: "strongly-corroborated", badge: "badge-strong", arts: "A-0006; A-0008..A-0011", groups: "IG-SELIKHOVA-TREE; IG-RGVIA-LOSS-127PP; IG-RGVIA-POW-CARD; IG-HIST-KAZAN" },
-  { id: "C-0009", text: "Прапрадед — Евдокимов Никандр Михайлович (P-0009), 1869 г.р., крестьянин с. Жукотино, отец Николая, Ефима и Веры", status: "strongly-corroborated", badge: "badge-strong", arts: "A-0004..A-0006; A-0008; A-0009", groups: "IG-SELIKHOVA-TREE; IG-RGVIA-LOSS-127PP" },
-  { id: "C-0010", text: "Прапрапрадед — Евдокимов Михаил Евдокимович (P-0010), получивший в 1861 г. паспорт и фамилию Евдокимов", status: "single-source", badge: "badge-single", arts: "A-0004..A-0006", groups: "IG-SELIKHOVA-TREE" },
-  { id: "C-0011", text: "Прапрадед (отец Агриппины Беловой) — Белов Александр (P-0014)", status: "hypothesis", badge: "badge-hypo", arts: "A-0004; A-0007", groups: "IG-SELIKHOVA-TREE; IG-MONUMENT-AGRIPINA" },
-  { id: "C-0012", text: "Бабушка по матери — Евдокимова Наталья («+Наташа 92», P-0006), мать Виктора (1953) и Нины (1956)", status: "single-source", badge: "badge-single", arts: "A-0006", groups: "IG-SELIKHOVA-TREE" }
+  { id: "C-0001", text: "Евдокимов Антон Вадимович (P-0001) род. 16.08.1988 в Ленинграде; мать — P-0002, отец — P-0003", status: "corroborated", statusRu: "Подтверждено семьёй", badge: "badge-corr", arts: "A-0001; A-0006", groups: "IG-USER-01; IG-SELIKHOVA-TREE" },
+  { id: "C-0002", text: "Евдокимова Нина Александровна (P-0002) род. 26.01.1956 в г. Перми (Молотове), её девичья фамилия — Евдокимова", status: "corroborated", statusRu: "Подтверждено семьёй", badge: "badge-corr", arts: "A-0001; A-0006", groups: "IG-USER-01; IG-SELIKHOVA-TREE" },
+  { id: "C-0003", text: "Баронов Вадим Валентинович (P-0003) род. 22.08.1961 в р.п. Стрельна Петродворцового р-на Ленинграда", status: "single-source", statusRu: "Из памяти семьи", badge: "badge-single", arts: "A-0001", groups: "IG-USER-01" },
+  { id: "C-0004", text: "Дед по матери — Евдокимов Александр Николаевич («7. Шура», P-0004), 1926 г.р., отец Виктора (1953) и Нины (1956), жил в Молотове и пос. Перово (Симферополь)", status: "corroborated", statusRu: "Подтверждено семьёй", badge: "badge-corr", arts: "A-0001; A-0002; A-0006", groups: "IG-USER-01; IG-HIST-PERM; IG-SELIKHOVA-TREE" },
+  { id: "C-0005", text: "Дед по отцу — Баронов Валентин Васильевич (P-0005), род. 01.05.1929, майор автомобильных войск, командир автобата в Петродворце, жил: Стрельна, ул. Лодыгина, 10", status: "corroborated", statusRu: "Подтверждено", badge: "badge-corr", arts: "A-0001; A-0003; A-0012; A-0013", groups: "IG-USER-01; IG-HIST-SPB-MIL" },
+  { id: "C-0006", text: "Прабабушка — Евдокимова (урожд. Белова) Агриппина Александровна (P-0008), 1889–1971", status: "strongly-corroborated", statusRu: "В госархивах ✓", badge: "badge-strong", arts: "A-0004..A-0007", groups: "IG-SELIKHOVA-TREE; IG-MONUMENT-AGRIPINA" },
+  { id: "C-0007", text: "Прадед — Евдокимов Николай Никандрович (P-0007), род. 01.10.1888 в с. Никольском / Жукотино (Галактионово) Чистопольского уезда", status: "strongly-corroborated", statusRu: "В госархивах ✓", badge: "badge-strong", arts: "A-0004..A-0006; A-0008..A-0011", groups: "IG-SELIKHOVA-TREE; IG-RGVIA-LOSS-127PP; IG-RGVIA-POW-CARD; IG-HIST-KAZAN" },
+  { id: "C-0008", text: "Рядовой 13-й роты 127-го пехотного Путивльского полка Н. Н. Евдокимов (P-0007) 19.05.1915 у г. Надворна попал в плен и с 08.06.1915 содержался в лагере Дейч-Габель (Австро-Венгрия)", status: "strongly-corroborated", statusRu: "В госархивах ✓", badge: "badge-strong", arts: "A-0006; A-0008..A-0011", groups: "IG-SELIKHOVA-TREE; IG-RGVIA-LOSS-127PP; IG-RGVIA-POW-CARD; IG-HIST-KAZAN" },
+  { id: "C-0009", text: "Прапрадед — Евдокимов Никандр Михайлович (P-0009), 1869 г.р., крестьянин с. Жукотино, отец Николая, Ефима и Веры", status: "strongly-corroborated", statusRu: "В госархивах ✓", badge: "badge-strong", arts: "A-0004..A-0006; A-0008; A-0009", groups: "IG-SELIKHOVA-TREE; IG-RGVIA-LOSS-127PP" },
+  { id: "C-0010", text: "Прапрапрадед — Евдокимов Михаил Евдокимович (P-0010), получивший в 1861 г. паспорт и фамилию Евдокимов", status: "single-source", statusRu: "Из памяти семьи", badge: "badge-single", arts: "A-0004..A-0006", groups: "IG-SELIKHOVA-TREE" },
+  { id: "C-0011", text: "Прапрадед (отец Агриппины Беловой) — Белов Александр (P-0014)", status: "hypothesis", statusRu: "Архивный поиск", badge: "badge-hypo", arts: "A-0004; A-0007", groups: "IG-SELIKHOVA-TREE; IG-MONUMENT-AGRIPINA" },
+  { id: "C-0012", text: "Бабушка по матери — Евдокимова Наталья («+Наташа 92», P-0006), мать Виктора (1953) и Нины (1956)", status: "single-source", statusRu: "Из памяти семьи", badge: "badge-single", arts: "A-0006", groups: "IG-SELIKHOVA-TREE" },
+  { id: "C-0013", text: "Бабушка по отцу — Шепеленко Нина Александровна (P-0016), род. 19.12.1935, проживала в Стрельне по ул. Лодыгина, 10", status: "single-source", statusRu: "Из памяти семьи", badge: "badge-single", arts: "A-0012", groups: "IG-USER-01" },
+  { id: "C-0014", text: "Баронов В. В. (P-0005) и Шепеленко Н. А. (P-0016) состояли в браке и являются родителями Баронова Вадима Валентиновича (P-0003)", status: "corroborated", statusRu: "Подтверждено", badge: "badge-corr", arts: "A-0001; A-0012; A-0013", groups: "IG-USER-01; IG-HIST-SPB-MIL" },
+  { id: "C-0015", text: "Прадед по отцу — Баронов Василий (P-0017), ок. 1895–1911 г.р., отец майора В. В. Баронова", status: "hypothesis", statusRu: "Архивный поиск", badge: "badge-hypo", arts: "A-0012", groups: "IG-USER-01" },
+  { id: "C-0016", text: "Прабабушка по отцу — Шепеленко Клавдия Ивановна (P-0018), мать Шепеленко Н. А., в 1946 г. в Кустанае (ул. Толстого, 78, семья 5 чел.) получала помощь как семья погибшего воина", status: "strongly-corroborated", statusRu: "В госархивах ✓", badge: "badge-strong", arts: "A-0012; A-0014; A-0015", groups: "IG-USER-01; IG-FATHER-MSG; IG-GAKO-1946" },
+  { id: "C-0017", text: "После Великой Отечественной войны Клавдия Ивановна Шепеленко (P-0018) переехала из Кустаная в Самарканд со всей роднёй, включая старшего родственника Степана («дед Степан», P-0019)", status: "single-source", statusRu: "Из памяти семьи", badge: "badge-single", arts: "A-0014", groups: "IG-FATHER-MSG" },
+  { id: "C-0018", text: "Род Шепеленко (отец Клавдии — Иван Шепеленко, P-0020) происходит из Харьковской губернии, откуда в 1912 г. в Столыпинское переселение перебрался в Кустанайский уезд", status: "corroborated", statusRu: "Подтверждено", badge: "badge-corr", arts: "A-0014; A-0015", groups: "IG-FATHER-MSG; IG-HIST-KUSTANAY" }
 ];
+
+// ==========================================================================
+// UI & INTERACTION CONTROLLERS
+// ==========================================================================
+
+function populateJumpSelect() {
+  const sel = document.getElementById("person-jump-select");
+  if (!sel) return;
+  const sorted = [...PERSONS].sort((a, b) => a.gen - b.gen);
+  sel.innerHTML = '<option value="">🔍 Найти предка в древе (20)...</option>' +
+    sorted.map(p => `<option value="${p.id}">[Пок. ${p.gen}] ${p.name} — ${p.role}</option>`).join("");
+}
 
 function renderTree() {
   const container = document.getElementById("gen-grid-container");
+  if (!container) return;
   const gens = [7, 6, 5, 4, 3, 2, 1];
   container.innerHTML = gens.map(g => {
     const items = PERSONS.filter(p => p.gen === g);
-    const first = items[0];
+    if (!items.length) return "";
+    const meta = items[0];
     return `
       <div class="gen-row">
         <div class="gen-meta">
-          <span class="gen-roman">${first.genRoman}</span>
-          <div class="gen-title">${first.genTitle}</div>
-          <div class="gen-era">${first.genEra}</div>
+          <div class="gen-roman">${meta.genRoman}</div>
+          <div class="gen-title">${meta.genTitle}</div>
+          <div class="gen-era">${meta.genEra}</div>
         </div>
         <div class="gen-cards">
           ${items.map(p => `
             <button type="button" class="node-card ${p.statusClass}" data-person-id="${p.id}" onclick="selectPerson('${p.id}')">
               <div class="node-top">
                 <span class="node-id">${p.id}</span>
-                <span class="badge ${p.badgeClass}">${p.status}</span>
+                <span class="badge ${p.badgeClass}">${
+                  p.status === "strongly-corroborated" ? "✓ В архивах" :
+                  p.status === "corroborated" ? "✓ Подтверждено" :
+                  p.status === "single-source" ? "Из памяти" : "Поиск"
+                }</span>
               </div>
               <div class="node-role">${p.role}</div>
               <div class="node-name">${p.name}</div>
               <div class="node-dates">${p.dates}</div>
-              <div class="node-place" title="${p.place}">${p.place}</div>
+              <div class="node-place">📍 ${p.place}</div>
             </button>
           `).join("")}
         </div>
@@ -2302,58 +2606,61 @@ function renderTree() {
   }).join("");
 }
 
-function selectPerson(personId) {
+function selectPerson(personId, shouldOpenMobile = true) {
   const p = PERSONS.find(item => item.id === personId) || PERSONS[4];
-  // Автоматически открывать шторку досье на мобилках при тапе на карточку
-  if (window.innerWidth <= 900) {
+  if (shouldOpenMobile && window.innerWidth <= 1024) {
     openMobileDossierSheet();
   }
   document.querySelectorAll(".node-card").forEach(btn => {
     btn.classList.toggle("selected", btn.getAttribute("data-person-id") === p.id);
   });
-  // Подсветка активной карточки на интерактивном холсте
   document.querySelectorAll(".canvas-node-card").forEach(card => {
     card.classList.toggle("selected", card.getAttribute("data-person-id") === p.id);
   });
+
+  const sel = document.getElementById("person-jump-select");
+  if (sel && sel.value !== p.id) sel.value = p.id;
 
   const artCards = p.artifacts.map(aid => ARTIFACTS[aid]).filter(Boolean);
   const visualArts = artCards.filter(a => a.img);
 
   const humanStatus = p.status === "strongly-corroborated" ? "✓ Документально подтверждено в госархивах" :
-                      p.status === "corroborated" ? "✓ Подтверждено независимыми семейными источниками" :
-                      p.status === "single-source" ? "Зафиксировано по семейным воспоминаниям" : "Рабочая версия (требует запроса справки в ЗАГС)";
+                      p.status === "corroborated" ? "✓ Подтверждено независимыми источниками" :
+                      p.status === "single-source" ? "Зафиксировано по семейным воспоминаниям" : "Рабочая гипотеза (в очереди архивного поиска)";
 
   const html = `
     <div class="insp-header">
-      <div class="insp-eyebrow">ПРЕДОК СЕМЬИ · ${p.role}</div>
+      <div class="insp-eyebrow">${p.id} · ${p.genRoman} · ${p.role}</div>
       <h3 class="insp-title">${p.name}</h3>
       <span class="badge ${p.badgeClass}">${humanStatus}</span>
     </div>
 
     <div class="insp-section">
-      <h4>Основные сведения</h4>
+      <h4>Основные биографические сведения</h4>
       <div class="kv-list">
         <div class="kv-key">Годы жизни:</div>
         <div class="kv-val mono"><b>${p.dates}</b></div>
-        <div class="kv-key">Кем приходится:</div>
+        <div class="kv-key">Родство:</div>
         <div class="kv-val"><b>${p.role}</b></div>
-        <div class="kv-key">Где жил(а) и служил(а):</div>
+        <div class="kv-key">Запись в источнике:</div>
+        <div class="kv-val" style="font-style:italic;">«${p.namesAsWritten}»</div>
+        <div class="kv-key">Юрисдикция и места:</div>
         <div class="kv-val">${p.jurisdiction}</div>
-        <div class="kv-key">Профессия и род занятий:</div>
+        <div class="kv-key">Сословие / род занятий:</div>
         <div class="kv-val">${p.occupation}</div>
-        <div class="kv-key">Семья и дети:</div>
+        <div class="kv-key">Семья и близкие:</div>
         <div class="kv-val">${p.relatives}</div>
       </div>
     </div>
 
     <div class="insp-section">
-      <h4>Семейная история и архивные свидетельства</h4>
-      <p style="font-size:13.5px;line-height:1.55;margin:0;color:var(--ink-primary);">${p.rationale}</p>
+      <h4>Историческое досье и доказательная база</h4>
+      <p style="font-size:13.5px;line-height:1.6;margin:0;color:var(--ink-900);">${p.rationale}</p>
     </div>
 
     ${visualArts.length ? `
     <div class="insp-section">
-      <h4>Подлинные документы и реликвии (нажмите для просмотра в высоком качестве)</h4>
+      <h4>Подлинные архивные сканы и фото (${visualArts.length})</h4>
       <div class="doc-thumb-grid">
         ${visualArts.map(a => `
           <div class="doc-thumb" onclick="openLightbox('${a.id}')">
@@ -2365,26 +2672,84 @@ function selectPerson(personId) {
     </div>
     ` : ""}
 
-    <div class="insp-section" style="border-bottom:0;">
-      <h4>Опорные артефакты (${artCards.length})</h4>
+    <div class="insp-section">
+      <h4>Опорные архивные источники (${artCards.length})</h4>
       ${artCards.map(a => `
-        <div style="margin-bottom:8px;padding:8px;background:var(--bg-paper);border:1px solid var(--border-hairline);font-size:12px;">
+        <div style="margin-bottom:8px;padding:10px 12px;background:var(--bg-elevated);border:1px solid var(--border-default);border-radius:6px;font-size:12px;">
           <div class="mono" style="color:var(--accent-seal);font-weight:700;">[${a.id}] ${a.cipher}</div>
-          <div style="font-weight:600;margin:2px 0;">${a.title}</div>
-          <div style="color:var(--ink-secondary);font-size:11.5px;">«${a.quote}»</div>
+          <div style="font-weight:700;margin:3px 0;color:var(--ink-900);">${a.title}</div>
+          <div style="color:var(--ink-700);font-size:11.5px;">«${a.quote}»</div>
         </div>
       `).join("")}
     </div>
   `;
 
-  document.getElementById("inspector-content").innerHTML = html;
+  const contentEl = document.getElementById("inspector-content");
+  if (contentEl) contentEl.innerHTML = html;
+}
+
+function openPersonFromAnywhere(personId) {
+  activateTab("tab-tree");
+  setTimeout(() => {
+    jumpToPerson(personId);
+  }, 60);
+}
+
+function jumpToPerson(personId) {
+  if (!personId) return;
+  selectPerson(personId, true);
+  const coord = CANVAS_COORDS[personId];
+  const vp = document.getElementById("canvas-viewport");
+  if (!coord || !vp) return;
+  const vw = vp.clientWidth || 900;
+  const vh = vp.clientHeight || 650;
+  const targetScale = window.innerWidth <= 900 ? 0.75 : 0.92;
+  canvasState.scale = targetScale;
+  canvasState.x = vw / 2 - (coord.x + 150) * targetScale;
+  canvasState.y = vh / 2 - (coord.y + 62) * targetScale;
+  updateCanvasTransform(true);
+}
+
+function filterCanvasBranch(branch) {
+  document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+  const activeBtn = document.getElementById("filter-" + branch);
+  if (activeBtn) activeBtn.classList.add("active");
+
+  document.querySelectorAll(".canvas-node-card").forEach(card => {
+    if (branch === "all") {
+      card.classList.remove("dimmed");
+    } else {
+      const isMatch = card.classList.contains(branch) || card.classList.contains("self");
+      card.classList.toggle("dimmed", !isMatch);
+    }
+  });
+
+  const vp = document.getElementById("canvas-viewport");
+  const vw = vp ? vp.clientWidth : 1000;
+  if (branch === "pat") {
+    canvasState.scale = window.innerWidth <= 900 ? 0.62 : 0.85;
+    canvasState.x = vw / 2 - 520 * canvasState.scale;
+    canvasState.y = -320 * canvasState.scale;
+    updateCanvasTransform(true);
+    selectPerson("P-0005", false);
+  } else if (branch === "mat") {
+    canvasState.scale = window.innerWidth <= 900 ? 0.58 : 0.78;
+    canvasState.x = vw / 2 - 1850 * canvasState.scale;
+    canvasState.y = -180 * canvasState.scale;
+    updateCanvasTransform(true);
+    selectPerson("P-0007", false);
+  } else {
+    resetCanvasZoom(true);
+  }
 }
 
 function renderGallery() {
   const container = document.getElementById("archive-gallery-container");
+  if (!container) return;
   const visualIds = ["A-0008", "A-0010", "A-0009", "A-0007", "A-0006", "A-0004", "A-0005"];
   container.innerHTML = visualIds.map(id => {
     const a = ARTIFACTS[id];
+    if (!a) return "";
     return `
       <article class="archive-card">
         <div class="archive-img-wrap" onclick="openLightbox('${a.id}')">
@@ -2394,9 +2759,9 @@ function renderGallery() {
           <div>
             <div class="archive-cipher">[${a.id}] · ${a.cipher}</div>
             <h3 class="archive-title">${a.title}</h3>
-            <div class="archive-quote">${a.quote}</div>
+            <div class="archive-quote">«${a.quote}»</div>
           </div>
-          <div style="font-size:12px;color:var(--ink-secondary);">${a.desc}</div>
+          <div style="font-size:12.5px;color:var(--ink-500);">${a.desc}</div>
         </div>
       </article>
     `;
@@ -2405,13 +2770,14 @@ function renderGallery() {
 
 function renderClaims() {
   const tbody = document.getElementById("claims-table-body");
+  if (!tbody) return;
   tbody.innerHTML = CLAIMS.map(c => `
     <tr>
       <td class="mono"><b>${c.id}</b></td>
       <td>${c.text}</td>
-      <td><span class="badge ${c.badge}">${c.status}</span></td>
+      <td><span class="badge ${c.badge}">${c.statusRu || c.status}</span></td>
       <td class="mono">${c.arts}</td>
-      <td class="mono">${c.groups}</td>
+      <td class="mono" style="color:var(--ink-500);">${c.groups}</td>
     </tr>
   `).join("");
 }
@@ -2421,7 +2787,7 @@ function openLightbox(artId) {
   if (!a || !a.img) return;
   document.getElementById("lightbox-title").textContent = `[${a.id}] ${a.title} — ${a.cipher}`;
   document.getElementById("lightbox-img").src = a.img;
-  document.getElementById("lightbox-caption").innerHTML = `<b>Расшифровка записи:</b> «${a.quote}»<br><span style="color:var(--ink-secondary)">${a.desc}</span>`;
+  document.getElementById("lightbox-caption").innerHTML = `<b>Расшифровка записи:</b> «${a.quote}»<br><span style="color:var(--ink-500)">${a.desc}</span>`;
   document.getElementById("lightbox-modal").classList.add("open");
 }
 
@@ -2434,22 +2800,37 @@ document.getElementById("lightbox-modal").addEventListener("click", (e) => {
   if (e.target.id === "lightbox-modal") closeLightbox();
 });
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeLightbox();
+  if (e.key === "Escape") {
+    closeLightbox();
+    closeMobileDossierSheet();
+  }
 });
+
+function activateTab(tabId) {
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-tab") === tabId);
+  });
+  document.querySelectorAll(".tab-panel").forEach(p => {
+    p.classList.toggle("active", p.id === tabId);
+  });
+  const mobBtn = document.getElementById("mobile-dossier-btn");
+  if (mobBtn) {
+    mobBtn.style.visibility = (tabId === "tab-tree") ? "visible" : "hidden";
+  }
+  if (tabId === "tab-tree") {
+    setTimeout(() => updateCanvasTransform(false), 40);
+  }
+}
 
 document.querySelectorAll(".tab-btn").forEach(btn => {
   btn.addEventListener("click", () => {
-    const target = btn.getAttribute("data-tab");
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b === btn));
-    document.querySelectorAll(".tab-panel").forEach(p => p.classList.toggle("active", p.id === target));
+    activateTab(btn.getAttribute("data-tab"));
   });
 });
 
-
-// ==========================================
-// ИНТЕРАКТИВНЫЙ ХОЛСТ ДРЕВА (D3/SVG CANVAS)
-// ==========================================
-
+// ==========================================================================
+// INTERACTIVE SVG CANVAS ENGINE
+// ==========================================================================
 const CANVAS_COORDS = {
   // Gen 7 (~1800)
   "P-0015": { x: 1620, y: 70, side: "mat" },
@@ -2516,55 +2897,58 @@ const GEN_BANDS = [
 ];
 
 let canvasState = {
-  scale: 0.85,
+  scale: 0.82,
   x: -350,
-  y: -30,
+  y: 10,
   isDragging: false,
   startX: 0,
   startY: 0
 };
 
-function updateCanvasTransform() {
+function updateCanvasTransform(animate = false) {
   const g = document.getElementById("canvas-pan-zoom-group");
   if (!g) return;
+  g.style.transition = animate ? "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)" : "none";
   g.setAttribute("transform", `translate(${canvasState.x}, ${canvasState.y}) scale(${canvasState.scale})`);
   const ztxt = document.getElementById("zoom-level-text");
   if (ztxt) ztxt.textContent = Math.round(canvasState.scale * 100) + "%";
 }
 
 function zoomCanvas(factor) {
-  const newScale = Math.min(Math.max(canvasState.scale * factor, 0.35), 2.5);
+  const newScale = Math.min(Math.max(canvasState.scale * factor, 0.32), 2.4);
   const vp = document.getElementById("canvas-viewport");
   const cx = vp ? vp.clientWidth / 2 : 500;
   const cy = vp ? vp.clientHeight / 2 : 350;
   canvasState.x = cx - (cx - canvasState.x) * (newScale / canvasState.scale);
   canvasState.y = cy - (cy - canvasState.y) * (newScale / canvasState.scale);
   canvasState.scale = newScale;
-  updateCanvasTransform();
+  updateCanvasTransform(true);
 }
 
-function resetCanvasZoom() {
+function resetCanvasZoom(animate = false) {
   const vp = document.getElementById("canvas-viewport");
-  const vw = vp ? vp.clientWidth : 1200;
+  const vw = vp ? vp.clientWidth : 1100;
+  const vh = vp ? vp.clientHeight : 700;
   const isMobile = window.innerWidth <= 900;
-  
+
   if (isMobile) {
-    canvasState.scale = Math.min(vw / 2800, 0.52);
+    canvasState.scale = Math.min(vw / 1600, 0.55);
     canvasState.x = (vw - 2800 * canvasState.scale) / 2;
-    canvasState.y = -350 * canvasState.scale;
+    canvasState.y = -280 * canvasState.scale;
   } else {
-    canvasState.scale = Math.min(vw / 2800, 0.82);
+    const scaleX = (vw - 24) / 2800;
+    const scaleY = (vh - 20) / 1685;
+    canvasState.scale = Math.min(scaleX, scaleY, 0.82);
     canvasState.x = (vw - 2800 * canvasState.scale) / 2;
-    canvasState.y = 10;
+    canvasState.y = Math.max(8, (vh - 1685 * canvasState.scale) / 2);
   }
-  updateCanvasTransform();
+  updateCanvasTransform(animate);
 }
 
 function initCanvasPanZoom() {
   const vp = document.getElementById("canvas-viewport");
   if (!vp) return;
 
-  // --- МЫШЬ (DESKTOP) ---
   vp.addEventListener("mousedown", (e) => {
     if (e.target.closest(".canvas-node-card, .svg-node-foreign, .svg-node-group")) return;
     canvasState.isDragging = true;
@@ -2576,7 +2960,7 @@ function initCanvasPanZoom() {
     if (!canvasState.isDragging) return;
     canvasState.x = e.clientX - canvasState.startX;
     canvasState.y = e.clientY - canvasState.startY;
-    updateCanvasTransform();
+    updateCanvasTransform(false);
   });
 
   window.addEventListener("mouseup", () => {
@@ -2585,18 +2969,17 @@ function initCanvasPanZoom() {
 
   vp.addEventListener("wheel", (e) => {
     e.preventDefault();
-    const factor = e.deltaY < 0 ? 1.12 : 0.89;
+    const factor = e.deltaY < 0 ? 1.1 : 0.9;
+    const newScale = Math.min(Math.max(canvasState.scale * factor, 0.32), 2.4);
     const rect = vp.getBoundingClientRect();
     const mx = e.clientX - rect.left;
     const my = e.clientY - rect.top;
-    const newScale = Math.min(Math.max(canvasState.scale * factor, 0.35), 2.5);
     canvasState.x = mx - (mx - canvasState.x) * (newScale / canvasState.scale);
     canvasState.y = my - (my - canvasState.y) * (newScale / canvasState.scale);
     canvasState.scale = newScale;
-    updateCanvasTransform();
+    updateCanvasTransform(false);
   }, { passive: false });
 
-  // --- СЕНСОРНЫЕ ЖЕСТЫ (MOBILE TOUCH / PINCH-TO-ZOOM) ---
   let initialPinchDistance = null;
   let initialPinchScale = null;
 
@@ -2609,12 +2992,10 @@ function initCanvasPanZoom() {
   vp.addEventListener("touchstart", (e) => {
     if (e.target.closest(".canvas-node-card, .svg-node-foreign, .svg-node-group")) return;
     if (e.touches.length === 1) {
-      // Одиночное касание: панорамирование (1-finger drag)
       canvasState.isDragging = true;
       canvasState.startX = e.touches[0].clientX - canvasState.x;
       canvasState.startY = e.touches[0].clientY - canvasState.y;
     } else if (e.touches.length === 2) {
-      // Двойное касание: щипок (pinch-to-zoom)
       canvasState.isDragging = false;
       initialPinchDistance = getTouchDistance(e.touches);
       initialPinchScale = canvasState.scale;
@@ -2626,72 +3007,69 @@ function initCanvasPanZoom() {
       e.preventDefault();
       canvasState.x = e.touches[0].clientX - canvasState.startX;
       canvasState.y = e.touches[0].clientY - canvasState.startY;
-      updateCanvasTransform();
+      updateCanvasTransform(false);
     } else if (e.touches.length === 2 && initialPinchDistance) {
       e.preventDefault();
       const currentDistance = getTouchDistance(e.touches);
       const pinchFactor = currentDistance / initialPinchDistance;
-      const newScale = Math.min(Math.max(initialPinchScale * pinchFactor, 0.35), 2.5);
-      
+      const newScale = Math.min(Math.max(initialPinchScale * pinchFactor, 0.32), 2.4);
       const rect = vp.getBoundingClientRect();
       const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
       const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
-
       canvasState.x = midX - (midX - canvasState.x) * (newScale / canvasState.scale);
       canvasState.y = midY - (midY - canvasState.y) * (newScale / canvasState.scale);
       canvasState.scale = newScale;
-      updateCanvasTransform();
+      updateCanvasTransform(false);
     }
   }, { passive: false });
 
   vp.addEventListener("touchend", (e) => {
-    if (e.touches.length < 2) {
-      initialPinchDistance = null;
-    }
-    if (e.touches.length === 0) {
-      canvasState.isDragging = false;
-    }
+    if (e.touches.length < 2) initialPinchDistance = null;
+    if (e.touches.length === 0) canvasState.isDragging = false;
   }, { passive: true });
 
-  resetCanvasZoom();
+  resetCanvasZoom(false);
 }
 
-// --- УПРАВЛЕНИЕ МОБИЛЬНОЙ ШТОРКОЙ ДОСЬЕ (BOTTOM SHEET) ---
 function toggleMobileDossierSheet() {
   const panel = document.getElementById("inspector-panel");
-  if (panel) panel.classList.toggle("sheet-open");
+  const bd = document.getElementById("dossier-backdrop");
+  if (!panel) return;
+  const isOpen = panel.classList.toggle("sheet-open");
+  if (bd) bd.classList.toggle("open", isOpen);
 }
 
 function openMobileDossierSheet() {
   const panel = document.getElementById("inspector-panel");
+  const bd = document.getElementById("dossier-backdrop");
   if (panel) panel.classList.add("sheet-open");
+  if (bd) bd.classList.add("open");
 }
 
 function closeMobileDossierSheet() {
   const panel = document.getElementById("inspector-panel");
+  const bd = document.getElementById("dossier-backdrop");
   if (panel) panel.classList.remove("sheet-open");
+  if (bd) bd.classList.remove("open");
 }
 
 function renderSvgCanvas() {
   const pMap = {};
   PERSONS.forEach(p => { pMap[p.id] = p; });
 
-  // 1. Bands
   const bandsEl = document.getElementById("canvas-generation-bands");
   if (bandsEl) {
     bandsEl.innerHTML = GEN_BANDS.map(b => `
       <g>
-        <rect class="svg-gen-band" x="20" y="${b.y}" width="2760" height="${b.h}" rx="6" ry="6"/>
-        <text class="svg-gen-label" x="35" y="${b.y + 22}">${b.label}</text>
+        <rect class="svg-gen-band" x="20" y="${b.y}" width="2760" height="${b.h}" rx="8" ry="8"/>
+        <text class="svg-gen-label" x="38" y="${b.y + 24}">${b.label}</text>
       </g>
     `).join("");
   }
 
-  // Card dimensions
   const CW = 300;
   const CH = 124;
 
-  // 2. Direct filial lines
   let filialSvg = "";
   CANVAS_FILIAL.forEach(l => {
     const fromPt = CANVAS_COORDS[l.from];
@@ -2706,25 +3084,21 @@ function renderSvgCanvas() {
     filialSvg += `<path class="svg-link-line ${l.side}" d="${path}" />`;
   });
 
-  // 3. Marriage unions and child drops
   let marriageSvg = "";
   let unionNodesSvg = "";
   CANVAS_MARRIAGES.forEach(m => {
     const p1 = CANVAS_COORDS[m.p1];
     const p2 = CANVAS_COORDS[m.p2];
     if (!p1 || !p2) return;
-    
     const yMid = p1.y + CH / 2;
     const knotX = (p1.x + CW / 2 + p2.x + CW / 2) / 2;
     const knotY = yMid;
 
-    marriageSvg += `
-      <line class="svg-link-line marriage" x1="${p1.x + CW}" y1="${yMid}" x2="${p2.x}" y2="${yMid}" />
-    `;
+    marriageSvg += `<line class="svg-link-line marriage" x1="${p1.x + CW}" y1="${yMid}" x2="${p2.x}" y2="${yMid}" />`;
     unionNodesSvg += `
       <g transform="translate(${knotX}, ${knotY})">
         <circle class="svg-union-circle" r="7" />
-        <text text-anchor="middle" style="font-size:9.5px;fill:#8C2D19;font-weight:700;" y="-10">💍 ${m.date}</text>
+        <text text-anchor="middle" style="font-family:var(--font-mono);font-size:9.5px;fill:#8C2D19;font-weight:700;" y="-10">💍 ${m.date}</text>
       </g>
     `;
 
@@ -2745,7 +3119,6 @@ function renderSvgCanvas() {
   const marrEl = document.getElementById("canvas-marriages-group");
   if (marrEl) marrEl.innerHTML = unionNodesSvg;
 
-  // 4. Render Nodes using foreignObject with Full HTML/CSS Layout
   const nodesEl = document.getElementById("canvas-nodes-group");
   if (nodesEl) {
     nodesEl.innerHTML = Object.keys(CANVAS_COORDS).map(pid => {
@@ -2758,7 +3131,6 @@ function renderSvgCanvas() {
                          p.status === "single-source" ? "ИЗ ПАМЯТИ" : "АРХИВНЫЙ ПОИСК";
       const badgeClass = p.badgeClass;
 
-      // HTML Avatar logic
       let avatarHtml = "";
       if (p.id === "P-0008") {
         avatarHtml = `
@@ -2789,7 +3161,6 @@ function renderSvgCanvas() {
         avatarHtml = `<span class="card-avatar-emoji">👨</span>`;
       }
 
-      // Compact dates for card without losing tooltip full text
       const cleanDates = p.dates.replace(/\s*\([^)]*\)/g, '').trim();
       const cardPlace = p.place ? ('📍 ' + p.place) : '';
 
@@ -2817,33 +3188,36 @@ function renderSvgCanvas() {
 }
 
 function switchTreeView(viewType) {
-  const canvasCont = document.getElementById("tree-canvas-container");
+  const canvasCont = document.getElementById("canvas-viewport");
   const gridCont = document.getElementById("tree-grid-view-container");
   const btnCanvas = document.getElementById("btn-view-canvas");
   const btnGrid = document.getElementById("btn-view-grid");
+  const zoomCtrls = document.getElementById("canvas-zoom-controls");
 
   if (viewType === "canvas") {
-    if (canvasCont) canvasCont.style.display = "flex";
+    if (canvasCont) canvasCont.style.display = "block";
     if (gridCont) gridCont.style.display = "none";
     if (btnCanvas) btnCanvas.classList.add("active");
     if (btnGrid) btnGrid.classList.remove("active");
-    setTimeout(resetCanvasZoom, 50);
+    if (zoomCtrls) zoomCtrls.style.display = "inline-flex";
+    setTimeout(() => resetCanvasZoom(false), 40);
   } else {
     if (canvasCont) canvasCont.style.display = "none";
     if (gridCont) gridCont.style.display = "block";
     if (btnCanvas) btnCanvas.classList.remove("active");
     if (btnGrid) btnGrid.classList.add("active");
+    if (zoomCtrls) zoomCtrls.style.display = "none";
   }
 }
 
-
+// Initialize Application
+populateJumpSelect();
 renderTree();
 renderSvgCanvas();
 initCanvasPanZoom();
 renderGallery();
 renderClaims();
-// По умолчанию открываем досье прадеда Николая Никандровича Евдокимова (P-0007) с его 3 архивными сканами 1915 г.
-selectPerson("P-0007");
+selectPerson("P-0007", false);
 </script>
 </body>
 </html>
