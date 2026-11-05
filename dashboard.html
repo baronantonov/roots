@@ -4,6 +4,12 @@
 <script>
 (function() {
   try {
+    var params = new URLSearchParams(window.location.search);
+    var urlTheme = params.get('theme');
+    if (urlTheme === 'dark' || urlTheme === 'light') {
+      document.documentElement.setAttribute('data-theme', urlTheme);
+      return;
+    }
     var saved = localStorage.getItem('roots_theme');
     var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (saved === 'dark' || (!saved && prefersDark)) {
@@ -43,9 +49,12 @@ html[data-theme="light"] {
 
   /* Typography */
   --ink-900: #1C1917;
+  --ink-800: #292524;
   --ink-700: #44403C;
   --ink-500: #78716C;
   --ink-400: #A8A29E;
+  --paper-50: #FAF9F6;
+  --paper-100: #F3F1EC;
 
   /* Accents */
   --accent-seal: #9E3A26;
@@ -57,6 +66,8 @@ html[data-theme="light"] {
   --accent-mat-soft: #FAF0ED;
   --accent-gold: #8C6A24;
   --accent-gold-soft: #FAF5E8;
+  --gold-500: #8C6A24;
+  --gold-600: #785A1D;
 
   /* GPS Tokens */
   --st-strong-fg: #1F6B3D;
@@ -112,9 +123,12 @@ html[data-theme="dark"] {
   --border-dark: #546587;
 
   --ink-900: #F8FAFC;
+  --ink-800: #E2E8F0;
   --ink-700: #CBD5E1;
   --ink-500: #94A3B8;
   --ink-400: #64748B;
+  --paper-50: #141822;
+  --paper-100: #1C2230;
 
   --accent-seal: #E05D44;
   --accent-seal-hover: #F07156;
@@ -125,6 +139,8 @@ html[data-theme="dark"] {
   --accent-mat-soft: rgba(224, 108, 83, 0.18);
   --accent-gold: #E5B842;
   --accent-gold-soft: rgba(229, 184, 66, 0.18);
+  --gold-500: #E5B842;
+  --gold-600: #F3CA65;
 
   --st-strong-fg: #4ADE80;
   --st-strong-bg: rgba(74, 222, 128, 0.14);
@@ -275,8 +291,8 @@ html, body {
 .header-top-subrow {
   display: contents;
 }
-
 .header-brand {
+  order: 1;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -312,6 +328,7 @@ html, body {
 
 /* Center Navigation Tabs */
 .header-nav {
+  order: 2;
   display: flex;
   align-items: center;
   gap: 3px;
@@ -366,12 +383,21 @@ html, body {
 
 /* Right Stats Strip in Header */
 .header-stats-strip {
+  order: 3;
   display: flex;
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
   font-size: 12px;
   color: var(--ink-500);
+}
+
+.header-top-actions {
+  order: 4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 .stat-item {
   white-space: nowrap;
@@ -1990,35 +2016,55 @@ html, body {
     justify-content: space-between;
     width: 100%;
     max-width: 100%;
-    gap: 6px;
+    gap: 8px;
     box-sizing: border-box;
-    overflow: hidden;
   }
   .header-brand {
-    gap: 5px;
+    gap: 6px;
     min-width: 0;
-    flex-shrink: 0;
+    flex: 1;
+    overflow: hidden;
   }
   .brand-seal {
     font-size: 9.5px;
     padding: 1.5px 5px;
   }
   .brand-title {
-    font-size: 14px;
+    font-size: 14.5px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .brand-years {
     display: none;
   }
   .header-stats-strip {
-    gap: 4px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    max-width: 100%;
-    box-sizing: border-box;
-    font-size: 11px;
+    display: none;
   }
-  .header-stats-strip::-webkit-scrollbar { display: none; }
+  .header-top-actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+  .theme-toggle-btn {
+    padding: 5px 11px;
+    font-size: 12px;
+    margin-left: 0;
+    border-radius: 18px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+  @media (max-width: 420px) {
+    .theme-toggle-text {
+      display: none;
+    }
+    .theme-toggle-btn {
+      padding: 5px 9px;
+      font-size: 14px;
+    }
+  }
   .header-nav {
     width: 100%;
     max-width: 100%;
@@ -2670,7 +2716,7 @@ html, body {
 .map-filter-pill.active {
   background: var(--ink-900);
   border-color: var(--ink-900);
-  color: #FFFFFF;
+  color: var(--bg-surface);
 }
 
 .map-filter-pill .pill-dot {
@@ -2699,6 +2745,14 @@ html, body {
   background: rgba(0, 0, 0, 0.08);
 }
 .map-filter-pill.active .map-pill-badge {
+  background: rgba(0, 0, 0, 0.16);
+  color: currentColor;
+}
+.map-filter-pill.active.pill-evd .map-pill-badge,
+.map-filter-pill.active.pill-bar .map-pill-badge,
+.map-filter-pill.active.pill-shep .map-pill-badge,
+.map-filter-pill.active.pill-kov .map-pill-badge,
+.map-filter-pill.active.pill-mil .map-pill-badge {
   background: rgba(255, 255, 255, 0.25);
   color: #fff;
 }
@@ -2781,50 +2835,76 @@ html, body {
   to { transform: rotate(360deg); }
 }
 
-/* Map stats badge bottom left */
-.map-stats-badge {
+/* Floating reset button bottom left */
+.map-floating-reset-btn {
   position: absolute;
-  bottom: 14px;
+  bottom: 16px;
   left: 14px;
   z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.95);
+  appearance: none;
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: 7px 14px;
-  border-radius: var(--radius-sm);
   border: 1px solid var(--border-default);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-family: var(--font-sans);
   font-size: 12px;
-  color: var(--ink-700);
-}
-.map-stat-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.map-stat-sep {
-  color: var(--border-strong);
-}
-.map-reset-btn {
-  appearance: none;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-default);
-  border-radius: 4px;
-  padding: 2px 7px;
-  font-family: var(--font-mono);
-  font-size: 11px;
   font-weight: 600;
   color: var(--ink-700);
   cursor: pointer;
-  margin-left: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   transition: all 0.15s ease;
+  user-select: none;
 }
-.map-reset-btn:hover {
+.map-floating-reset-btn:hover {
   background: var(--bg-surface);
   color: var(--ink-900);
+  border-color: var(--ink-400);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Mobile Floating Dossier Button */
+.mobile-map-dossier-btn {
+  display: none;
+  position: absolute;
+  bottom: 16px;
+  right: 14px;
+  z-index: 1000;
+  appearance: none;
+  background: var(--accent-seal);
+  color: #FFFFFF;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 24px;
+  padding: 8px 16px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(158, 58, 38, 0.35);
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.mobile-map-dossier-btn:active {
+  transform: scale(0.96);
+}
+
+/* Map Sheet Handle Bar for Mobile */
+.map-sheet-handle-bar {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px 8px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 15;
 }
 
 /* Leaflet Custom Marker Pins */
@@ -2847,7 +2927,7 @@ html, body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #FFFFFF;
+  background: var(--bg-surface);
   border: 3px solid var(--accent-seal);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
   display: flex;
@@ -2856,27 +2936,28 @@ html, body {
   font-size: 18px;
   position: relative;
   box-sizing: border-box;
+  transition: all 0.15s ease;
 }
 
 .custom-map-pin.branch-evdokimov .pin-bubble {
   border-color: #9E3A26;
-  background: #FAF0ED;
+  background: var(--accent-seal-soft);
 }
 .custom-map-pin.branch-baronov .pin-bubble {
   border-color: #25527A;
-  background: #EDF3F8;
+  background: var(--accent-pat-soft);
 }
 .custom-map-pin.branch-shepelenko .pin-bubble {
   border-color: #1B7340;
-  background: #EAF5EE;
+  background: var(--st-strong-bg);
 }
 .custom-map-pin.branch-kovalenko .pin-bubble {
   border-color: #8C6A24;
-  background: #FAF5E8;
+  background: var(--accent-gold-soft);
 }
 .custom-map-pin.branch-military .pin-bubble {
   border-color: #4B5563;
-  background: #F3F4F6;
+  background: var(--bg-subtle);
 }
 
 .pin-count-badge {
@@ -3330,13 +3411,48 @@ html, body {
 /* Responsive Map Layout */
 @media (max-width: 1024px) {
   .map-workspace-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: 52vh minmax(0, 1fr);
+    display: block;
+    position: relative;
     height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+  .map-stage-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+  .roots-map-element {
+    height: 100%;
+    width: 100%;
   }
   .map-sidebar {
-    border-left: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    max-height: 80vh;
+    border-radius: 18px 18px 0 0;
+    border: none;
     border-top: 1px solid var(--border-default);
+    box-shadow: 0 -10px 36px rgba(0, 0, 0, 0.35);
+    z-index: 1050;
+    transform: translateY(105%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-surface);
+    overflow: hidden;
+  }
+  .map-sidebar.mobile-sheet-open {
+    transform: translateY(0%);
+  }
+  .map-sheet-handle-bar {
+    display: flex;
+  }
+  .mobile-map-dossier-btn {
+    display: inline-flex;
   }
   .map-floating-bar {
     top: 8px;
@@ -3347,12 +3463,158 @@ html, body {
   .map-filters-row {
     padding: 6px 10px;
   }
-  .map-stats-badge {
-    bottom: 8px;
-    left: 8px;
-    padding: 5px 10px;
+  .map-floating-reset-btn {
+    bottom: 12px;
+    left: 10px;
+    padding: 5px 12px;
     font-size: 11px;
   }
+}
+
+/* ==========================================================================
+   DARK THEME COMPREHENSIVE FIXES (Zero Light Fields / Deep Obsidian)
+   ========================================================================== */
+html[data-theme="dark"] .canvas-floating-legend {
+  background: rgba(20, 24, 34, 0.92);
+  border-color: var(--border-default);
+  color: var(--ink-700);
+}
+
+html[data-theme="dark"] .node-card:hover {
+  background: var(--bg-elevated);
+}
+
+html[data-theme="dark"] .s-nav-btn {
+  background: var(--bg-surface);
+  color: var(--ink-700);
+  border-color: var(--border-default);
+}
+html[data-theme="dark"] .s-nav-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--accent-seal);
+  border-color: var(--accent-seal);
+}
+
+html[data-theme="dark"] .map-filters-row,
+html[data-theme="dark"] .map-jumps-row {
+  background: rgba(20, 24, 34, 0.94);
+  border-color: var(--border-default);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] .map-filter-pill.active {
+  background: #F8FAFC;
+  border-color: #F8FAFC;
+  color: #0B0E14;
+}
+html[data-theme="dark"] .map-filter-pill.active .map-pill-badge {
+  background: rgba(0, 0, 0, 0.16);
+  color: #0B0E14;
+}
+
+html[data-theme="dark"] .map-jump-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-subtle);
+  color: var(--ink-700);
+}
+html[data-theme="dark"] .map-jump-chip:hover {
+  background: var(--bg-surface);
+  border-color: var(--border-strong);
+  color: var(--ink-900);
+}
+
+html[data-theme="dark"] .map-floating-reset-btn {
+  background: rgba(20, 24, 34, 0.94);
+  border-color: var(--border-default);
+  color: var(--ink-700);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+html[data-theme="dark"] .map-floating-reset-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--ink-900);
+  border-color: var(--ink-400);
+}
+
+/* Dark Mode Leaflet Map Tiles & Controls */
+html[data-theme="dark"] .roots-map-element {
+  background: #0B0E14 !important;
+}
+html[data-theme="dark"] .roots-map-element .leaflet-tile-pane {
+  filter: brightness(0.65) invert(1) contrast(2.8) hue-rotate(200deg) saturate(0.35) brightness(0.8) !important;
+}
+html[data-theme="dark"] .leaflet-control-zoom a {
+  background: #141822 !important;
+  color: #F8FAFC !important;
+  border-color: #263043 !important;
+}
+html[data-theme="dark"] .leaflet-control-zoom a:hover {
+  background: #202737 !important;
+}
+html[data-theme="dark"] .leaflet-control-attribution {
+  background: rgba(11, 14, 20, 0.85) !important;
+  color: #64748B !important;
+}
+html[data-theme="dark"] .leaflet-control-attribution a {
+  color: #94A3B8 !important;
+}
+
+/* Dark Mode Pins & Popups */
+html[data-theme="dark"] .pin-bubble {
+  background: #141822;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+}
+html[data-theme="dark"] .custom-map-pin.branch-evdokimov .pin-bubble {
+  border-color: #E05D44;
+  background: rgba(224, 93, 68, 0.22);
+}
+html[data-theme="dark"] .custom-map-pin.branch-baronov .pin-bubble {
+  border-color: #4D97FF;
+  background: rgba(77, 151, 255, 0.22);
+}
+html[data-theme="dark"] .custom-map-pin.branch-shepelenko .pin-bubble {
+  border-color: #4ADE80;
+  background: rgba(74, 222, 128, 0.22);
+}
+html[data-theme="dark"] .custom-map-pin.branch-kovalenko .pin-bubble {
+  border-color: #E5B842;
+  background: rgba(229, 184, 66, 0.22);
+}
+html[data-theme="dark"] .custom-map-pin.branch-military .pin-bubble {
+  border-color: #94A3B8;
+  background: rgba(148, 163, 184, 0.22);
+}
+
+html[data-theme="dark"] .leaflet-popup-content-wrapper,
+html[data-theme="dark"] .leaflet-popup-tip {
+  background: #141822 !important;
+  color: #F8FAFC !important;
+  border-color: #263043 !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7) !important;
+}
+html[data-theme="dark"] .map-popup-person-item {
+  background: #1C2230;
+  color: #F8FAFC;
+}
+html[data-theme="dark"] .map-popup-detail-btn {
+  background: #202737;
+  border-color: #263043;
+  color: #F8FAFC;
+}
+html[data-theme="dark"] .map-popup-detail-btn:hover {
+  background: var(--accent-seal-soft);
+  border-color: var(--accent-seal);
+}
+
+html[data-theme="dark"] .map-relative-row:hover {
+  background: var(--bg-elevated);
+}
+
+html[data-theme="dark"] select,
+html[data-theme="dark"] option,
+html[data-theme="dark"] input {
+  background-color: var(--bg-surface);
+  color: var(--ink-900);
+  border-color: var(--border-default);
 }
 
 </style>
@@ -3371,17 +3633,20 @@ html, body {
       </div>
 
       <div class="header-stats-strip">
-        <span class="stat-item"><strong>29</strong> персон</span>
+        <span class="stat-item"><strong>35</strong> персон</span>
         <span class="stat-dot-sep">·</span>
         <span class="stat-item"><strong>7</strong> пок.</span>
         <span class="stat-dot-sep">·</span>
-        <span class="stat-item"><strong>4</strong> рода</span>
+        <span class="stat-item"><strong>6</strong> родов</span>
         <span class="stat-dot-sep">·</span>
-        <span class="stat-item"><strong>35</strong> арт.</span>
+        <span class="stat-item"><strong>40</strong> арт.</span>
         <span class="stat-pill gps"><span class="status-dot"></span>GPS 100%</span>
+      </div>
+
+      <div class="header-top-actions">
         <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Переключить тему (светлая / тёмная)" aria-label="Переключить тему оформления">
-          <span id="theme-toggle-icon">🌙</span>
-          <span id="theme-toggle-text">Тёмная</span>
+          <span class="theme-toggle-icon" id="theme-toggle-icon">🌙</span>
+          <span class="theme-toggle-text" id="theme-toggle-text">Тёмная</span>
         </button>
       </div>
     </div>
@@ -3390,11 +3655,11 @@ html, body {
     <nav class="header-nav" role="tablist" aria-label="Разделы семейного архива">
       <button class="nav-tab-btn active" data-tab="tab-tree" onclick="activateTab('tab-tree')">
         <span>🌳 Древо</span>
-        <span class="nav-count">29</span>
+        <span class="nav-count">35</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-map" id="tab-btn-map" onclick="activateTab('tab-map')">
         <span>🗺️ Карта</span>
-        <span class="nav-count">29 чел.</span>
+        <span class="nav-count">35 чел.</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-surnames" id="tab-btn-surnames" onclick="activateTab('tab-surnames')">
         <span>📖 О фамилиях</span>
@@ -3436,7 +3701,7 @@ html, body {
         <div class="tree-toolbar">
           <div class="tree-toolbar-left">
             <div class="branch-filter-pills">
-              <button type="button" class="filter-pill active" id="filter-all" onclick="filterCanvasBranch('all')">Все персоны (29)</button>
+              <button type="button" class="filter-pill active" id="filter-all" onclick="filterCanvasBranch('all')">Все персоны (35)</button>
               <button type="button" class="filter-pill pat" id="filter-pat" onclick="filterCanvasBranch('pat')">⚓ Ветвь папы</button>
               <button type="button" class="filter-pill mat" id="filter-mat" onclick="filterCanvasBranch('mat')">🌾 Ветвь мамы</button>
             </div>
@@ -3449,7 +3714,7 @@ html, body {
 
           <div class="tree-toolbar-right">
             <select class="person-jump-select" id="person-jump-select" onchange="jumpToPerson(this.value)" aria-label="Быстрый переход к предку">
-              <option value="">🔍 Найти персону (29)...</option>
+              <option value="">🔍 Найти персону (35)...</option>
             </select>
 
             <div class="zoom-btn-group" id="canvas-zoom-controls">
@@ -3658,7 +3923,7 @@ html, body {
             <div class="map-pills-wrap">
               <button class="map-filter-pill active" data-branch="all" onclick="filterMapBranch('all')">
                 <span>Все ветви</span>
-                <span class="map-pill-badge">29</span>
+                <span class="map-pill-badge">35</span>
               </button>
               <button class="map-filter-pill pill-evd" data-branch="evdokimov" onclick="filterMapBranch('evdokimov')">
                 <span class="pill-dot"></span>
@@ -3714,35 +3979,32 @@ html, body {
           </div>
         </div>
 
-        <!-- Нижний бейдж статистики и легенды -->
-        <div class="map-stats-badge">
-          <div class="map-stat-item">
-            <span class="map-stat-icon">🧭</span>
-            <span><strong>13</strong> очагов</span>
-          </div>
-          <span class="map-stat-sep">·</span>
-          <div class="map-stat-item">
-            <span><strong>29</strong> родственников на карте</span>
-          </div>
-          <span class="map-stat-sep">·</span>
-          <div class="map-stat-item">
-            <span><strong>1785–2026 гг.</strong></span>
-          </div>
-          <button type="button" class="map-reset-btn" onclick="resetMapView()" title="Сбросить масштаб на всю географию">
-            ⟲ Вся география
-          </button>
-        </div>
+        <!-- Компактная плавающая кнопка обзора всей карты -->
+        <button type="button" class="map-floating-reset-btn" onclick="resetMapView()" title="Сбросить масштаб и показать все 14 очагов рода">
+          <span>⟲</span> <span>Вся карта (14 очагов)</span>
+        </button>
+
+        <!-- Мобильная плавающая кнопка для открытия досье -->
+        <button type="button" class="mobile-map-dossier-btn" id="mobile-map-dossier-btn" onclick="openMobileMapSheet()" title="Показать досье выбранного очага">
+          <span>📋</span> <span id="mobile-map-btn-text">Досье места</span>
+        </button>
 
       </div>
 
-      <!-- ПРАВАЯ ЧАСТЬ: ИНТЕРАКТИВНЫЙ АТЛАС МЕСТ И КАРТОЧКИ РОДСТВЕННИКОВ -->
-      <aside class="map-sidebar">
+      <!-- ПРАВАЯ ЧАСТЬ: ИНТЕРАКТИВНОЕ ДОСЬЕ ОЧАГОВ РАССЕЛЕНИЯ -->
+      <aside class="map-sidebar" id="map-sidebar">
+        <!-- Полоса шторки для мобильных экранов -->
+        <div class="map-sheet-handle-bar">
+          <div class="sheet-pill"></div>
+          <button type="button" class="sheet-close-btn" onclick="closeMobileMapSheet()" title="Закрыть досье">✕</button>
+        </div>
+
         <div class="map-sidebar-header">
           <div class="map-sidebar-title-row">
-            <h3>📍 Географический атлас семьи</h3>
+            <h3>📍 Досье очага рода</h3>
             <span class="badge badge-corr" id="map-visible-badge">14 очагов</span>
           </div>
-          <p class="map-sidebar-sub">Каждое село, город и рубеж, где жили, служили и трудились 7 поколений предков.</p>
+          <p class="map-sidebar-sub">История, статус, координаты и предки в выбранной географической точке.</p>
           <div class="map-search-box">
             <span class="map-search-icon">🔍</span>
             <input type="text" id="map-search-input" class="map-search-field" placeholder="Поиск места, села или имени предка..." oninput="filterMapPlacesByText(this.value)">
@@ -3752,11 +4014,6 @@ html, body {
 
         <!-- Карточка выбранной локации (детальная) -->
         <div id="map-selected-dossier" class="map-selected-dossier">
-          <!-- Рендерится динамически -->
-        </div>
-
-        <!-- Справочник всех локаций списком -->
-        <div class="map-places-scroll" id="map-places-scroll">
           <!-- Рендерится динамически -->
         </div>
       </aside>
@@ -4256,14 +4513,14 @@ html, body {
                 <span>🔥</span> Детство в немецкой оккупации (1941–1943 гг.):
               </div>
               <p style="margin:0 0 8px; font-size:13px; line-height:1.55; color:var(--ink-700);">Дед встретил войну 12-летним подростком (род. 01.05.1929). В сентябре 1941 года вермахт захватил Кириши, образовав <b>Киришский плацдарм</b> (ожесточённые позиционные бои шли до 4 октября 1943 г.).</p>
-              <p style="margin:0; font-size:13px; line-height:1.55; color:#7D4B12; background:#FCF8EE; border:1px solid #EADBBA; border-radius:6px; padding:8px 10px;"><i>«О детстве рассказывал, как жили в оккупации немецких войск во время войны, мальчишки пекли в костре очистки от картошки»</i> — подлинная семейная память о жестоком голоде и подвиге выживания детей войны.</p>
+              <p style="margin:0; font-size:13px; line-height:1.55; color:var(--accent-gold); background:var(--accent-gold-soft); border:1px solid var(--accent-gold-soft); border-radius:6px; padding:8px 10px;"><i>«О детстве рассказывал, как жили в оккупации немецких войск во время войны, мальчишки пекли в костре очистки от картошки»</i> — подлинная семейная память о жестоком голоде и подвиге выживания детей войны.</p>
             </div>
             <div style="background:var(--bg-subtle); border:1px solid var(--border-default); border-radius:8px; padding:16px;">
               <div style="font-weight:700; color:var(--accent-pat); font-size:13.5px; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
                 <span>🎓</span> 1948 год — старт военной службы в автоучилище:
               </div>
               <p style="margin:0 0 8px; font-size:13px; line-height:1.55; color:var(--ink-700);">В 1948 году в возрасте 19 лет Валентин Васильевич поступил в <b>военное автомобильное училище</b> (1-е Ленинградское Краснознаменное военно-автомобильное училище / РВАТУ), начав путь кадрового офицера автомобильных войск ВС СССР (выпуск лейтенантом в 1951 г.).</p>
-              <p style="margin:0; font-size:13px; line-height:1.55; color:#1C4E72; background:#EEF4F9; border:1px solid #C9DEEE; border-radius:6px; padding:8px 10px;"><b>Ключ к ЦАМО РФ:</b> Год поступления на службу (1948) и пункт анкеты офицера <i>«Находился ли на оккупированной территории в период ВОВ»</i> дают архивистам 100% точность поиска личного дела и УПК!</p>
+              <p style="margin:0; font-size:13px; line-height:1.55; color:var(--accent-pat); background:var(--accent-pat-soft); border:1px solid var(--accent-pat-soft); border-radius:6px; padding:8px 10px;"><b>Ключ к ЦАМО РФ:</b> Год поступления на службу (1948) и пункт анкеты офицера <i>«Находился ли на оккупированной территории в период ВОВ»</i> дают архивистам 100% точность поиска личного дела и УПК!</p>
             </div>
           </div>
         </div>
@@ -5439,7 +5696,7 @@ function populateJumpSelect() {
   const sel = document.getElementById("person-jump-select");
   if (!sel) return;
   const sorted = [...PERSONS].sort((a, b) => a.gen - b.gen);
-  sel.innerHTML = '<option value="">🔍 Найти персону в древе (29)...</option>' +
+  sel.innerHTML = `<option value="">🔍 Найти персону в древе (${PERSONS.length})...</option>` +
     sorted.map(p => `<option value="${p.id}">[Пок. ${p.gen}] ${p.name} — ${p.role}</option>`).join("");
 }
 
@@ -5729,6 +5986,10 @@ function activateTab(tabId) {
   const mobBtn = document.getElementById("mobile-dossier-btn");
   if (mobBtn) {
     mobBtn.style.visibility = (tabId === "tab-tree") ? "visible" : "hidden";
+  }
+  const mapMobBtn = document.getElementById("mobile-map-dossier-btn");
+  if (mapMobBtn) {
+    mapMobBtn.style.display = (tabId === "tab-map" && window.innerWidth <= 1024) ? "inline-flex" : "none";
   }
   if (tabId === "tab-tree") {
     setTimeout(() => {
@@ -7028,6 +7289,20 @@ function renderMapMarkers() {
   });
 }
 
+function openMobileMapSheet() {
+  const sidebar = document.getElementById("map-sidebar");
+  if (sidebar && window.innerWidth <= 1024) {
+    sidebar.classList.add("mobile-sheet-open");
+  }
+}
+
+function closeMobileMapSheet() {
+  const sidebar = document.getElementById("map-sidebar");
+  if (sidebar) {
+    sidebar.classList.remove("mobile-sheet-open");
+  }
+}
+
 function selectMapPlace(placeId, shouldCenter = true) {
   currentSelectedPlaceId = placeId;
   const loc = MAP_LOCATIONS.find(l => l.id === placeId);
@@ -7049,13 +7324,19 @@ function selectMapPlace(placeId, shouldCenter = true) {
     }
   }
 
+  // Update mobile button text
+  const mobBtnText = document.getElementById("mobile-map-btn-text");
+  if (mobBtnText) {
+    mobBtnText.textContent = `${loc.icon} ${loc.shortName}`;
+  }
+
   // Render detail card in sidebar
   renderSelectedPlaceDossier(loc);
 
-  // Highlight in sidebar list
-  document.querySelectorAll(".map-place-item-card").forEach(c => {
-    c.classList.toggle("selected", c.getAttribute("data-place-id") === placeId);
-  });
+  // If mobile and center requested, open bottom sheet
+  if (shouldCenter && window.innerWidth <= 1024) {
+    openMobileMapSheet();
+  }
 }
 
 function renderSelectedPlaceDossier(loc) {
@@ -7096,7 +7377,7 @@ function renderSelectedPlaceDossier(loc) {
             📍 ${loc.lat.toFixed(4)}°N, ${loc.lng.toFixed(4)}°E · ${loc.region}
           </div>
         </div>
-        <button type="button" class="map-reset-btn" onclick="flyToMapPlace('${loc.id}')" style="margin:0;padding:5px 9px;">
+        <button type="button" class="ctrl-btn" onclick="flyToMapPlace('${loc.id}')" style="margin:0;padding:5px 9px;font-size:11.5px;height:auto;border-radius:6px;" title="Центрировать на карте">
           🎯 Фокус
         </button>
       </div>
@@ -7116,9 +7397,6 @@ function renderSelectedPlaceDossier(loc) {
 }
 
 function renderMapSidebar() {
-  const listContainer = document.getElementById("map-places-scroll");
-  if (!listContainer) return;
-
   const searchInput = document.getElementById("map-search-input");
   const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
@@ -7145,34 +7423,10 @@ function renderMapSidebar() {
     badgeEl.textContent = `${filtered.length} из ${MAP_LOCATIONS.length} очагов`;
   }
 
-  if (filtered.length === 0) {
-    listContainer.innerHTML = `
-      <div style="padding:28px 16px;text-align:center;color:var(--ink-500);font-size:13px;">
-        Ничего не найдено по запросу «${query}».
-      </div>
-    `;
-    return;
+  // Auto-focus if query matches 1 location exactly
+  if (query && filtered.length === 1) {
+    selectMapPlace(filtered[0].id, true);
   }
-
-  listContainer.innerHTML = filtered.map(loc => {
-    const isSelected = loc.id === currentSelectedPlaceId;
-    const chipsHtml = loc.persons.map(pid => {
-      const p = PERSONS.find(item => item.id === pid);
-      if (!p) return "";
-      return `<span class="map-place-person-chip">${p.name.split(" ")[0]} (${p.role})</span>`;
-    }).join("");
-
-    return `
-      <div class="map-place-item-card branch-${loc.branch} ${isSelected ? 'selected' : ''}" data-place-id="${loc.id}" onclick="flyToMapPlace('${loc.id}')">
-        <div class="map-place-item-top">
-          <div class="map-place-item-title">${loc.icon} ${loc.shortName}</div>
-          <span class="badge ${loc.branch === 'baronov' ? 'badge-pat' : 'badge-corr'}" style="font-size:10px;">${loc.persons.length} чел.</span>
-        </div>
-        <div class="map-place-item-region">📍 ${loc.region}</div>
-        <div class="map-place-item-chips">${chipsHtml}</div>
-      </div>
-    `;
-  }).join("");
 }
 
 function flyToMapPlace(placeId) {
@@ -7221,6 +7475,7 @@ function resetMapView() {
   clearMapSearch();
   renderMapMarkers();
   renderMapSidebar();
+  closeMobileMapSheet();
   if (rootsMap && typeof L !== "undefined") {
     rootsMap.setView([54.5, 45.0], 5, { animate: true });
   }
@@ -7256,10 +7511,16 @@ function toggleTheme() {
 }
 
 function updateThemeToggleBtn(isDark) {
-  const icon = document.getElementById("theme-toggle-icon");
-  const text = document.getElementById("theme-toggle-text");
-  if (icon) icon.textContent = isDark ? "☀️" : "🌙";
-  if (text) text.textContent = isDark ? "Светлая" : "Тёмная";
+  document.querySelectorAll(".theme-toggle-icon, #theme-toggle-icon").forEach(icon => {
+    icon.textContent = isDark ? "☀️" : "🌙";
+  });
+  document.querySelectorAll(".theme-toggle-text, #theme-toggle-text").forEach(text => {
+    text.textContent = isDark ? "Светлая" : "Тёмная";
+  });
+  const btn = document.getElementById("theme-toggle-btn");
+  if (btn) {
+    btn.setAttribute("title", isDark ? "Включить светлую тему" : "Включить тёмную тему");
+  }
 }
 
 function initThemeUI() {
@@ -7278,6 +7539,13 @@ initCanvasPanZoom();
 renderGallery();
 renderClaims();
 selectPerson("P-0007", false);
+
+try {
+  const urlTab = new URLSearchParams(window.location.search).get('tab') || window.location.hash.replace('#', '');
+  if (urlTab && document.getElementById(urlTab)) {
+    activateTab(urlTab);
+  }
+} catch(e) {}
 </script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </body>
