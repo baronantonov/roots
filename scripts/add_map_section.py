@@ -10,8 +10,8 @@ import sys
 import os
 import shutil
 
-DASHBOARD_PATH = "dashboard.html"
-INDEX_PATH = "index.html"
+DASHBOARD_PATH = sys.argv[1] if len(sys.argv) > 1 else "dashboard.html"
+INDEX_PATH = sys.argv[2] if len(sys.argv) > 2 else "index.html"
 
 # Verify files exist
 if not os.path.exists(DASHBOARD_PATH):
@@ -250,6 +250,9 @@ map_css = """
   transform: translateY(-1px);
 }
 
+.roots-map-element .leaflet-tile-pane {
+  filter: saturate(0.92) contrast(0.98);
+}
 .roots-map-element {
   flex: 1;
   width: 100%;
