@@ -1423,7 +1423,7 @@ html, body {
 @media (max-width: 1024px) {
   .hero-container {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
   }
   .tree-workspace-grid {
     grid-template-columns: 1fr;
@@ -1433,6 +1433,7 @@ html, body {
   }
   .nest-summary-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   /* Slide-Up Bottom Sheet Inspector Drawer */
@@ -1443,14 +1444,15 @@ html, body {
     right: 0;
     height: auto;
     max-height: 86vh;
-    border-radius: 20px 20px 0 0;
+    border-radius: 18px 18px 0 0;
     border: none;
-    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.32);
+    box-shadow: 0 -10px 36px rgba(44, 38, 33, 0.28);
     z-index: 1000;
     transform: translateY(105%);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
+    background: var(--bg-surface);
   }
   .inspector-card.sheet-open {
     transform: translateY(0%);
@@ -1460,7 +1462,7 @@ html, body {
     display: flex !important;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 18px 10px;
+    padding: 10px 18px 8px;
     background: var(--bg-surface);
     border-bottom: 1px solid var(--border-subtle);
     position: sticky;
@@ -1470,8 +1472,8 @@ html, body {
     touch-action: none;
   }
   .sheet-pill {
-    width: 44px;
-    height: 5px;
+    width: 40px;
+    height: 4px;
     background: var(--border-default);
     border-radius: 4px;
   }
@@ -1479,12 +1481,12 @@ html, body {
     background: var(--bg-subtle);
     border: 1px solid var(--border-default);
     border-radius: 50%;
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     color: var(--ink-700);
@@ -1494,28 +1496,28 @@ html, body {
     background: var(--border-default);
   }
   .inspector-scroll {
-    padding: 16px 18px calc(24px + env(safe-area-inset-bottom, 0px));
+    padding: 14px 18px calc(24px + env(safe-area-inset-bottom, 16px));
     -webkit-overflow-scrolling: touch;
   }
 
   .mobile-dossier-pill-btn {
     display: inline-flex !important;
     position: fixed;
-    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    right: 14px;
     background: var(--accent-seal);
     color: #FFFFFF;
     border: 1.5px solid rgba(255, 255, 255, 0.35);
-    padding: 10px 18px;
-    border-radius: 30px;
+    padding: 9px 16px;
+    border-radius: 26px;
     font-family: var(--font-sans);
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 700;
-    box-shadow: 0 8px 24px rgba(140, 45, 25, 0.45);
+    box-shadow: 0 4px 18px rgba(158, 67, 48, 0.38);
     z-index: 995;
     cursor: pointer;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
     -webkit-tap-highlight-color: transparent;
   }
@@ -1527,65 +1529,82 @@ html, body {
 @media (max-width: 768px) {
   .mobile-table-hint {
     display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-seal);
+    background: var(--accent-seal-soft);
+    border: 1px dashed rgba(158, 67, 48, 0.3);
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+    text-align: center;
   }
   .canvas-mobile-hint {
     display: block;
+    font-size: 11px;
+    color: var(--ink-500);
+    text-align: center;
+    margin-bottom: 4px;
   }
   .canvas-header-bar {
-    padding: 10px 12px;
-    gap: 10px;
+    padding: 8px 10px;
+    gap: 6px;
     flex-direction: column;
     align-items: stretch;
-  }
-  .view-mode-switch {
-    display: flex !important;
-    width: 100%;
-    background: var(--bg-subtle);
-    padding: 3px;
-    border-radius: 8px;
-    order: 1;
-  }
-  .btn-mode {
-    flex: 1;
-    justify-content: center;
-    padding: 9px 12px;
-    font-size: 13px;
-    font-weight: 700;
-    border-radius: 6px;
-    text-align: center;
-  }
-  .btn-mode.active {
-    background: #FFFFFF;
-    color: var(--accent-seal);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    background: var(--bg-elevated);
   }
   .canvas-right-tools {
     display: flex !important;
     flex-direction: row;
     align-items: center;
     width: 100%;
-    gap: 8px;
-    order: 2;
+    gap: 6px;
+    order: 1;
   }
-  .person-jump-select {
+  .view-mode-switch {
+    display: flex !important;
     flex: 1;
-    min-width: 0;
-    font-size: 12.5px;
-    padding: 8px 10px;
-    height: 38px;
+    min-width: 130px;
+    background: var(--bg-subtle);
+    padding: 2px;
+    border-radius: 6px;
+  }
+  .btn-mode {
+    flex: 1;
+    justify-content: center;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .btn-mode.active {
+    background: #FFFFFF;
+    color: var(--accent-seal);
+    box-shadow: 0 1px 4px rgba(44, 38, 33, 0.08);
   }
   .zoom-btn-group {
-    height: 38px;
+    height: 32px;
     flex-shrink: 0;
+    border-radius: 6px;
   }
   .ctrl-btn {
-    width: 34px;
-    height: 38px;
-    font-size: 14px;
+    width: 30px;
+    height: 32px;
+    font-size: 13px;
   }
   .zoom-indicator {
-    padding: 0 6px;
-    font-size: 11px;
+    padding: 0 4px;
+    font-size: 10.5px;
+    min-width: 38px;
+  }
+  .person-jump-select {
+    width: 100%;
+    height: 34px;
+    font-size: 12px;
+    padding: 5px 24px 5px 8px;
+    order: 2;
+    margin-top: 1px;
   }
   .branch-filter-pills {
     display: flex !important;
@@ -1593,152 +1612,367 @@ html, body {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    gap: 6px;
+    gap: 5px;
     padding-bottom: 2px;
     scrollbar-width: none;
   }
   .branch-filter-pills::-webkit-scrollbar { display: none; }
   .filter-pill {
-    padding: 7px 12px;
-    font-size: 12px;
+    padding: 5px 10px;
+    font-size: 11.5px;
     font-weight: 600;
     white-space: nowrap;
-    border-radius: 20px;
+    border-radius: 16px;
     flex-shrink: 0;
   }
   .canvas-stage-card {
-    height: 58vh;
-    min-height: 420px;
-    max-height: 560px;
+    height: 60vh;
+    min-height: 440px;
+    max-height: 600px;
+    border-radius: 10px;
+  }
+  .canvas-footer-bar {
+    padding: 6px 10px;
+    font-size: 10.5px;
+    gap: 4px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .canvas-footer-hint {
+    display: none;
+  }
+  .legend-Inline {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    width: 100%;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .legend-Inline::-webkit-scrollbar { display: none; }
+  .legend-Inline .badge {
+    font-size: 9.5px;
+    padding: 2px 5px;
+    white-space: nowrap;
+  }
+
+  /* Mode 2: Generation Grid in List Mode on Mobile */
+  .gen-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .gen-meta {
+    padding: 8px 10px;
+    border-left-width: 3px;
+    border-radius: 4px;
+  }
+  .gen-roman {
+    font-size: 10px;
+  }
+  .gen-title {
+    font-size: 15px;
+    margin-top: 1px;
+  }
+  .gen-era {
+    font-size: 10px;
+    margin-top: 2px;
+  }
+  .gen-cards {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .node-card {
+    padding: 10px 12px;
+    border-radius: 8px;
+  }
+  .node-name {
+    font-size: 15px;
+  }
+  .node-dates {
+    font-size: 11px;
   }
 }
 
 @media (max-width: 640px) {
   .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     padding: 7px 12px;
-    font-size: 10px;
+    font-size: 11px;
+    height: 38px;
+  }
+  .topbar-subtext,
+  .topbar-scope {
+    display: none !important;
   }
   .topbar-left {
-    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
     gap: 6px;
   }
+  .topbar-seal {
+    font-size: 9.5px;
+    padding: 2.5px 6px;
+    letter-spacing: 0.05em;
+  }
   .topbar-right {
-    flex-wrap: wrap;
-    gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size: 10px;
   }
+
   .hero-wrap {
     padding: 14px 12px 16px;
   }
   .hero-kicker {
-    font-size: 10.5px;
-    margin-bottom: 4px;
+    font-size: 10px;
+    margin-bottom: 2px;
   }
   .hero-title {
-    font-size: 22px;
-    line-height: 1.2;
-    margin-bottom: 8px;
+    font-size: 20px;
+    line-height: 1.22;
+    margin-bottom: 6px;
   }
   .hero-sub {
-    font-size: 13px;
+    font-size: 12.5px;
     line-height: 1.5;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
+  .hero-chip-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    padding: 8px 12px !important;
+  }
+  .hero-chip-btn-text-full {
+    display: none !important;
+  }
+  .hero-chip-btn-text-mobile {
+    display: inline !important;
+  }
+
   .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 6px;
   }
   .kpi-card {
-    padding: 10px 12px;
+    padding: 8px 10px;
+    border-radius: 8px;
   }
   .kpi-val {
-    font-size: 24px;
+    font-size: 20px;
   }
   .kpi-lbl {
-    font-size: 10.5px;
-    margin-top: 3px;
+    font-size: 10px;
+    margin-top: 2px;
   }
+
   .app-nav {
     padding: 0 8px;
     gap: 4px;
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 8px;
+    scrollbar-width: none;
   }
   .tab-btn {
-    padding: 11px 12px;
-    font-size: 12.5px;
-    gap: 6px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    padding: 10px 12px;
+    font-size: 12px;
+    gap: 5px;
+    border-radius: 6px 6px 0 0;
   }
   .tab-count {
-    padding: 2px 6px;
-    font-size: 10px;
+    padding: 1px 5px;
+    font-size: 9.5px;
+    border-radius: 8px;
   }
+
   .app-main {
-    padding: 12px 10px 40px;
+    padding: 10px 8px 36px;
   }
   .section-card {
-    padding: 16px 14px;
+    padding: 14px 12px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
+  .section-card h2 {
+    font-size: 20px;
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+  .section-sub {
+    font-size: 12.5px;
+    margin-bottom: 14px;
+  }
+
+  .table-wrap {
+    border-radius: 8px;
   }
   .data-table th, .data-table td {
     padding: 8px 10px;
-    font-size: 12px;
+    font-size: 11.5px;
   }
   .data-table th {
-    font-size: 10.5px;
+    font-size: 10px;
   }
   .data-table {
-    min-width: 520px;
+    min-width: 480px;
   }
+
   .archive-gallery {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)) !important;
-    gap: 14px;
+    grid-template-columns: 1fr !important;
+    gap: 12px;
   }
+  .archive-card {
+    border-radius: 8px;
+  }
+  .archive-img-wrap {
+    height: 190px !important;
+  }
+
+  /* Surname Hero Banner on Mobile */
+  .surname-hero-banner {
+    padding: 16px 12px 14px !important;
+    margin-bottom: 14px !important;
+    border-radius: 10px !important;
+  }
+  .surname-hero-banner h2 {
+    font-size: 20px !important;
+    line-height: 1.22 !important;
+    margin-bottom: 6px !important;
+  }
+  .surname-hero-banner p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 12px !important;
+  }
+
+  .surname-quick-nav {
+    gap: 5px;
+    padding: 2px 0 4px;
+    scroll-snap-type: x mandatory;
+  }
+  .s-nav-btn {
+    scroll-snap-align: start;
+    padding: 5px 11px !important;
+    font-size: 11px !important;
+    border-radius: 14px !important;
+  }
+
   .surname-grid {
     grid-template-columns: 1fr !important;
-    gap: 14px;
+    gap: 12px;
   }
   .surname-card {
-    padding: 16px 16px;
+    padding: 14px 12px;
+    border-radius: 8px;
+    gap: 6px;
+  }
+  .surname-kicker {
+    font-size: 10px;
   }
   .surname-title {
-    font-size: 20px;
+    font-size: 18px;
   }
+  .surname-etym {
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .surname-etym ul {
+    padding-left: 14px;
+    margin-top: 6px;
+  }
+  .surname-etym li {
+    margin-bottom: 4px;
+  }
+
+  .table-search-bar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  #baronov-search-input {
+    width: 100% !important;
+    font-size: 12.5px;
+    padding: 7px 10px;
+    border-radius: 6px;
+  }
+
+  .timeline {
+    margin-left: 4px;
+    padding-left: 16px;
+  }
+  .tl-item {
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+  }
+  .tl-item::before {
+    left: -23px;
+    top: 14px;
+    width: 10px;
+    height: 10px;
+  }
+  .tl-date {
+    font-size: 11.5px;
+  }
+  .tl-place {
+    display: block;
+    margin-left: 0;
+    margin-top: 2px;
+    font-size: 10.5px;
+  }
+  .tl-desc {
+    font-size: 12.5px;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
   .lightbox {
     padding: 8px 6px;
   }
   .lightbox-inner {
     max-height: 96vh;
-    border-radius: 12px;
+    border-radius: 10px;
   }
   .lightbox-bar {
     padding: 10px 12px;
-    font-size: 11.5px;
+    font-size: 11px;
   }
   .lightbox-close {
-    padding: 8px 14px;
-    font-size: 12.5px;
-    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 4px;
   }
   .lightbox-caption {
     padding: 10px 12px;
-    font-size: 12.5px;
+    font-size: 12px;
     max-height: 25vh;
-    overflow-y: auto;
   }
+
   .app-footer {
-    padding: 20px 16px calc(76px + env(safe-area-inset-bottom, 0px));
+    padding: 20px 14px calc(76px + env(safe-area-inset-bottom, 0px));
     font-size: 11.5px;
   }
   .footer-inner {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 10px;
+  }
+  .footer-brand {
+    font-size: 16px;
   }
   .footer-meta {
-    gap: 10px;
-    font-size: 10.5px;
+    gap: 8px;
+    font-size: 10px;
   }
 }
 
@@ -1835,11 +2069,11 @@ html, body {
 <header class="topbar">
   <div class="topbar-left">
     <span class="topbar-seal">ФАМИЛЬНЫЙ АРХИВ</span>
-    <span>ЛЕТОПИСЬ РОДОВ ЕВДОКИМОВЫХ · БАРОНОВЫХ · ШЕПЕЛЕНКО · БЕЛОВЫХ (1795–2026)</span>
+    <span class="topbar-subtext">ЛЕТОПИСЬ РОДОВ ЕВДОКИМОВЫХ · БАРОНОВЫХ · ШЕПЕЛЕНКО · БЕЛОВЫХ (1795–2026)</span>
   </div>
   <div class="topbar-right">
-    <span><span class="status-dot"></span>СТАТУС: <strong>СВЕРЕНО С ГОСАРХИВАМИ (GPS)</strong></span>
-    <span>ОХВАТ: <strong>22 ПЕРСОНЫ · 7 ПОКОЛЕНИЙ · 230 ЛЕТ</strong></span>
+    <span class="topbar-status"><span class="status-dot"></span>СТАТУС: <strong>СВЕРЕНО (GPS)</strong></span>
+    <span class="topbar-scope">ОХВАТ: <strong>22 ПЕРСОНЫ · 7 ПОКОЛЕНИЙ · 230 ЛЕТ</strong></span>
   </div>
 </header>
 
@@ -1855,8 +2089,9 @@ html, body {
         <span class="branch-tag-pat">Ветвь папы</span> — переселенцы Столыпинской реформы 1912 года из Харьковской губернии в Кустанай, послевоенный Самарканд и офицерский гарнизон Петродворца и Стрельны.
       </p>
       <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-        <button type="button" onclick="activateTab('tab-surnames')" class="hero-chip-btn" style="appearance:none;background:rgba(140,45,25,0.08);border:1.5px solid rgba(140,45,25,0.35);color:var(--accent-seal);padding:8px 16px;border-radius:24px;font-family:var(--font-sans);font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(140,45,25,0.08);transition:all 0.15s ease;">
-          <span>📖 Раздел «О фамилиях» (Евдокимовы · Бароновы · Шепеленко · Беловы)</span>
+        <button type="button" onclick="activateTab('tab-surnames')" class="hero-chip-btn" style="appearance:none;background:rgba(158,67,48,0.08);border:1.5px solid rgba(158,67,48,0.35);color:var(--accent-seal);padding:8px 16px;border-radius:24px;font-family:var(--font-sans);font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(158,67,48,0.08);transition:all 0.15s ease;">
+          <span class="hero-chip-btn-text-full">📖 Раздел «О фамилиях» (Евдокимовы · Бароновы · Шепеленко · Беловы)</span>
+          <span class="hero-chip-btn-text-mobile" style="display:none;">📖 Раздел «О фамилиях» (4 рода)</span>
           <span style="font-size:14px;">→</span>
         </button>
       </div>
@@ -1992,7 +2227,7 @@ html, body {
             <span class="badge badge-single">Из памяти семьи</span>
             <span class="badge badge-hypo">Архивный поиск</span>
           </div>
-          <span>💡 Перетаскивайте карту мышью или пальцем · Нажмите на карточку для открытия досье</span>
+          <span class="canvas-footer-hint">💡 Перетаскивайте карту мышью или пальцем · Нажмите на карточку для открытия досье</span>
         </div>
       </div>
 
@@ -2334,7 +2569,7 @@ html, body {
        ==================================================================== -->
   <section class="tab-panel" id="tab-surnames">
     <!-- ГЛАВНЫЙ БАННЕР РАЗДЕЛА «О ФАМИЛИЯХ» -->
-    <div style="background:linear-gradient(135deg, #FAF7F0 0%, #F1ECE0 100%); border:1px solid var(--border-default); border-left:5px solid var(--accent-seal); border-radius:var(--radius-lg); padding:26px 24px; margin-bottom:22px; color:var(--ink-900); box-shadow:var(--shadow-sm);">
+    <div class="surname-hero-banner" style="background:linear-gradient(135deg, #FAF7F0 0%, #F1ECE0 100%); border:1px solid var(--border-default); border-left:5px solid var(--accent-seal); border-radius:var(--radius-lg); padding:26px 24px; margin-bottom:22px; color:var(--ink-900); box-shadow:var(--shadow-sm);">
       <div style="display:inline-block; font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent-seal); background:var(--accent-seal-soft); border:1px solid rgba(158,67,48,0.25); padding:3px 10px; border-radius:20px; margin-bottom:12px;">
         🏛️ Научно-исследовательский раздел · Ономастика & Антропонимика
       </div>
@@ -2546,7 +2781,7 @@ html, body {
           <h2 style="margin:0 0 4px;">Сводная матрица всех 17 персоналий «Баронов Василий» в РГВИА</h2>
           <p class="section-sub" style="margin:0;">Интерактивная база данных участников Первой мировой войны (1914–1918) для верификации и локализации прадеда Василия Баронова (P-0017).</p>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;">
+        <div class="table-search-bar" style="display:flex;align-items:center;gap:10px;">
           <input type="text" id="baronov-search-input" placeholder="🔍 Поиск по полку, уезду, чину..." oninput="filterBaronovTable(this.value)" style="padding:8px 14px;border:1px solid var(--border-dark);border-radius:6px;background:var(--paper-100);font-size:13px;width:260px;color:var(--ink-900);">
           <span id="baronov-table-count" style="font-size:12px;color:var(--ink-500);font-weight:600;white-space:nowrap;">17 записей</span>
         </div>
