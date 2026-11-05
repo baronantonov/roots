@@ -1101,7 +1101,7 @@ html, body {
 }
 
 /* ==========================================================================
-   DESIGNER NODE CARDS (Refined Editorial & Dark Mode Glow)
+   DESIGNER NODE CARDS (Vertical Compact Orientation for Mobile & Desktop)
    ========================================================================== */
 .canvas-node-card {
   width: 100%;
@@ -1110,10 +1110,12 @@ html, body {
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
   border-radius: 12px;
-  padding: 8px 10px 8px 12px;
+  padding: 8px 7px 7px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  text-align: center;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(28, 25, 23, 0.04), 0 2px 8px rgba(28, 25, 23, 0.02);
   transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease, border-color 0.18s ease, opacity 0.2s;
@@ -1127,27 +1129,27 @@ html, body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* Gradient branch indicator strip on the left */
+/* Gradient branch indicator strip on the TOP of vertical card */
 .canvas-node-card::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  bottom: 0;
-  width: 4px;
+  right: 0;
+  height: 3.5px;
   background: var(--border-strong);
   border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-  transition: width 0.15s ease, background 0.15s ease;
+  border-top-right-radius: 12px;
+  transition: height 0.15s ease, background 0.15s ease;
 }
 .canvas-node-card.pat::before {
-  background: linear-gradient(180deg, #25527A 0%, #4D97FF 100%);
+  background: linear-gradient(90deg, #25527A 0%, #4D97FF 100%);
 }
 .canvas-node-card.mat::before {
-  background: linear-gradient(180deg, #9E3A26 0%, #E06C53 100%);
+  background: linear-gradient(90deg, #9E3A26 0%, #E06C53 100%);
 }
 .canvas-node-card.self::before {
-  background: linear-gradient(180deg, #D4AF37 0%, #15803D 100%);
+  background: linear-gradient(90deg, #D4AF37 0%, #15803D 100%);
 }
 
 .canvas-node-card:hover {
@@ -1196,8 +1198,8 @@ html, body {
 
 /* Card Avatar */
 .card-avatar-wrap {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
   border-radius: 50%;
   position: relative;
@@ -1207,6 +1209,7 @@ html, body {
   background: var(--bg-subtle);
   border: 1.5px solid var(--border-default);
   box-shadow: var(--shadow-xs);
+  margin: 1px 0;
 }
 [data-theme="dark"] .card-avatar-wrap {
   background: #1C2332;
@@ -1224,9 +1227,9 @@ html, body {
   right: -2px;
   background: #15803D;
   color: #FFF;
-  font-size: 8.5px;
-  width: 16px;
-  height: 16px;
+  font-size: 7.5px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1234,58 +1237,66 @@ html, body {
   border: 1.5px solid var(--bg-surface);
 }
 .card-avatar-emoji {
-  font-size: 22px;
+  font-size: 19px;
   line-height: 1;
 }
 .card-avatar-rank {
   font-family: var(--font-mono);
-  font-size: 7.5px;
+  font-size: 7px;
   font-weight: 800;
   color: var(--accent-pat);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   margin-top: 1px;
 }
 
-/* Card Text Content */
+/* Card Text Content (Vertical layout) */
 .card-content-wrap {
-  flex: 1;
+  width: 100%;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  text-align: center;
   gap: 1.5px;
 }
 .card-meta-row {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
+  gap: 3px;
+  line-height: 1;
+  padding: 0 1px;
 }
 .card-id {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 700;
   color: var(--ink-500) !important;
+  letter-spacing: -0.02em;
 }
 .card-badge {
   font-family: var(--font-mono);
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  padding: 1px 5px;
-  border-radius: 4px;
+  letter-spacing: 0.01em;
+  padding: 1px 4px;
+  border-radius: 3px;
   white-space: nowrap;
 }
 .card-role {
-  font-size: 8.5px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   color: var(--accent-mat);
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 138px;
   display: block;
+  line-height: 1.1;
+  margin-top: 1px;
 }
 .canvas-node-card.pat .card-role { color: var(--accent-pat); }
 .canvas-node-card.self .card-role { color: #15803D; }
@@ -1293,31 +1304,39 @@ html, body {
 
 .card-name {
   font-family: var(--font-serif);
-  font-size: 14.5px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--ink-900) !important;
-  line-height: 1.15;
-  white-space: nowrap;
+  line-height: 1.12;
+  text-align: center;
+  max-height: 31px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+  margin: 1px 0;
 }
 .card-dates {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 600;
   color: var(--ink-700) !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
+  line-height: 1.15;
 }
 .card-place {
-  font-size: 9px;
+  font-size: 8.5px;
   color: var(--ink-500) !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 138px;
   display: block;
+  line-height: 1.1;
 }
 
 /* Leaflet Dark Mode Adjustments */
@@ -5278,11 +5297,14 @@ const PERSONS = [
     genTitle: "Старший сын Фёдора Белова (пал смертью храбрых)",
     genEra: "1911 – 12 октября 1943 гг.",
     role: "Двоюродный брат деда Шуры (кавалер ордена Красной Звезды)",
+    name: "Белов Иван Фёдорович",
+    dates: "1911–1943",
+    place: "с. Галактионово (Жукотино)",
     birth: "1911 г.",
     birthPlace: "с. Галактионово (Жукотино), Казанская губ. / Чистопольский р-н ТАССР",
     death: "12 октября 1943 г. (умер от ран)",
     deathPlace: "станица Анапская, Краснодарский край (госпиталь ХППГ 750)",
-    status: "Архивно подтверждено ✓",
+    status: "strongly-corroborated",
     statusClass: "st-strong",
     badgeClass: "badge-strong",
     namesAsWritten: "Белов Иван Федорович 1911 г.р.",
@@ -5362,11 +5384,14 @@ const PERSONS = [
     genTitle: "Чистопольская ветвь Беловых (офицер РККА)",
     genEra: "1906 – после 1945 гг.",
     role: "Кандидат в младшие братья прабабушки Агриппины",
+    name: "Белов Владимир Александрович",
+    dates: "1906–после 1945",
+    place: "г. Чистополь, Казанская губ.",
     birth: "23 июня 1906 г.",
     birthPlace: "г. Чистополь, Казанская губ. / Чистопольский р-н ТАССР",
     death: "после 1945 г.",
     deathPlace: "СССР",
-    status: "Гипотеза (на проверке)",
+    status: "hypothesis",
     statusClass: "st-hypo",
     badgeClass: "badge-hypo",
     namesAsWritten: "Белов Владимир Александрович 1906 г.р.",
@@ -5901,18 +5926,18 @@ function openPersonFromAnywhere(personId) {
   }, 60);
 }
 
-function jumpToPerson(personId) {
+function jumpToPerson(personId, openSheet = false) {
   if (!personId) return;
-  selectPerson(personId, true);
+  selectPerson(personId, openSheet);
   const coord = CANVAS_COORDS[personId];
   const vp = document.getElementById("canvas-viewport");
   if (!coord || !vp) return;
   const vw = vp.clientWidth || 900;
   const vh = vp.clientHeight || 650;
-  const targetScale = window.innerWidth <= 768 ? 0.75 : 0.95;
+  const targetScale = window.innerWidth <= 768 ? 0.85 : 1.0;
   canvasState.scale = targetScale;
-  canvasState.x = vw / 2 - (coord.x + 130) * targetScale;
-  canvasState.y = vh / 2 - (coord.y + 57) * targetScale;
+  canvasState.x = vw / 2 - (coord.x + 77) * targetScale;
+  canvasState.y = vh / 2 - (coord.y + 78) * targetScale;
   updateCanvasTransform(true);
 }
 
@@ -5942,13 +5967,13 @@ function filterCanvasBranch(branch) {
   const vw = vp ? vp.clientWidth : 1000;
   const vh = vp ? vp.clientHeight : 700;
   if (branch === "pat") {
-    canvasState.scale = window.innerWidth <= 768 ? 0.55 : 0.78;
-    canvasState.x = vw / 2 - 500 * canvasState.scale;
+    canvasState.scale = window.innerWidth <= 768 ? 0.65 : 0.85;
+    canvasState.x = vw / 2 - 375 * canvasState.scale;
     canvasState.y = vh / 2 - 800 * canvasState.scale;
     updateCanvasTransform(true);
   } else if (branch === "mat") {
-    canvasState.scale = window.innerWidth <= 768 ? 0.55 : 0.78;
-    canvasState.x = vw / 2 - 2250 * canvasState.scale;
+    canvasState.scale = window.innerWidth <= 768 ? 0.65 : 0.85;
+    canvasState.x = vw / 2 - 1485 * canvasState.scale;
     canvasState.y = vh / 2 - 800 * canvasState.scale;
     updateCanvasTransform(true);
   } else {
@@ -6073,54 +6098,54 @@ document.querySelectorAll(".nav-tab-btn, .tab-btn").forEach(btn => {
 // ==========================================================================
 const CANVAS_COORDS = {
   // Gen 7 (~1800)
-  "P-0026": { x: 40,   y: 70,  side: "pat" }, // Барон (родоначальник Бароновых)
-  "P-0015": { x: 1660, y: 70,  side: "mat" }, // Евдоким (родоначальник Евдокимовых)
+  "P-0026": { x: 30,   y: 70,  side: "pat" }, // Барон (родоначальник Бароновых)
+  "P-0015": { x: 925,  y: 70,  side: "mat" }, // Евдоким (родоначальник Евдокимовых)
+  "P-0034": { x: 1890, y: 70,  side: "mat" }, // Грицко Бринюк (казак Глуховской сотни)
+  "P-0035": { x: 2065, y: 70,  side: "mat" }, // Клим Бренюка (казак Глуховской сотни)
 
   // Gen 6 (1820-1861)
-  "P-0025": { x: 40,   y: 280, side: "pat" }, // Баронов (сын Барона)
-  "P-0010": { x: 1660, y: 280, side: "mat" }, // Михаил Евдокимович
+  "P-0025": { x: 30,   y: 280, side: "pat" }, // Баронов (сын Барона)
+  "P-0010": { x: 925,  y: 280, side: "mat" }, // Михаил Евдокимович
+  "P-0033": { x: 1975, y: 280, side: "mat" }, // Авдей Бринюк (VI поколение)
 
   // Gen 5 (1860-1880)
-  "P-0024": { x: 40,   y: 490, side: "pat" }, // Баронов [отец Василия]
-  "P-0020": { x: 680,  y: 490, side: "pat" }, // Иван Шепеленко
-  "P-0009": { x: 1660, y: 490, side: "mat" }, // Никандр Евдокимов
-  "P-0014": { x: 2300, y: 490, side: "mat" }, // Александр Белов
-  "P-0029": { x: 3340, y: 490, side: "mat" }, // Тимофей Бринюк
-  "P-0033": { x: 3340, y: 280, side: "mat" }, // Авдей Бринюк (VI поколение)
-  "P-0034": { x: 3180, y: 70,  side: "mat" }, // Грицко Бринюк (казак Глуховской сотни)
-  "P-0035": { x: 3500, y: 70,  side: "mat" }, // Клим Бренюка (казак Глуховской сотни)
+  "P-0024": { x: 30,   y: 490, side: "pat" }, // Баронов [отец Василия]
+  "P-0020": { x: 390,  y: 490, side: "pat" }, // Иван Шепеленко
+  "P-0009": { x: 925,  y: 490, side: "mat" }, // Никандр Евдокимов
+  "P-0014": { x: 1450, y: 490, side: "mat" }, // Александр Белов
+  "P-0029": { x: 1975, y: 490, side: "mat" }, // Тимофей Бринюк
 
   // Gen 4 (1888-1915)
-  "P-0017": { x: 40,   y: 730, side: "pat" }, // Василий Баронов
-  "P-0023": { x: 360,  y: 730, side: "pat" }, // Баронова [мать Валентина]
-  "P-0018": { x: 680,  y: 730, side: "pat" }, // Клавдия Шепеленко
-  "P-0019": { x: 1000, y: 730, side: "pat" }, // дед Степан
-  "P-0012": { x: 1340, y: 730, side: "mat" }, // Ефим Евдокимов
-  "P-0013": { x: 1660, y: 730, side: "mat" }, // Вера Евдокимова
-  "P-0007": { x: 1980, y: 730, side: "mat" }, // Николай Евдокимов
-  "P-0008": { x: 2300, y: 730, side: "mat" }, // Агриппина Белова
-  "P-0030": { x: 2620, y: 730, side: "mat" }, // Фёдор Александрович Белов (брат Агриппины)
-  "P-0036": { x: 2900, y: 730, side: "mat" }, // Владимир Александрович Белов (кандидат в братья)
-  "P-0027": { x: 3260, y: 730, side: "mat" }, // Афанасий Коваленко (сдвинут)
-  "P-0028": { x: 3580, y: 730, side: "mat" }, // Серафима Бринюк (сдвинута)
+  "P-0017": { x: 30,   y: 730, side: "pat" }, // Василий Баронов
+  "P-0023": { x: 205,  y: 730, side: "pat" }, // Баронова [мать Валентина]
+  "P-0018": { x: 390,  y: 730, side: "pat" }, // Клавдия Шепеленко
+  "P-0019": { x: 565,  y: 730, side: "pat" }, // дед Степан
+  "P-0012": { x: 750,  y: 730, side: "mat" }, // Ефим Евдокимов
+  "P-0013": { x: 925,  y: 730, side: "mat" }, // Вера Евдокимова
+  "P-0007": { x: 1100, y: 730, side: "mat" }, // Николай Евдокимов
+  "P-0008": { x: 1275, y: 730, side: "mat" }, // Агриппина Белова
+  "P-0030": { x: 1450, y: 730, side: "mat" }, // Фёдор Александрович Белов
+  "P-0036": { x: 1625, y: 730, side: "mat" }, // Владимир Александрович Белов
+  "P-0027": { x: 1800, y: 730, side: "mat" }, // Афанасий Коваленко
+  "P-0028": { x: 1975, y: 730, side: "mat" }, // Серафима Бринюк
 
   // Gen 3 (1926-1935)
-  "P-0005": { x: 200,  y: 990, side: "pat" }, // Валентин Баронов
-  "P-0016": { x: 680,  y: 990, side: "pat" }, // Нина Шепеленко
-  "P-0004": { x: 2140, y: 990, side: "mat" }, // Александр Евдокимов
-  "P-0031": { x: 2500, y: 990, side: "mat" }, // Павел Фёдорович Белов (ветеран ВОВ)
-  "P-0032": { x: 2780, y: 990, side: "mat" }, // Иван Фёдорович Белов (герой ВОВ, пал в 1943)
-  "P-0006": { x: 3420, y: 990, side: "mat" }, // Наталья Коваленко (сдвинута)
+  "P-0005": { x: 117,  y: 990, side: "pat" }, // Валентин Баронов
+  "P-0016": { x: 477,  y: 990, side: "pat" }, // Нина Шепеленко
+  "P-0004": { x: 1187, y: 990, side: "mat" }, // Александр Евдокимов
+  "P-0031": { x: 1400, y: 990, side: "mat" }, // Павел Фёдорович Белов (ветеран ВОВ)
+  "P-0032": { x: 1575, y: 990, side: "mat" }, // Иван Фёдорович Белов (герой ВОВ, пал в 1943)
+  "P-0006": { x: 1887, y: 990, side: "mat" }, // Наталья Коваленко
 
   // Gen 2 (1953-1961)
-  "P-0003": { x: 440,  y: 1250, side: "pat" }, // Вадим Баронов
-  "P-0002": { x: 2150, y: 1250, side: "mat" }, // Нина Евдокимова
-  "P-0011": { x: 2630, y: 1250, side: "mat" }, // Виктор Евдокимов
+  "P-0003": { x: 297,  y: 1250, side: "pat" }, // Вадим Баронов
+  "P-0002": { x: 1260, y: 1250, side: "mat" }, // Нина Евдокимова
+  "P-0011": { x: 1440, y: 1250, side: "mat" }, // Виктор Евдокимов
 
   // Gen 1 (1988-2004)
-  "P-0021": { x: 280,  y: 1500, side: "pat" }, // Дарья Баронова
-  "P-0022": { x: 600,  y: 1500, side: "pat" }, // Анастасия Баронова
-  "P-0001": { x: 1295, y: 1500, side: "self" }  // Антон Евдокимов
+  "P-0021": { x: 150,  y: 1500, side: "pat" }, // Дарья Баронова
+  "P-0022": { x: 330,  y: 1500, side: "pat" }, // Анастасия Баронова
+  "P-0001": { x: 778,  y: 1500, side: "self" }  // Антон Евдокимов
 };
 
 
@@ -6250,9 +6275,9 @@ const GEN_BANDS = [
 ];
 
 // Tree World Dimensions & Bounds
-const CONTENT_MIN_X = -500;
-const CONTENT_MAX_X = 3380;
-const CONTENT_WIDTH = 3880;
+const CONTENT_MIN_X = -320;
+const CONTENT_MAX_X = 2260;
+const CONTENT_WIDTH = 2580;
 const CONTENT_MIN_Y = 0;
 const CONTENT_MAX_Y = 1720;
 const CONTENT_HEIGHT = 1720;
@@ -6509,36 +6534,36 @@ function renderSvgCanvas() {
       const stripeClass = isEven ? "gen-stripe-even" : "gen-stripe-odd";
       return `
         <g class="svg-gen-band-group" data-gen="${b.gen}">
-          <!-- Фоновая полоса эпохи от -520 до 3450 -->
-          <rect class="svg-gen-stripe ${stripeClass}" x="-520" y="${b.y}" width="3970" height="${b.h}" />
-          <!-- Верхняя разделительная архитектурная линия с точечной насечкой -->
-          <line class="svg-gen-divider" x1="-520" y1="${b.y}" x2="3450" y2="${b.y}" />
+          <!-- Фоновая полоса эпохи от -320 до 2260 -->
+          <rect class="svg-gen-stripe ${stripeClass}" x="-320" y="${b.y}" width="2580" height="${b.h}" />
+          <!-- Верхняя разделительная архитектурная линия -->
+          <line class="svg-gen-divider" x1="-320" y1="${b.y}" x2="2260" y2="${b.y}" />
           
-          <!-- Левая карточка-плашка эпохи (Информативный исторический контекст, x = -470) -->
-          <g class="svg-epoch-card" transform="translate(-470, ${b.y + 12})">
-            <rect class="svg-epoch-card-bg" x="0" y="0" width="460" height="54" rx="10" />
+          <!-- Левая карточка-плашка эпохи (x = -300) -->
+          <g class="svg-epoch-card" transform="translate(-300, ${b.y + 12})">
+            <rect class="svg-epoch-card-bg" x="0" y="0" width="280" height="54" rx="8" />
             <!-- Римская цифра в медальоне -->
             <rect class="svg-epoch-badge-box" x="8" y="8" width="38" height="38" rx="8" />
             <text class="svg-epoch-roman" x="27" y="34" text-anchor="middle">${b.gen}</text>
             
             <!-- Заголовки и исторический контекст -->
-            <text class="svg-epoch-title" x="56" y="21">${b.title}</text>
-            <text class="svg-epoch-years" x="56" y="35">⏳ ${b.years} · ${b.epoch}</text>
-            <text class="svg-epoch-context" x="56" y="47">${b.context}</text>
+            <text class="svg-epoch-title" x="54" y="21">${b.gen} ПОКОЛЕНИЕ</text>
+            <text class="svg-epoch-years" x="54" y="35">⏳ ${b.years}</text>
+            <text class="svg-epoch-context" x="54" y="47">${b.markerDate} · ${b.epoch.length > 28 ? b.epoch.slice(0, 26) + '…' : b.epoch}</text>
           </g>
           
           <!-- Правый маркер эпохи -->
-          <g class="svg-epoch-right-marker" transform="translate(3220, ${b.y + 16})">
-            <rect class="svg-year-badge-rect" x="0" y="0" width="85" height="24" rx="12" />
-            <text class="svg-year-badge-text" x="42" y="16" text-anchor="middle">${b.markerDate}</text>
+          <g class="svg-epoch-right-marker" transform="translate(2170, ${b.y + 16})">
+            <rect class="svg-year-badge-rect" x="0" y="0" width="80" height="24" rx="12" />
+            <text class="svg-year-badge-text" x="40" y="16" text-anchor="middle">${b.markerDate}</text>
           </g>
         </g>
       `;
     }).join("");
   }
 
-  const CW = 264;
-  const CH = 118;
+  const CW = 154;
+  const CH = 156;
 
   let filialSvg = "";
   CANVAS_FILIAL.forEach(l => {
@@ -6601,9 +6626,9 @@ function renderSvgCanvas() {
       const p = pMap[pid];
       if (!p) return "";
       const sideClass = coord.side;
-      const badgeLabel = p.status === "strongly-corroborated" ? "В АРХИВАХ ✓" :
-                         p.status === "corroborated" ? "ПОДТВЕРЖДЕНО ✓" :
-                         p.status === "single-source" ? "ИЗ ПАМЯТИ" : "АРХИВНЫЙ ПОИСК";
+      const badgeLabel = p.status === "strongly-corroborated" ? "АРХИВ ✓" :
+                         p.status === "corroborated" ? "ПОДТВ. ✓" :
+                         p.status === "single-source" ? "ПАМЯТЬ" : "ПОИСК";
       const badgeClass = p.badgeClass;
 
       let avatarHtml = "";
@@ -6656,7 +6681,8 @@ function renderSvgCanvas() {
         avatarHtml = `<span class="card-avatar-emoji">👨</span>`;
       }
 
-      const cleanDates = p.dates.replace(/\s*\([^)]*\)/g, '').trim();
+      const cleanDates = (p.dates || '').replace(/\s*\([^)]*\)/g, '').trim();
+      const cardName = p.name || p.namesAsWritten || p.id;
       const cardPlace = p.place ? ('📍 ' + p.place) : '';
 
       return `
@@ -6671,7 +6697,7 @@ function renderSvgCanvas() {
                 <span class="card-badge ${badgeClass}">${badgeLabel}</span>
               </div>
               <span class="card-role">${p.role || ''}</span>
-              <div class="card-name" title="${p.name}">${p.name}</div>
+              <div class="card-name" title="${cardName}">${cardName}</div>
               <div class="card-dates">${cleanDates}</div>
               ${cardPlace ? `<div class="card-place" title="${p.place}">${cardPlace}</div>` : ''}
             </div>
@@ -7605,7 +7631,12 @@ renderSvgCanvas();
 initCanvasPanZoom();
 renderGallery();
 renderClaims();
-selectPerson("P-0007", false);
+if (window.innerWidth <= 768) {
+  selectPerson("P-0001", false);
+  setTimeout(() => jumpToPerson("P-0001"), 60);
+} else {
+  selectPerson("P-0007", false);
+}
 
 try {
   const urlTab = new URLSearchParams(window.location.search).get('tab') || window.location.hash.replace('#', '');
