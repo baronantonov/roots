@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
 <title>Родословный архив семьи Евдокимовых и Бароновых (1795–2026)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1371,6 +1372,49 @@ html, body {
 /* ==========================================================================
    11. RESPONSIVE & MOBILE DRAWER ARCHITECTURE (<= 1024px)
    ========================================================================== */
+/* --- MOBILE ERGONOMICS & TABLE HINTS --- */
+.mobile-table-hint {
+  display: none;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-seal);
+  background: rgba(140, 45, 25, 0.06);
+  border: 1px dashed rgba(140, 45, 25, 0.3);
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin: 10px 0 6px;
+  text-align: center;
+}
+
+.canvas-mobile-hint {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  background: rgba(21, 20, 18, 0.82);
+  color: #FFFFFF;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 500;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+  transition: opacity 0.5s ease;
+  white-space: nowrap;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  margin-top: 14px;
+}
+
 @media (max-width: 1024px) {
   .hero-container {
     grid-template-columns: 1fr;
@@ -1380,26 +1424,28 @@ html, body {
     grid-template-columns: 1fr;
   }
   .canvas-stage-card {
-    height: 620px;
+    height: 600px;
   }
   .nest-summary-grid {
     grid-template-columns: 1fr;
   }
 
-  /* Transform Inspector into a clean Slide-Up Bottom Sheet / Drawer (Never a static footer block!) */
+  /* Slide-Up Bottom Sheet Inspector Drawer */
   .inspector-card {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     height: auto;
-    max-height: 84vh;
+    max-height: 86vh;
     border-radius: 20px 20px 0 0;
     border: none;
-    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.32);
     z-index: 1000;
     transform: translateY(105%);
-    transition: transform 0.3s var(--ease-out-expo);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
   }
   .inspector-card.sheet-open {
     transform: translateY(0%);
@@ -1409,12 +1455,14 @@ html, body {
     display: flex !important;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 18px 8px;
+    padding: 12px 18px 10px;
     background: var(--bg-surface);
     border-bottom: 1px solid var(--border-subtle);
     position: sticky;
     top: 0;
     z-index: 10;
+    cursor: grab;
+    touch-action: none;
   }
   .sheet-pill {
     width: 44px;
@@ -1426,35 +1474,137 @@ html, body {
     background: var(--bg-subtle);
     border: 1px solid var(--border-default);
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
     color: var(--ink-700);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .sheet-close-btn:active {
+    background: var(--border-default);
+  }
+  .inspector-scroll {
+    padding: 16px 18px calc(24px + env(safe-area-inset-bottom, 0px));
+    -webkit-overflow-scrolling: touch;
   }
 
   .mobile-dossier-pill-btn {
     display: inline-flex !important;
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    right: 16px;
     background: var(--accent-seal);
     color: #FFFFFF;
-    border: none;
-    padding: 12px 20px;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    padding: 10px 18px;
     border-radius: 30px;
     font-family: var(--font-sans);
-    font-size: 13.5px;
+    font-size: 13px;
     font-weight: 700;
     box-shadow: 0 8px 24px rgba(140, 45, 25, 0.45);
     z-index: 995;
     cursor: pointer;
     align-items: center;
     gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-dossier-pill-btn:active {
+    transform: scale(0.96);
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-table-hint {
+    display: block;
+  }
+  .canvas-mobile-hint {
+    display: block;
+  }
+  .canvas-header-bar {
+    padding: 10px 12px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .view-mode-switch {
+    display: flex !important;
+    width: 100%;
+    background: var(--bg-subtle);
+    padding: 3px;
+    border-radius: 8px;
+    order: 1;
+  }
+  .btn-mode {
+    flex: 1;
+    justify-content: center;
+    padding: 9px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    text-align: center;
+  }
+  .btn-mode.active {
+    background: #FFFFFF;
+    color: var(--accent-seal);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+  .canvas-right-tools {
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+    order: 2;
+  }
+  .person-jump-select {
+    flex: 1;
+    min-width: 0;
+    font-size: 12.5px;
+    padding: 8px 10px;
+    height: 38px;
+  }
+  .zoom-btn-group {
+    height: 38px;
+    flex-shrink: 0;
+  }
+  .ctrl-btn {
+    width: 34px;
+    height: 38px;
+    font-size: 14px;
+  }
+  .zoom-indicator {
+    padding: 0 6px;
+    font-size: 11px;
+  }
+  .branch-filter-pills {
+    display: flex !important;
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 6px;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+  .branch-filter-pills::-webkit-scrollbar { display: none; }
+  .filter-pill {
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .canvas-stage-card {
+    height: 58vh;
+    min-height: 420px;
+    max-height: 560px;
   }
 }
 
@@ -1462,45 +1612,128 @@ html, body {
   .topbar {
     flex-direction: column;
     align-items: flex-start;
+    gap: 4px;
+    padding: 7px 12px;
+    font-size: 10px;
+  }
+  .topbar-left {
+    flex-wrap: wrap;
     gap: 6px;
-    padding: 8px 14px;
+  }
+  .topbar-right {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 10px;
   }
   .hero-wrap {
-    padding: 18px 14px;
+    padding: 14px 12px 16px;
+  }
+  .hero-kicker {
+    font-size: 10.5px;
+    margin-bottom: 4px;
+  }
+  .hero-title {
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .hero-sub {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 12px;
   }
   .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .kpi-card {
+    padding: 10px 12px;
+  }
+  .kpi-val {
+    font-size: 24px;
+  }
+  .kpi-lbl {
+    font-size: 10.5px;
+    margin-top: 3px;
+  }
+  .app-nav {
+    padding: 0 8px;
+    gap: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab-btn {
+    padding: 11px 12px;
+    font-size: 12.5px;
+    gap: 6px;
+  }
+  .tab-count {
+    padding: 2px 6px;
+    font-size: 10px;
   }
   .app-main {
-    padding: 14px 12px 40px;
-  }
-  .canvas-stage-card {
-    height: 560px;
-  }
-  .branch-filter-pills {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    width: 100%;
-    padding-bottom: 2px;
-    scrollbar-width: none;
-  }
-  .branch-filter-pills::-webkit-scrollbar { display: none; }
-  .filter-pill {
-    white-space: nowrap;
-    padding: 5px 10px;
-    font-size: 11.5px;
-  }
-  .person-jump-select {
-    width: 100%;
-  }
-  .gen-row {
-    grid-template-columns: 1fr;
+    padding: 12px 10px 40px;
   }
   .section-card {
-    padding: 18px 16px;
+    padding: 16px 14px;
+  }
+  .data-table th, .data-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  .data-table th {
+    font-size: 10.5px;
+  }
+  .data-table {
+    min-width: 520px;
+  }
+  .archive-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)) !important;
+    gap: 14px;
   }
   .surname-grid {
     grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+  .surname-card {
+    padding: 16px 16px;
+  }
+  .surname-title {
+    font-size: 20px;
+  }
+  .lightbox {
+    padding: 8px 6px;
+  }
+  .lightbox-inner {
+    max-height: 96vh;
+    border-radius: 12px;
+  }
+  .lightbox-bar {
+    padding: 10px 12px;
+    font-size: 11.5px;
+  }
+  .lightbox-close {
+    padding: 8px 14px;
+    font-size: 12.5px;
+    border-radius: 6px;
+  }
+  .lightbox-caption {
+    padding: 10px 12px;
+    font-size: 12.5px;
+    max-height: 25vh;
+    overflow-y: auto;
+  }
+  .app-footer {
+    padding: 20px 16px calc(76px + env(safe-area-inset-bottom, 0px));
+    font-size: 11.5px;
+  }
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .footer-meta {
+    gap: 10px;
+    font-size: 10.5px;
   }
 }
 
@@ -1761,6 +1994,7 @@ html, body {
         </div>
       </div>
 
+      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
       <div class="table-wrap">
         <table class="data-table">
           <thead>
@@ -1903,6 +2137,7 @@ html, body {
     <div class="section-card">
       <h2>Историко-географическая матрица юрисдикций (АТД строго на дату события)</h2>
       <p class="section-sub">Архивный поиск ведётся строго по административно-территориальному делению, действовавшему в день события.</p>
+      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
       <div class="table-wrap">
         <table class="data-table">
           <thead>
@@ -1963,6 +2198,7 @@ html, body {
     <div class="section-card">
       <h2>План следующих архивных запросов (Готовые шаги для углубления древа)</h2>
       <p class="section-sub">Приоритетная очередь точечных запросов в архивы РФ, Казахстана и Узбекистана (готовые бланки запросов лежат в папке <code>queries/</code> проекта).</p>
+      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
       <div class="table-wrap">
         <table class="data-table">
           <thead>
@@ -2012,6 +2248,7 @@ html, body {
     <div class="section-card">
       <h2>Реестр доказанных утверждений (Genealogical Proof Standard — 18 фактов)</h2>
       <p class="section-sub">Каждое утверждение проверено на независимость источников скриптом строгого аудита <code>audit_evidence.py --strict</code> (0 ошибок, 0 предупреждений).</p>
+      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
       <div class="table-wrap">
         <table class="data-table">
           <thead>
@@ -2102,6 +2339,7 @@ html, body {
     <div class="section-card">
       <h2>Новые архивные находки по однофамильцам и родственникам в с. Жукотино и г. Кустанае</h2>
       <p class="section-sub">Документальные записи из фондов РГВИА, НА РТ и Государственного архива Костанайской области (ГАКО), обнаруженные при углублённом поиске по тем же населённым пунктам.</p>
+      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
       <div class="table-wrap">
         <table class="data-table">
           <thead>
@@ -2215,6 +2453,7 @@ html, body {
           <span id="baronov-table-count" style="font-size:12px;color:var(--ink-500);font-weight:600;white-space:nowrap;">17 записей</span>
         </div>
       </div>
+      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
       <div class="table-wrap">
         <table class="data-table" id="baronov-gwar-table">
           <thead>
@@ -2242,7 +2481,7 @@ html, body {
 <!-- 5. MOBILE FLOATING BUTTON & BACKDROP (Hidden on Desktop > 1024px) -->
 <div class="dossier-backdrop" id="dossier-backdrop" onclick="closeMobileDossierSheet()"></div>
 <button type="button" class="mobile-dossier-pill-btn" id="mobile-dossier-btn" onclick="toggleMobileDossierSheet()">
-  <span>📋 Досье предка</span>
+  <span id="mobile-dossier-btn-text">📋 Досье предка</span>
 </button>
 
 <!-- 6. CLEAN ARCHIVAL COLOPHON FOOTER -->
@@ -2947,6 +3186,11 @@ function renderTree() {
 }
 
 function selectPerson(personId, shouldOpenMobile = true) {
+  const btnText = document.getElementById("mobile-dossier-btn-text");
+  const personObj = PERSONS.find(item => item.id === personId);
+  if (btnText && personObj) {
+    btnText.textContent = `📋 Досье: ${personObj.name.split(" ")[0]} (${personObj.role})`;
+  }
   const p = PERSONS.find(item => item.id === personId) || PERSONS[4];
   if (shouldOpenMobile && window.innerWidth <= 1024) {
     openMobileDossierSheet();
@@ -3063,6 +3307,14 @@ function filterCanvasBranch(branch) {
       card.classList.toggle("dimmed", !isMatch);
     }
   });
+  document.querySelectorAll(".node-card").forEach(card => {
+    if (branch === "all") {
+      card.classList.remove("dimmed");
+    } else {
+      const isMatch = card.classList.contains(branch) || card.classList.contains("self");
+      card.classList.toggle("dimmed", !isMatch);
+    }
+  });
 
   const vp = document.getElementById("canvas-viewport");
   const vw = vp ? vp.clientWidth : 1000;
@@ -3135,10 +3387,15 @@ function openLightbox(artId) {
   document.getElementById("lightbox-img").src = a.img;
   document.getElementById("lightbox-caption").innerHTML = `<b>Расшифровка записи:</b> «${a.quote}»<br><span style="color:var(--ink-500)">${a.desc}</span>`;
   document.getElementById("lightbox-modal").classList.add("open");
+  document.body.style.overflow = "hidden";
 }
 
 function closeLightbox() {
   document.getElementById("lightbox-modal").classList.remove("open");
+  const panel = document.getElementById("inspector-panel");
+  if (!panel || !panel.classList.contains("sheet-open")) {
+    document.body.style.overflow = "";
+  }
 }
 
 document.getElementById("lightbox-close-btn").addEventListener("click", closeLightbox);
@@ -3282,9 +3539,9 @@ function resetCanvasZoom(animate = false) {
   const isMobile = window.innerWidth <= 900;
 
   if (isMobile) {
-    canvasState.scale = Math.min(vw / 1600, 0.55);
+    canvasState.scale = 0.68;
     canvasState.x = (vw - 2800 * canvasState.scale) / 2;
-    canvasState.y = -280 * canvasState.scale;
+    canvasState.y = Math.min(10, vh - 1650 * canvasState.scale);
   } else {
     const scaleX = (vw - 24) / 2800;
     const scaleY = (vh - 20) / 1685;
@@ -3339,13 +3596,21 @@ function initCanvasPanZoom() {
     return Math.sqrt(dx * dx + dy * dy);
   }
 
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchIntent = null; // null, "canvas", or "page"
+
   vp.addEventListener("touchstart", (e) => {
     if (e.target.closest(".canvas-node-card, .svg-node-foreign, .svg-node-group")) return;
     if (e.touches.length === 1) {
-      canvasState.isDragging = true;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchIntent = null;
+      canvasState.isDragging = false;
       canvasState.startX = e.touches[0].clientX - canvasState.x;
       canvasState.startY = e.touches[0].clientY - canvasState.y;
     } else if (e.touches.length === 2) {
+      touchIntent = "canvas";
       canvasState.isDragging = false;
       initialPinchDistance = getTouchDistance(e.touches);
       initialPinchScale = canvasState.scale;
@@ -3353,13 +3618,8 @@ function initCanvasPanZoom() {
   }, { passive: true });
 
   vp.addEventListener("touchmove", (e) => {
-    if (e.touches.length === 1 && canvasState.isDragging) {
-      e.preventDefault();
-      canvasState.x = e.touches[0].clientX - canvasState.startX;
-      canvasState.y = e.touches[0].clientY - canvasState.startY;
-      updateCanvasTransform(false);
-    } else if (e.touches.length === 2 && initialPinchDistance) {
-      e.preventDefault();
+    if (e.touches.length === 2 && initialPinchDistance) {
+      if (e.cancelable) e.preventDefault();
       const currentDistance = getTouchDistance(e.touches);
       const pinchFactor = currentDistance / initialPinchDistance;
       const newScale = Math.min(Math.max(initialPinchScale * pinchFactor, 0.32), 2.4);
@@ -3370,37 +3630,74 @@ function initCanvasPanZoom() {
       canvasState.y = midY - (midY - canvasState.y) * (newScale / canvasState.scale);
       canvasState.scale = newScale;
       updateCanvasTransform(false);
+      return;
+    }
+
+    if (e.touches.length === 1) {
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+
+      if (touchIntent === null) {
+        if (Math.abs(dx) > 7 || Math.abs(dy) > 7) {
+          if (Math.abs(dy) > Math.abs(dx) * 1.3) {
+            touchIntent = "page"; // Allow vertical scrolling of document
+            canvasState.isDragging = false;
+            return;
+          } else {
+            touchIntent = "canvas"; // Horizontal drag -> pan canvas
+            canvasState.isDragging = true;
+          }
+        }
+      }
+
+      if (touchIntent === "canvas") {
+        if (e.cancelable) e.preventDefault();
+        canvasState.x = e.touches[0].clientX - canvasState.startX;
+        canvasState.y = e.touches[0].clientY - canvasState.startY;
+        updateCanvasTransform(false);
+      }
     }
   }, { passive: false });
 
   vp.addEventListener("touchend", (e) => {
     if (e.touches.length < 2) initialPinchDistance = null;
-    if (e.touches.length === 0) canvasState.isDragging = false;
+    if (e.touches.length === 0) {
+      canvasState.isDragging = false;
+      touchIntent = null;
+    }
   }, { passive: true });
 
   resetCanvasZoom(false);
 }
 
-function toggleMobileDossierSheet() {
-  const panel = document.getElementById("inspector-panel");
-  const bd = document.getElementById("dossier-backdrop");
-  if (!panel) return;
-  const isOpen = panel.classList.toggle("sheet-open");
-  if (bd) bd.classList.toggle("open", isOpen);
-}
-
 function openMobileDossierSheet() {
   const panel = document.getElementById("inspector-panel");
   const bd = document.getElementById("dossier-backdrop");
+  const btn = document.getElementById("mobile-dossier-btn");
   if (panel) panel.classList.add("sheet-open");
   if (bd) bd.classList.add("open");
+  if (btn) btn.style.opacity = "0";
+  document.body.style.overflow = "hidden";
 }
 
 function closeMobileDossierSheet() {
   const panel = document.getElementById("inspector-panel");
   const bd = document.getElementById("dossier-backdrop");
+  const btn = document.getElementById("mobile-dossier-btn");
   if (panel) panel.classList.remove("sheet-open");
   if (bd) bd.classList.remove("open");
+  if (btn) btn.style.opacity = "1";
+  document.body.style.overflow = "";
+}
+
+function toggleMobileDossierSheet() {
+  const panel = document.getElementById("inspector-panel");
+  if (!panel) return;
+  if (panel.classList.contains("sheet-open")) {
+    closeMobileDossierSheet();
+  } else {
+    openMobileDossierSheet();
+  }
 }
 
 function renderSvgCanvas() {
@@ -3833,8 +4130,49 @@ function filterBaronovTable(query) {
   renderBaronovTable(query);
 }
 
+
+function initSheetDragToClose() {
+  const bar = document.querySelector(".sheet-handle-bar");
+  const panel = document.getElementById("inspector-panel");
+  if (!bar || !panel) return;
+
+  let startY = 0;
+  let currentTranslateY = 0;
+
+  bar.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 1) {
+      startY = e.touches[0].clientY;
+      currentTranslateY = 0;
+      panel.style.transition = "none";
+    }
+  }, { passive: true });
+
+  bar.addEventListener("touchmove", (e) => {
+    if (e.touches.length === 1) {
+      const deltaY = e.touches[0].clientY - startY;
+      if (deltaY > 0) {
+        if (e.cancelable) e.preventDefault();
+        currentTranslateY = deltaY;
+        panel.style.transform = `translateY(${deltaY}px)`;
+      }
+    }
+  }, { passive: false });
+
+  bar.addEventListener("touchend", () => {
+    panel.style.transition = "";
+    if (currentTranslateY > 80) {
+      panel.style.transform = "";
+      closeMobileDossierSheet();
+    } else {
+      panel.style.transform = "";
+    }
+    currentTranslateY = 0;
+  }, { passive: true });
+}
+
 // Initialize Application
 populateJumpSelect();
+initSheetDragToClose();
 renderBaronovTable();
 renderTree();
 renderSvgCanvas();
