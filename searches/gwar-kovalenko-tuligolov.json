@@ -1,0 +1,29 @@
+{
+  "source": "gwar",
+  "query": {
+    "last_name": "Коваленко",
+    "birth_place": "Тулиголов"
+  },
+  "entities": [
+    "chelovek_donesenie",
+    "chelovek_gospital",
+    "chelovek_nagrazhdenie",
+    "chelovek_plen"
+  ],
+  "fingerprint": "5f1ee1605c43ec72967c2abba114f70afb3f23f36c04e2428442be0bbf3f1de7",
+  "total": 0,
+  "hits": [],
+  "next_offset": 0,
+  "started_at": "2026-11-05T20:33:04+00:00",
+  "captured_at": "2026-11-05T20:33:08+00:00",
+  "coverage": {
+    "complete": true,
+    "retrieved_records": 0,
+    "reported_total": 0,
+    "limit": 1000,
+    "reason": "",
+    "scope": "returned-source-records-not-population-census"
+  },
+  "updated_at": "2026-11-05T20:33:08+00:00",
+  "blocked": null
+}

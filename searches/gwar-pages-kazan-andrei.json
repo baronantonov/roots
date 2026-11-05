@@ -1,0 +1,58 @@
+{
+  "source": "gwar-pages",
+  "captured_at": "2026-11-05T20:40:06+00:00",
+  "pages": [
+    {
+      "pages_id": 1509362,
+      "total": 1,
+      "complete": true,
+      "records": [
+        {
+          "id": "1509362",
+          "source": {
+            "obraz_s_oblastyami": "<i src=\"KartotekaPoter/00001046_E/00000053.jpg\"><s c=\"0,0,500,100\" id=\"1411970\"/></i>",
+            "document_id": 1411970,
+            "image_type": "Карточка из госпиталя"
+          },
+          "image_path": "KartotekaPoter/00001046_E/00000053.jpg",
+          "image_url": "https://gwar.mil.ru/cdn/imagesfww/KartotekaPoter/00001046_E/00000053.jpg",
+          "zones": [
+            {
+              "c": "0,0,500,100",
+              "id": "1411970"
+            }
+          ],
+          "raw": "<i src=\"KartotekaPoter/00001046_E/00000053.jpg\"><s c=\"0,0,500,100\" id=\"1411970\"/></i>"
+        }
+      ]
+    },
+    {
+      "pages_id": 1814775,
+      "total": 1,
+      "complete": true,
+      "records": [
+        {
+          "id": "1814775",
+          "source": {
+            "obraz_s_oblastyami": "<i src=\"KartotekaPoter/00001195_Z/00000417.jpg\"><s c=\"0,0,500,100\" id=\"1703075\"/></i>",
+            "document_id": 1703075,
+            "image_type": "Карточка из госпиталя"
+          },
+          "image_path": "KartotekaPoter/00001195_Z/00000417.jpg",
+          "image_url": "https://gwar.mil.ru/cdn/imagesfww/KartotekaPoter/00001195_Z/00000417.jpg",
+          "zones": [
+            {
+              "c": "0,0,500,100",
+              "id": "1703075"
+            }
+          ],
+          "raw": "<i src=\"KartotekaPoter/00001195_Z/00000417.jpg\"><s c=\"0,0,500,100\" id=\"1703075\"/></i>"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "complete": true,
+    "scope": "selected-pages"
+  }
+}
