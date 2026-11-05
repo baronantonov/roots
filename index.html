@@ -13,53 +13,54 @@
    1. DESIGN SYSTEM & TOKENS (Refactoring UI + Top-Design + Web Typography)
    ========================================================================== */
 :root {
-  /* Warm Archival Surfaces (Zero pure black/white halation) */
-  --bg-app: #F4F1EA;
-  --bg-surface: #FFFFFF;
-  --bg-elevated: #FAF8F4;
-  --bg-subtle: #EAE4D7;
-  --bg-glass: rgba(250, 248, 244, 0.92);
-  --bg-obsidian: #151412;
+  /* Warm Archival Surfaces in Soft Harmonious Tones (Zero harsh black/white halation) */
+  --bg-app: #F7F5EE;           /* Soft warm linen paper background */
+  --bg-surface: #FFFFFF;       /* Clean warm white card surface */
+  --bg-elevated: #FAF8F2;      /* Gentle warm ivory cream */
+  --bg-subtle: #EDE8DE;        /* Soft warm stone / parchment tone */
+  --bg-glass: rgba(247, 245, 238, 0.94);
+  --bg-header: #EAE5DA;        /* Warm archival header replacing obsidian */
+  --bg-footer: #E6E0D3;        /* Warm archival footer replacing obsidian */
 
-  /* Typography Ink Hierarchy */
-  --ink-900: #161513;
-  --ink-700: #44403C;
-  --ink-500: #78716C;
-  --ink-400: #A8A29E;
+  /* Typography Ink Hierarchy (Warm charcoal/espresso, soft on the eyes) */
+  --ink-900: #2C2621;          /* Warm dark espresso ink */
+  --ink-700: #544C42;          /* Muted graphite */
+  --ink-500: #7A7062;          /* Neutral archival medium */
+  --ink-400: #9E9383;          /* Soft label gray */
 
   /* Borders & Hairlines */
-  --border-subtle: #E4DECFE6;
-  --border-default: #D5CCBC;
-  --border-strong: #9E9482;
-  --border-dark: #292524;
+  --border-subtle: #EAE4D8;
+  --border-default: #DCD4C5;
+  --border-strong: #B8AD9B;
+  --border-dark: #8C806E;
 
-  /* Brand & Branch Accents */
-  --accent-seal: #8C2D19;       /* Imperial Sealing Wax (Сургуч) */
-  --accent-seal-hover: #6E2010;
-  --accent-seal-soft: #FDF2EF;
-  --accent-pat: #1E4E79;        /* Officer's Prussian Blue (Ветвь папы) */
-  --accent-pat-soft: #EFF6FB;
-  --accent-mat: #8C2D19;        /* Volga Terracotta (Ветвь мамы) */
-  --accent-mat-soft: #FDF5F0;
-  --accent-gold: #B5892E;       /* Archival Gold (Субъект) */
-  --accent-gold-soft: #FCF8EB;
+  /* Brand & Branch Accents (Muted soft archival tones) */
+  --accent-seal: #9E4330;       /* Muted Imperial Sealing Wax / Terracotta */
+  --accent-seal-hover: #7D3121;
+  --accent-seal-soft: #F9ECE8;
+  --accent-pat: #2B577D;        /* Soft Officer's Prussian Slate Blue */
+  --accent-pat-soft: #EDF3F8;
+  --accent-mat: #9E4330;        /* Soft Volga Terracotta */
+  --accent-mat-soft: #F9ECE8;
+  --accent-gold: #9E7430;       /* Soft Archival Honey Gold */
+  --accent-gold-soft: #FAF4E6;
 
   /* GPS Proof Status Tokens */
-  --st-strong-fg: #14532D;
-  --st-strong-bg: #DCFCE7;
-  --st-strong-bd: #86EFAC;
+  --st-strong-fg: #1F6B3D;
+  --st-strong-bg: #EAF5EE;
+  --st-strong-bd: #A3D9B5;
 
-  --st-corr-fg: #1E3A8A;
-  --st-corr-bg: #DBEAFE;
-  --st-corr-bd: #93C5FD;
+  --st-corr-fg: #23527C;
+  --st-corr-bg: #EBF3F9;
+  --st-corr-bd: #A8CCE8;
 
-  --st-single-fg: #475569;
-  --st-single-bg: #F1F5F9;
+  --st-single-fg: #545D68;
+  --st-single-bg: #F1F4F7;
   --st-single-bd: #CBD5E1;
 
-  --st-hypo-fg: #92400E;
-  --st-hypo-bg: #FEF3C7;
-  --st-hypo-bd: #FCD34D;
+  --st-hypo-fg: #8C531B;
+  --st-hypo-bg: #FCF5E8;
+  --st-hypo-bd: #F2D59B;
 
   /* Font Families */
   --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
@@ -107,16 +108,17 @@ html, body {
    2. TOP ARCHIVAL STATUS BAR & EDITORIAL HERO
    ========================================================================== */
 .topbar {
-  background: var(--bg-obsidian);
-  color: #EAE4D7;
-  padding: 8px 24px;
+  background: var(--bg-header);
+  color: var(--ink-700);
+  padding: 10px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-mono);
   font-size: 11.5px;
   letter-spacing: 0.04em;
-  border-bottom: 2px solid var(--accent-seal);
+  border-bottom: 1px solid var(--border-default);
+  box-shadow: 0 1px 3px rgba(44, 38, 33, 0.04);
 }
 .topbar-left {
   display: flex;
@@ -126,7 +128,7 @@ html, body {
 .topbar-seal {
   background: var(--accent-seal);
   color: #FFFFFF;
-  padding: 3px 8px;
+  padding: 3px 9px;
   border-radius: 4px;
   font-weight: 700;
   font-size: 10.5px;
@@ -137,24 +139,24 @@ html, body {
   display: flex;
   align-items: center;
   gap: 20px;
-  color: var(--ink-400);
+  color: var(--ink-500);
 }
 .topbar-right strong {
-  color: #FFFFFF;
+  color: var(--ink-900);
 }
 .status-dot {
   display: inline-block;
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #22C55E;
-  box-shadow: 0 0 8px #22C55E;
+  background: #3B9654;
+  box-shadow: 0 0 6px rgba(59, 150, 84, 0.4);
   margin-right: 6px;
 }
 
 /* Hero Banner */
 .hero-wrap {
-  background: linear-gradient(180deg, #FAF8F4 0%, #F4F1EA 100%);
+  background: linear-gradient(180deg, #FAF8F2 0%, #F5F2EA 100%);
   border-bottom: 1px solid var(--border-default);
   padding: 28px 24px 24px;
 }
@@ -520,10 +522,10 @@ html, body {
   overflow: hidden;
   cursor: grab;
   position: relative;
-  background-color: #F4EFE6;
+  background-color: #FAF8F2;
   background-image: 
-    radial-gradient(#D5CBB8 1.25px, transparent 1.25px),
-    radial-gradient(#E6DFD1 1.25px, #F4EFE6 1.25px);
+    radial-gradient(#DBD3C3 1.25px, transparent 1.25px),
+    radial-gradient(#E8E1D3 1.25px, #FAF8F2 1.25px);
   background-size: 36px 36px;
   background-position: 0 0, 18px 18px;
   user-select: none;
@@ -600,7 +602,7 @@ html, body {
 }
 
 .insp-header {
-  border-bottom: 2px solid var(--ink-900);
+  border-bottom: 2px solid var(--border-strong);
   padding-bottom: 14px;
   margin-bottom: 18px;
 }
@@ -1173,7 +1175,7 @@ html, body {
   border-color: var(--accent-seal);
 }
 .archive-img-wrap {
-  background: #1C1B19;
+  background: #EBE5D8;
   height: 230px;
   overflow: hidden;
   position: relative;
@@ -1274,10 +1276,10 @@ html, body {
    9. CLEAN ARCHIVAL FOOTER (Colophon)
    ========================================================================== */
 .app-footer {
-  background: var(--bg-obsidian);
-  color: #A8A29E;
-  border-top: 3px solid var(--accent-seal);
-  padding: 28px 24px;
+  background: var(--bg-footer);
+  color: var(--ink-700);
+  border-top: 1px solid var(--border-default);
+  padding: 32px 24px 36px;
   margin-top: auto;
   font-size: 13px;
 }
@@ -1291,10 +1293,11 @@ html, body {
   gap: 16px;
 }
 .footer-brand {
-  color: #FFFFFF;
+  color: var(--ink-900);
   font-family: var(--font-serif);
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 700;
+  letter-spacing: 0.02em;
 }
 .footer-meta {
   font-family: var(--font-mono);
@@ -1302,6 +1305,7 @@ html, body {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+  color: var(--ink-500);
 }
 
 /* ==========================================================================
@@ -1310,7 +1314,7 @@ html, body {
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(15, 14, 13, 0.90);
+  background: rgba(36, 32, 28, 0.85);
   backdrop-filter: blur(6px);
   display: none;
   align-items: center;
@@ -1333,13 +1337,14 @@ html, body {
 }
 .lightbox-bar {
   padding: 12px 18px;
-  background: var(--bg-obsidian);
-  color: #FAF8F4;
+  background: var(--bg-header);
+  color: var(--ink-900);
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-mono);
   font-size: 12.5px;
+  border-bottom: 1px solid var(--border-default);
 }
 .lightbox-close {
   background: var(--accent-seal);
@@ -1750,24 +1755,25 @@ html, body {
 .surname-quick-nav::-webkit-scrollbar { display: none; }
 .s-nav-btn {
   appearance: none;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #FFFFFF;
+  border: 1px solid var(--border-default);
   border-radius: 20px;
-  padding: 6px 14px;
+  padding: 7px 15px;
   font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--ink-700);
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s ease;
   flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(44, 38, 33, 0.05);
 }
 .s-nav-btn:hover, .s-nav-btn:active {
-  background: #FFFFFF;
-  color: var(--ink-900);
-  border-color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background: var(--bg-subtle);
+  color: var(--accent-seal);
+  border-color: var(--accent-seal);
+  box-shadow: 0 3px 8px rgba(158, 67, 48, 0.12);
 }
 
 /* Surname Onomastics Cards */
@@ -2328,14 +2334,14 @@ html, body {
        ==================================================================== -->
   <section class="tab-panel" id="tab-surnames">
     <!-- ГЛАВНЫЙ БАННЕР РАЗДЕЛА «О ФАМИЛИЯХ» -->
-    <div style="background:linear-gradient(135deg, rgba(30,41,59,0.96), rgba(15,23,42,0.98)), url('photos/gwar-pow-card-30587701-front.jpg') center/cover; border:1px solid rgba(212,163,89,0.35); border-radius:12px; padding:26px 22px; margin-bottom:20px; color:#F1F5F9; box-shadow:0 8px 24px rgba(0,0,0,0.18);">
-      <div style="display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#D4A359; background:rgba(212,163,89,0.15); border:1px solid rgba(212,163,89,0.35); padding:3px 10px; border-radius:20px; margin-bottom:10px;">
+    <div style="background:linear-gradient(135deg, #FAF7F0 0%, #F1ECE0 100%); border:1px solid var(--border-default); border-left:5px solid var(--accent-seal); border-radius:var(--radius-lg); padding:26px 24px; margin-bottom:22px; color:var(--ink-900); box-shadow:var(--shadow-sm);">
+      <div style="display:inline-block; font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent-seal); background:var(--accent-seal-soft); border:1px solid rgba(158,67,48,0.25); padding:3px 10px; border-radius:20px; margin-bottom:12px;">
         🏛️ Научно-исследовательский раздел · Ономастика & Антропонимика
       </div>
-      <h2 style="font-family:'Cinzel','Trajan Pro',serif; font-size:26px; margin:0 0 10px; color:#FFFFFF; font-weight:700; letter-spacing:0.5px; line-height:1.2;">
+      <h2 style="font-family:var(--font-serif); font-size:28px; margin:0 0 10px; color:var(--ink-900); font-weight:700; letter-spacing:0.02em; line-height:1.2;">
         О фамилиях: происхождение и тайны четырёх родов
       </h2>
-      <p style="font-size:14.5px; line-height:1.65; color:#CBD5E1; margin:0 0 16px; max-width:960px;">
+      <p style="font-size:14.5px; line-height:1.65; color:var(--ink-700); margin:0 0 18px; max-width:980px;">
         Историко-лингвистическая и архивная реконструкция происхождения фамилий <b>Евдокимовых</b>, <b>Бароновых</b>, <b>Шепеленко</b> и <b>Беловых</b>. Синтез классической восточнославянской ономастики (Б. О. Унбегаун, Ю. А. Федосюк, В. А. Никонов, А. В. Суперанская, Ю. К. Редько) с первичными архивными фондами РГВИА, Национального архива Республики Татарстан (НА РТ) и Государственного архива Костанайской области (ГАКО).
       </p>
 
@@ -2508,20 +2514,24 @@ html, body {
           </div>
         </div>
 
-        <div class="surname-card pat" style="grid-column: 1 / -1; background: linear-gradient(135deg, rgba(30,41,59,0.95), rgba(15,23,42,0.98)); color: #F1F5F9; border: 1px solid rgba(212,163,89,0.35);">
-          <div class="surname-kicker" style="color:#D4A359;">🎖️ Великая Отечественная война & Офицерская юность · 1941–1948 гг. [A-0019]</div>
-          <h3 class="surname-title" style="color:#FFFFFF;">Киришский плацдарм, оккупация и поступление в военное автомобильное училище (1948 г.)</h3>
-          <div class="surname-etym" style="color:#CBD5E1;">
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-top:8px;">
-              <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(212,163,89,0.25); border-radius:8px; padding:14px;">
-                <div style="font-weight:700; color:#D4A359; font-size:13.5px; margin-bottom:6px;">🔥 Детство в немецкой оккупации (1941–1943 гг.):</div>
-                <p style="margin:0 0 6px; font-size:13px; line-height:1.55;">Дед встретил войну 12-летним подростком (род. 01.05.1929). В сентябре 1941 года вермахт захватил Кириши, образовав <b>Киришский плацдарм</b> (ожесточённые позиционные бои шли до 4 октября 1943 г.).</p>
-                <p style="margin:0; font-size:13px; line-height:1.55; color:#FDE68A;"><i>«О детстве рассказывал, как жили в оккупации немецких войск во время войны, мальчишки пекли в костре очистки от картошки»</i> — подлинная семейная память о жестоком голоде и подвиге выживания детей войны.</p>
+        <div class="surname-card pat" style="grid-column: 1 / -1; background: linear-gradient(135deg, #FAF7F0 0%, #F2ECE0 100%); color: var(--ink-900); border: 1px solid var(--border-default); border-top: 4px solid var(--accent-pat);">
+          <div class="surname-kicker" style="color:var(--accent-pat);">🎖️ Великая Отечественная война & Офицерская юность · 1941–1948 гг. [A-0019]</div>
+          <h3 class="surname-title" style="color:var(--ink-900);">Киришский плацдарм, оккупация и поступление в военное автомобильное училище (1948 г.)</h3>
+          <div class="surname-etym" style="color:var(--ink-700);">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-top:12px;">
+              <div style="background:#FFFFFF; border:1px solid var(--border-default); border-radius:8px; padding:16px; box-shadow:0 1px 3px rgba(44,38,33,0.04);">
+                <div style="font-weight:700; color:var(--accent-seal); font-size:13.5px; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                  <span>🔥</span> Детство в немецкой оккупации (1941–1943 гг.):
+                </div>
+                <p style="margin:0 0 8px; font-size:13px; line-height:1.55; color:var(--ink-700);">Дед встретил войну 12-летним подростком (род. 01.05.1929). В сентябре 1941 года вермахт захватил Кириши, образовав <b>Киришский плацдарм</b> (ожесточённые позиционные бои шли до 4 октября 1943 г.).</p>
+                <p style="margin:0; font-size:13px; line-height:1.55; color:#7D4B12; background:#FCF8EE; border:1px solid #EADBBA; border-radius:6px; padding:8px 10px;"><i>«О детстве рассказывал, как жили в оккупации немецких войск во время войны, мальчишки пекли в костре очистки от картошки»</i> — подлинная семейная память о жестоком голоде и подвиге выживания детей войны.</p>
               </div>
-              <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(212,163,89,0.25); border-radius:8px; padding:14px;">
-                <div style="font-weight:700; color:#D4A359; font-size:13.5px; margin-bottom:6px;">🎓 1948 год — старт военной службы в автоучилище:</div>
-                <p style="margin:0 0 6px; font-size:13px; line-height:1.55;">В 1948 году в возрасте 19 лет Валентин Васильевич поступил в <b>военное автомобильное училище</b> (1-е Ленинградское Краснознаменное военно-автомобильное училище / РВАТУ), начав путь кадрового офицера автомобильных войск ВС СССР (выпуск лейтенантом в 1951 г.).</p>
-                <p style="margin:0; font-size:13px; line-height:1.55; color:#93C5FD;"><b>Ключ к ЦАМО РФ:</b> Год поступления на службу (1948) и пункт анкеты офицера <i>«Находился ли на оккупированной территории в период ВОВ»</i> дают архивистам 100% точность поиска личного дела и УПК!</p>
+              <div style="background:#FFFFFF; border:1px solid var(--border-default); border-radius:8px; padding:16px; box-shadow:0 1px 3px rgba(44,38,33,0.04);">
+                <div style="font-weight:700; color:var(--accent-pat); font-size:13.5px; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
+                  <span>🎓</span> 1948 год — старт военной службы в автоучилище:
+                </div>
+                <p style="margin:0 0 8px; font-size:13px; line-height:1.55; color:var(--ink-700);">В 1948 году в возрасте 19 лет Валентин Васильевич поступил в <b>военное автомобильное училище</b> (1-е Ленинградское Краснознаменное военно-автомобильное училище / РВАТУ), начав путь кадрового офицера автомобильных войск ВС СССР (выпуск лейтенантом в 1951 г.).</p>
+                <p style="margin:0; font-size:13px; line-height:1.55; color:#1C4E72; background:#EEF4F9; border:1px solid #C9DEEE; border-radius:6px; padding:8px 10px;"><b>Ключ к ЦАМО РФ:</b> Год поступления на службу (1948) и пункт анкеты офицера <i>«Находился ли на оккупированной территории в период ВОВ»</i> дают архивистам 100% точность поиска личного дела и УПК!</p>
               </div>
             </div>
           </div>
