@@ -1567,7 +1567,7 @@ html, body {
   </div>
   <div class="topbar-right">
     <span><span class="status-dot"></span>СТАТУС: <strong>СВЕРЕНО С ГОСАРХИВАМИ (GPS)</strong></span>
-    <span>ОХВАТ: <strong>20 ПРЕДКОВ · 7 ПОКОЛЕНИЙ · 230 ЛЕТ</strong></span>
+    <span>ОХВАТ: <strong>22 ПЕРСОНЫ · 7 ПОКОЛЕНИЙ · 230 ЛЕТ</strong></span>
   </div>
 </header>
 
@@ -1589,8 +1589,8 @@ html, body {
         <div class="kpi-lbl">Поколений рода (1795–2026)</div>
       </div>
       <div class="kpi-card" onclick="activateTab('tab-tree')">
-        <div class="kpi-val">20</div>
-        <div class="kpi-lbl">Установленных предков в древе</div>
+        <div class="kpi-val">22</div>
+        <div class="kpi-lbl">Установленных персоны в древе</div>
       </div>
       <div class="kpi-card" onclick="activateTab('tab-scans')">
         <div class="kpi-val">7</div>
@@ -1609,7 +1609,7 @@ html, body {
   <nav class="app-nav" role="tablist">
     <button class="tab-btn active" data-tab="tab-tree">
       <span>🌳 Интерактивное древо</span>
-      <span class="tab-count">20</span>
+      <span class="tab-count">22</span>
     </button>
     <button class="tab-btn" data-tab="tab-nest">
       <span>🏡 Семейное гнездо Агриппины</span>
@@ -1629,7 +1629,7 @@ html, body {
     </button>
     <button class="tab-btn" data-tab="tab-queue">
       <span>🔍 План поиска и база фактов</span>
-      <span class="tab-count">18</span>
+      <span class="tab-count">19</span>
     </button>
   </nav>
 </div>
@@ -1647,7 +1647,7 @@ html, body {
       <div class="canvas-stage-card">
         <div class="canvas-header-bar">
           <div class="branch-filter-pills">
-            <button type="button" class="filter-pill active" id="filter-all" onclick="filterCanvasBranch('all')">Все предки (20)</button>
+            <button type="button" class="filter-pill active" id="filter-all" onclick="filterCanvasBranch('all')">Все персоны (22)</button>
             <button type="button" class="filter-pill pat" id="filter-pat" onclick="filterCanvasBranch('pat')">⚓ Ветвь папы (Бароновы · Шепеленко)</button>
             <button type="button" class="filter-pill mat" id="filter-mat" onclick="filterCanvasBranch('mat')">🌾 Ветвь мамы (Евдокимовы · Беловы)</button>
           </div>
@@ -2159,9 +2159,9 @@ html, body {
       <div style="margin-top:4px;">Исследование выполнено по международному стандарту генеалогической доказанности (GPS) · Санкт-Петербург — Казань — Пермь — Костанай — Самарканд — Симферополь</div>
     </div>
     <div class="footer-meta">
-      <span>ПЕРСОН: <b>20</b></span>
+      <span>ПЕРСОН: <b>22</b></span>
       <span>АРТЕФАКТОВ: <b>15</b></span>
-      <span>УТВЕРЖДЕНИЙ: <b>18</b></span>
+      <span>УТВЕРЖДЕНИЙ: <b>19</b></span>
       <span>АУДИТ: <b style="color:#4ADE80;">PASSED (0 ERRORS)</b></span>
     </div>
   </div>
@@ -2519,7 +2519,7 @@ const PERSONS = [
     namesAsWritten: "Баронов Вадим Валентинович",
     jurisdiction: "рабочий пос. Стрельна в подчинении Петродворцового райсовета г. Ленинграда (на 22.08.1961)",
     occupation: "Скрыто (правило минимизации данных живых лиц)",
-    relatives: "Отец: Баронов Валентин Васильевич (P-0005); Мать: Шепеленко Нина Александровна (P-0016); Сын: Евдокимов Антон Вадимович (P-0001)",
+    relatives: "Отец: Баронов Валентин Васильевич (P-0005); Мать: Шепеленко Нина Александровна (P-0016); Сын: Евдокимов Антон Вадимович (P-0001); Дочери: Баронова Дарья Вадимовна (P-0021, р. 1998), Баронова Анастасия Вадимовна (P-0022, р. 2004)",
     rationale: "Прямое свидетельство сына [A-0001] + историко-архивная справка по юрисдикции Стрельны на 1961 г. [A-0003].",
     artifacts: ["A-0001", "A-0003"]
   },
@@ -2567,8 +2567,8 @@ const PERSONS = [
     id: "P-0001",
     gen: 1,
     genRoman: "I ПОКОЛЕНИЕ",
-    genTitle: "Основной субъект исследования",
-    genEra: "1988 г.",
+    genTitle: "Субъект исследования и сёстры",
+    genEra: "1988–2004 гг.",
     role: "Заявитель",
     name: "Евдокимов Антон Вадимович",
     dates: "р. 16.08.1988",
@@ -2579,9 +2579,49 @@ const PERSONS = [
     namesAsWritten: "Евдокимов Антон Вадимович; Антон 16.08.88",
     jurisdiction: "г. Ленинград, РСФСР, СССР (на 16.08.1988)",
     occupation: "Заявитель исследования ROOTS",
-    relatives: "Мать: Евдокимова Нина Александровна (P-0002); Отец: Баронов Вадим Валентинович (P-0003)",
+    relatives: "Мать: Евдокимова Нина Александровна (P-0002); Отец: Баронов Вадим Валентинович (P-0003); Сёстры по отцу: Баронова Дарья Вадимовна (P-0021, р. 23.07.1998), Баронова Анастасия Вадимовна (P-0022, р. 12.02.2004)",
     rationale: "Подтверждён собственным заявлением [A-0001] и независимой записью с рукописной датой «Антон 16.08.88» в родословной таблице Ларисы Селиховой [A-0006].",
     artifacts: ["A-0001", "A-0006"]
+  },
+  {
+    id: "P-0021",
+    gen: 1,
+    genRoman: "I ПОКОЛЕНИЕ",
+    genTitle: "Субъект исследования и сёстры",
+    genEra: "1988–2004 гг.",
+    role: "Сестра по отцу",
+    name: "Баронова Дарья Вадимовна",
+    dates: "р. 23.07.1998",
+    place: "г. Санкт-Петербург",
+    status: "single-source",
+    statusClass: "st-single",
+    badgeClass: "badge-single",
+    namesAsWritten: "Баронова Дарья Вадимовна 23 июля 1998",
+    jurisdiction: "г. Санкт-Петербург, Российская Федерация",
+    occupation: "Скрыто (минимизация данных живых лиц)",
+    relatives: "Отец: Баронов Вадим Валентинович (P-0003); Брат по отцу: Евдокимов Антон Вадимович (P-0001); Сестра: Баронова Анастасия Вадимовна (P-0022)",
+    rationale: "Младшая единокровная сестра заявителя по отцовской линии Бароновых; подтверждена прямым свидетельством старшего брата [A-0001].",
+    artifacts: ["A-0001"]
+  },
+  {
+    id: "P-0022",
+    gen: 1,
+    genRoman: "I ПОКОЛЕНИЕ",
+    genTitle: "Субъект исследования и сёстры",
+    genEra: "1988–2004 гг.",
+    role: "Сестра по отцу",
+    name: "Баронова Анастасия Вадимовна",
+    dates: "р. 12.02.2004",
+    place: "г. Санкт-Петербург",
+    status: "single-source",
+    statusClass: "st-single",
+    badgeClass: "badge-single",
+    namesAsWritten: "Баронова Анастасия Вадимовна 12 фев 2004 года",
+    jurisdiction: "г. Санкт-Петербург, Российская Федерация",
+    occupation: "Скрыто (минимизация данных живых лиц)",
+    relatives: "Отец: Баронов Вадим Валентинович (P-0003); Брат по отцу: Евдокимов Антон Вадимович (P-0001); Сестра: Баронова Дарья Вадимовна (P-0021)",
+    rationale: "Младшая единокровная сестра заявителя по отцовской линии Бароновых; подтверждена прямым свидетельством старшего брата [A-0001].",
+    artifacts: ["A-0001"]
   }
 ];
 
@@ -2726,7 +2766,8 @@ const CLAIMS = [
   { id: "C-0015", text: "Прадед по отцу — Баронов Василий (P-0017), ок. 1895–1911 г.р., отец майора В. В. Баронова", status: "hypothesis", statusRu: "Архивный поиск", badge: "badge-hypo", arts: "A-0012", groups: "IG-USER-01" },
   { id: "C-0016", text: "Прабабушка по отцу — Шепеленко Клавдия Ивановна (P-0018), мать Шепеленко Н. А., в 1946 г. в Кустанае (ул. Толстого, 78, семья 5 чел.) получала помощь как семья погибшего воина", status: "strongly-corroborated", statusRu: "В госархивах ✓", badge: "badge-strong", arts: "A-0012; A-0014; A-0015", groups: "IG-USER-01; IG-FATHER-MSG; IG-GAKO-1946" },
   { id: "C-0017", text: "После Великой Отечественной войны Клавдия Ивановна Шепеленко (P-0018) переехала из Кустаная в Самарканд со всей роднёй, включая старшего родственника Степана («дед Степан», P-0019)", status: "single-source", statusRu: "Из памяти семьи", badge: "badge-single", arts: "A-0014", groups: "IG-FATHER-MSG" },
-  { id: "C-0018", text: "Род Шепеленко (отец Клавдии — Иван Шепеленко, P-0020) происходит из Харьковской губернии, откуда в 1912 г. в Столыпинское переселение перебрался в Кустанайский уезд", status: "corroborated", statusRu: "Подтверждено", badge: "badge-corr", arts: "A-0014; A-0015", groups: "IG-FATHER-MSG; IG-HIST-KUSTANAY" }
+  { id: "C-0018", text: "Род Шепеленко (отец Клавдии — Иван Шепеленко, P-0020) происходит из Харьковской губернии, откуда в 1912 г. в Столыпинское переселение перебрался в Кустанайский уезд", status: "corroborated", statusRu: "Подтверждено", badge: "badge-corr", arts: "A-0014; A-0015", groups: "IG-FATHER-MSG; IG-HIST-KUSTANAY" },
+  { id: "C-0019", text: "Младшие сёстры заявителя по отцу Вадиму Валентиновичу Баронову (P-0003) — Баронова Дарья Вадимовна (P-0021, род. 23.07.1998) и Баронова Анастасия Вадимовна (P-0022, род. 12.02.2004)", status: "single-source", statusRu: "Из памяти семьи", badge: "badge-single", arts: "A-0001", groups: "IG-USER-01" }
 ];
 
 // ==========================================================================
@@ -2737,7 +2778,7 @@ function populateJumpSelect() {
   const sel = document.getElementById("person-jump-select");
   if (!sel) return;
   const sorted = [...PERSONS].sort((a, b) => a.gen - b.gen);
-  sel.innerHTML = '<option value="">🔍 Найти предка в древе (20)...</option>' +
+  sel.innerHTML = '<option value="">🔍 Найти персону в древе (22)...</option>' +
     sorted.map(p => `<option value="${p.id}">[Пок. ${p.gen}] ${p.name} — ${p.role}</option>`).join("");
 }
 
@@ -3036,7 +3077,9 @@ const CANVAS_COORDS = {
   "P-0002": { x: 1620, y: 1240, side: "mat" },
   "P-0011": { x: 2050, y: 1240, side: "mat" },
 
-  // Gen 1 (1988)
+  // Gen 1 (1988-2004)
+  "P-0021": { x: 160,  y: 1490, side: "pat" },
+  "P-0022": { x: 520,  y: 1490, side: "pat" },
   "P-0001": { x: 1000, y: 1490, side: "self" }
 };
 
@@ -3056,7 +3099,9 @@ const CANVAS_FILIAL = [
   { from: "P-0014", to: "P-0008", side: "mat" },
   { from: "P-0017", to: "P-0005", side: "pat" },
   { from: "P-0020", to: "P-0018", side: "pat" },
-  { from: "P-0018", to: "P-0016", side: "pat" }
+  { from: "P-0018", to: "P-0016", side: "pat" },
+  { from: "P-0003", to: "P-0021", side: "pat" },
+  { from: "P-0003", to: "P-0022", side: "pat" }
 ];
 
 const GEN_BANDS = [
@@ -3066,7 +3111,7 @@ const GEN_BANDS = [
   { gen: "IV",  label: "IV ПОКОЛЕНИЕ · ПЕРВАЯ МИРОВАЯ ВОЙНА И КУСТАНАЙ (1888–1915)", y: 680, h: 230 },
   { gen: "III", label: "III ПОКОЛЕНИЕ · СОВЕТСКАЯ АРМИЯ И ВОССТАНОВЛЕНИЕ (1926–1935)", y: 935, h: 230 },
   { gen: "II",  label: "II ПОКОЛЕНИЕ · РОДИТЕЛИ И ДЯДЯ (1953–1961)", y: 1195, h: 220 },
-  { gen: "I",   label: "I ПОКОЛЕНИЕ · СУБЪЕКТ ИССЛЕДОВАНИЯ (1988)", y: 1445, h: 220 }
+  { gen: "I",   label: "I ПОКОЛЕНИЕ · СУБЪЕКТ ИССЛЕДОВАНИЯ И СЁСТРЫ (1988–2004)", y: 1445, h: 220 }
 ];
 
 let canvasState = {
@@ -3326,7 +3371,7 @@ function renderSvgCanvas() {
         `;
       } else if (p.id === "P-0010" || p.id === "P-0015" || p.id === "P-0009") {
         avatarHtml = `<span class="card-avatar-emoji">👴</span>`;
-      } else if (p.id === "P-0016" || p.id === "P-0018" || p.id === "P-0002" || p.id === "P-0006" || p.id === "P-0013") {
+      } else if (p.id === "P-0016" || p.id === "P-0018" || p.id === "P-0002" || p.id === "P-0006" || p.id === "P-0013" || p.id === "P-0021" || p.id === "P-0022") {
         avatarHtml = `<span class="card-avatar-emoji">👩</span>`;
       } else if (p.id === "P-0001") {
         avatarHtml = `<span class="card-avatar-emoji">👤</span>`;

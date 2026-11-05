@@ -16,3 +16,5 @@ R-0014,P-0017,father-child,P-0005,biological-and-legal,C-0015,A-0012,,IG-USER-01
 R-0015,P-0018,mother-child,P-0016,biological-and-legal,C-0016,A-0014,,IG-USER-FATHER,single-source,high,Прямое свидетельство сына/внука Баронова В. В. (A-0014); Шепеленко Клавдия Ивановна является матерью Нины Александровны Шепеленко
 R-0016,P-0020,father-child,P-0018,biological-and-legal,C-0018,A-0014;A-0015,,IG-USER-FATHER;IG-HIST-KUSTANAY,corroborated,high,Выведено из отчества Клавдии Ивановны (P-0018) и хроники переселения семьи Шепеленко из Харьковской губ. в 1912 г.
 R-0017,P-0019,household,P-0018,cohabitation-or-kinship,C-0017,A-0014,,IG-USER-FATHER,hypothesis,medium,«Дед Степан» проживал совместно с Клавдией Ивановной Шепеленко и выехал вместе с ней в Самарканд после войны
+R-0018,P-0003,father-child,P-0021,biological-and-legal,C-0019,A-0001,,IG-USER-01,single-source,high,Заявлено старшим братом (P-0001); согласуется с фамилией Баронова и отчеством Вадимовна
+R-0019,P-0003,father-child,P-0022,biological-and-legal,C-0019,A-0001,,IG-USER-01,single-source,high,Заявлено старшим братом (P-0001); согласуется с фамилией Баронова и отчеством Вадимовна
