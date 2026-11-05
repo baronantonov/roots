@@ -93,56 +93,172 @@
 html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Static full screen app, no body scroll */
   background-color: var(--bg-app);
   color: var(--ink-900);
   font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: 14.5px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 /* ==========================================================================
-   2. TOP ARCHIVAL STATUS BAR & EDITORIAL HERO
+   2. TOP ARCHIVAL HEADER & PRIMARY NAVIGATION (Compact, High-Density)
    ========================================================================== */
-.topbar {
+.app-header {
   background: var(--bg-header);
-  color: var(--ink-700);
-  padding: 10px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.04em;
   border-bottom: 1px solid var(--border-default);
-  box-shadow: 0 1px 3px rgba(44, 38, 33, 0.04);
+  box-shadow: 0 1px 3px rgba(44, 38, 33, 0.05);
+  flex-shrink: 0;
+  z-index: 200;
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow: hidden;
 }
-.topbar-left {
+
+.header-main-row {
+  max-width: 1800px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0 16px;
+  height: 52px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
 }
-.topbar-seal {
-  background: var(--accent-seal);
-  color: #FFFFFF;
-  padding: 3px 9px;
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.header-top-subrow {
+  display: contents;
 }
-.topbar-right {
+
+.header-brand {
   display: flex;
   align-items: center;
-  gap: 20px;
-  color: var(--ink-500);
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
 }
-.topbar-right strong {
+.brand-seal {
+  background: var(--accent-seal);
+  color: #FFFFFF;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.brand-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.02em;
   color: var(--ink-900);
+  white-space: nowrap;
+}
+.brand-years {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-500);
+  background: var(--bg-subtle);
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* Center Navigation Tabs */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.header-nav::-webkit-scrollbar { display: none; }
+
+.nav-tab-btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-700);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.nav-tab-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--ink-900);
+}
+.nav-tab-btn.active {
+  background: #FFFFFF;
+  color: var(--accent-seal);
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(44, 38, 33, 0.08);
+  border-color: var(--border-default);
+}
+.nav-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  color: var(--ink-700);
+}
+.nav-tab-btn.active .nav-count {
+  background: var(--accent-seal-soft);
+  color: var(--accent-seal);
+  font-weight: 700;
+}
+
+/* Right Stats Strip in Header */
+.header-stats-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.stat-pill {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-700);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  padding: 3px 8px;
+  border-radius: 14px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.stat-pill strong {
+  color: var(--ink-900);
+  font-weight: 700;
+}
+.stat-pill.gps {
+  background: var(--st-strong-bg);
+  border-color: var(--st-strong-bd);
+  color: var(--st-strong-fg);
+  font-weight: 700;
 }
 .status-dot {
   display: inline-block;
@@ -151,58 +267,9 @@ html, body {
   border-radius: 50%;
   background: #3B9654;
   box-shadow: 0 0 6px rgba(59, 150, 84, 0.4);
-  margin-right: 6px;
 }
 
-/* Hero Banner */
-.hero-wrap {
-  background: linear-gradient(180deg, #FAF8F2 0%, #F5F2EA 100%);
-  border-bottom: 1px solid var(--border-default);
-  padding: 28px 24px 24px;
-}
-.hero-container {
-  max-width: 1560px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 32px;
-  align-items: center;
-}
-.hero-kicker {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--accent-seal);
-  margin: 0 0 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.hero-kicker::before {
-  content: "";
-  display: inline-block;
-  width: 20px;
-  height: 2px;
-  background: var(--accent-seal);
-}
-.hero-title {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: clamp(28px, 3.2vw, 44px);
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  color: var(--ink-900);
-  margin: 0 0 12px;
-}
-.hero-sub {
-  margin: 0;
-  color: var(--ink-700);
-  font-size: 14.5px;
-  line-height: 1.6;
-  max-width: 68ch;
-}
+/* Branch tags for content */
 .branch-tag-pat {
   display: inline-block;
   padding: 1px 7px;
@@ -224,115 +291,68 @@ html, body {
   border: 1px solid rgba(140, 45, 25, 0.2);
 }
 
-/* KPI Strip */
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-.kpi-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  box-shadow: var(--shadow-xs);
-  transition: transform 0.2s var(--ease-out-quart), box-shadow 0.2s var(--ease-out-quart), border-color 0.2s;
-  cursor: pointer;
-}
-.kpi-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--accent-seal);
-}
-.kpi-val {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 1;
-  color: var(--ink-900);
-  font-variant-numeric: tabular-nums;
-}
-.kpi-lbl {
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--ink-500);
-  margin-top: 6px;
-  line-height: 1.3;
-}
-
 /* ==========================================================================
-   3. STICKY APPLICATION NAVIGATION TABS
-   ========================================================================== */
-.app-nav-wrap {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--bg-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-default);
-  box-shadow: 0 2px 10px rgba(22, 21, 19, 0.04);
-}
-.app-nav {
-  max-width: 1560px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.app-nav::-webkit-scrollbar { display: none; }
-
-.tab-btn {
-  appearance: none;
-  background: transparent;
-  border: none;
-  border-bottom: 3px solid transparent;
-  padding: 14px 18px;
-  font-family: var(--font-sans);
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--ink-500);
-  cursor: pointer;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
-}
-.tab-btn:hover {
-  color: var(--ink-900);
-  background: rgba(234, 228, 215, 0.45);
-}
-.tab-btn.active {
-  color: var(--accent-seal);
-  border-bottom-color: var(--accent-seal);
-  background: rgba(140, 45, 25, 0.05);
-}
-.tab-count {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  padding: 1px 6px;
-  border-radius: 10px;
-  background: var(--bg-subtle);
-  color: var(--ink-700);
-}
-.tab-btn.active .tab-count {
-  background: var(--accent-seal);
-  color: #FFFFFF;
-}
-
-/* ==========================================================================
-   4. MAIN WORKSPACE & TAB PANELS
+   3. MAIN WORKSPACE CONTAINER (100% Height, No Body Scroll)
    ========================================================================== */
 .app-main {
   flex: 1;
-  max-width: 1560px;
   width: 100%;
+  height: calc(100vh - 53px);
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* TAB 1: MASTER-DETAIL INTERACTIVE TREE (Full Screen, Static, No Scroll) */
+#tab-tree.tab-panel {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  overflow: hidden;
+  display: none;
+}
+#tab-tree.tab-panel.active {
+  display: block;
+}
+
+.tree-workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 12px;
+  height: 100%;
+  align-items: stretch;
+}
+
+.canvas-stage-card {
+  height: 100%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* TABS 2–6: SCROLLABLE DOCUMENT / DOSSIER PANELS */
+.tab-panel.scrollable {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 24px 28px 60px;
+  display: none;
+}
+.tab-panel.scrollable.active {
+  display: block;
+}
+
+.tab-scroll-inner {
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 20px 24px 48px;
 }
 
 .tab-panel {
@@ -345,27 +365,6 @@ html, body {
 @keyframes fadeInPanel {
   from { opacity: 0; transform: translateY(4px); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ==========================================================================
-   5. TAB 1: MASTER-DETAIL INTERACTIVE TREE WORKSPACE (Zero Footer Bleed!)
-   ========================================================================== */
-.tree-workspace-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 420px;
-  gap: 20px;
-  align-items: stretch;
-}
-
-.canvas-stage-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  height: 840px;
 }
 
 /* Top Control Bar inside Canvas Card */
@@ -570,7 +569,7 @@ html, body {
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  height: 840px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -1427,9 +1426,12 @@ html, body {
   }
   .tree-workspace-grid {
     grid-template-columns: 1fr;
+    height: 100%;
   }
   .canvas-stage-card {
-    height: 600px;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
   }
   .nest-summary-grid {
     grid-template-columns: 1fr;
@@ -1523,6 +1525,78 @@ html, body {
   }
   .mobile-dossier-pill-btn:active {
     transform: scale(0.96);
+  }
+}
+
+@media (max-width: 900px) {
+  .header-main-row {
+    height: auto;
+    padding: 7px 10px 5px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .header-top-subrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 100%;
+    gap: 6px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .header-brand {
+    gap: 5px;
+    min-width: 0;
+    flex-shrink: 0;
+  }
+  .brand-seal {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+  .brand-title {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .brand-years {
+    display: none;
+  }
+  .header-stats-strip {
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .header-stats-strip::-webkit-scrollbar { display: none; }
+  .stat-pill {
+    font-size: 10px;
+    padding: 2px 5px;
+    white-space: nowrap;
+  }
+  .stat-pill-label {
+    display: none;
+  }
+  .header-nav {
+    width: 100%;
+    max-width: 100%;
+    gap: 4px;
+    padding-bottom: 2px;
+    box-sizing: border-box;
+  }
+  .nav-tab-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+  .nav-count {
+    font-size: 9.5px;
+  }
+  #tab-tree.tab-panel {
+    padding: 4px;
   }
 }
 
@@ -1626,9 +1700,9 @@ html, body {
     flex-shrink: 0;
   }
   .canvas-stage-card {
-    height: 60vh;
-    min-height: 440px;
-    max-height: 600px;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
     border-radius: 10px;
   }
   .canvas-footer-bar {
@@ -2065,87 +2139,54 @@ html, body {
 </head>
 <body>
 
-<!-- 1. TOP ARCHIVAL STATUS BAR -->
-<header class="topbar">
-  <div class="topbar-left">
-    <span class="topbar-seal">ФАМИЛЬНЫЙ АРХИВ</span>
-    <span class="topbar-subtext">ЛЕТОПИСЬ РОДОВ ЕВДОКИМОВЫХ · БАРОНОВЫХ · ШЕПЕЛЕНКО · БЕЛОВЫХ (1795–2026)</span>
-  </div>
-  <div class="topbar-right">
-    <span class="topbar-status"><span class="status-dot"></span>СТАТУС: <strong>СВЕРЕНО (GPS)</strong></span>
-    <span class="topbar-scope">ОХВАТ: <strong>22 ПЕРСОНЫ · 7 ПОКОЛЕНИЙ · 230 ЛЕТ</strong></span>
+<!-- 1. TOP ARCHIVAL APPLICATION HEADER & MAIN NAVIGATION -->
+<header class="app-header">
+  <div class="header-main-row">
+    <div class="header-top-subrow">
+      <div class="header-brand" onclick="activateTab('tab-tree')" title="На главную / Интерактивное древо">
+        <span class="brand-seal">РОДОСЛОВНАЯ</span>
+        <span class="brand-title">Евдокимовы · Бароновы</span>
+        <span class="brand-years">1795–2026</span>
+      </div>
+
+      <div class="header-stats-strip">
+        <div class="stat-pill" title="Установленных персон в древе">👥 <strong>22</strong> <span class="stat-pill-label">персоны</span></div>
+        <div class="stat-pill" title="Поколений рода с XVIII века">⏳ <strong>7</strong> <span class="stat-pill-label">пок.</span></div>
+        <div class="stat-pill" title="Исследованных фамильных ветвей">🛡️ <strong>4</strong> <span class="stat-pill-label">рода</span></div>
+        <div class="stat-pill" title="Доказанных артефактов и сканов">📜 <strong>19</strong> <span class="stat-pill-label">арт.</span></div>
+        <div class="stat-pill gps" title="Стандарт доказанности GPS соблюдён на 100%"><span class="status-dot"></span>GPS 100%</div>
+      </div>
+    </div>
+
+    <!-- Основное верхнее меню по разделам архива -->
+    <nav class="header-nav" role="tablist" aria-label="Разделы семейного архива">
+      <button class="nav-tab-btn active" data-tab="tab-tree" onclick="activateTab('tab-tree')">
+        <span>🌳 Древо</span>
+        <span class="nav-count">22</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-surnames" id="tab-btn-surnames" onclick="activateTab('tab-surnames')">
+        <span>📖 О фамилиях</span>
+        <span class="nav-count">4 рода</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-scans" onclick="activateTab('tab-scans')">
+        <span>📜 Сканы</span>
+        <span class="nav-count">11</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-nest" onclick="activateTab('tab-nest')">
+        <span>🏡 Семья (13 детей)</span>
+        <span class="nav-count">13</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-geo" onclick="activateTab('tab-geo')">
+        <span>🗺️ Хронология</span>
+        <span class="nav-count">1800–1988</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-queue" onclick="activateTab('tab-queue')">
+        <span>📑 Запросы GPS</span>
+        <span class="nav-count">19</span>
+      </button>
+    </nav>
   </div>
 </header>
-
-<!-- 2. EDITORIAL HERO -->
-<section class="hero-wrap">
-  <div class="hero-container">
-    <div>
-      <p class="hero-kicker">Интерактивная родословная книга семьи</p>
-      <h1 class="hero-title">Родословное древо Евдокимовых и Бароновых</h1>
-      <p class="hero-sub">
-        Две большие истории, сошедшиеся в Санкт-Петербурге:
-        <span class="branch-tag-mat">Ветвь мамы</span> — волжские крестьяне села Никольское (Жукотино) Казанской губернии, герои Первой мировой войны (127-й Путивльский полк), Пермь и Крым;
-        <span class="branch-tag-pat">Ветвь папы</span> — переселенцы Столыпинской реформы 1912 года из Харьковской губернии в Кустанай, послевоенный Самарканд и офицерский гарнизон Петродворца и Стрельны.
-      </p>
-      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-        <button type="button" onclick="activateTab('tab-surnames')" class="hero-chip-btn" style="appearance:none;background:rgba(158,67,48,0.08);border:1.5px solid rgba(158,67,48,0.35);color:var(--accent-seal);padding:8px 16px;border-radius:24px;font-family:var(--font-sans);font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(158,67,48,0.08);transition:all 0.15s ease;">
-          <span class="hero-chip-btn-text-full">📖 Раздел «О фамилиях» (Евдокимовы · Бароновы · Шепеленко · Беловы)</span>
-          <span class="hero-chip-btn-text-mobile" style="display:none;">📖 Раздел «О фамилиях» (4 рода)</span>
-          <span style="font-size:14px;">→</span>
-        </button>
-      </div>
-    </div>
-    <div class="kpi-grid">
-      <div class="kpi-card" onclick="activateTab('tab-tree')">
-        <div class="kpi-val">7</div>
-        <div class="kpi-lbl">Поколений рода (1795–2026)</div>
-      </div>
-      <div class="kpi-card" onclick="activateTab('tab-tree')">
-        <div class="kpi-val">22</div>
-        <div class="kpi-lbl">Установленных персоны в древе</div>
-      </div>
-      <div class="kpi-card" onclick="activateTab('tab-surnames')" style="border-left:4px solid var(--accent-seal);background:linear-gradient(135deg, #FFFFFF 0%, #FDF7F3 100%);">
-        <div class="kpi-val" style="color:var(--accent-seal);">4 рода</div>
-        <div class="kpi-lbl" style="font-weight:700;color:var(--ink-900);">📖 Раздел «О фамилиях» (этимология & архивы) →</div>
-      </div>
-      <div class="kpi-card" onclick="activateTab('tab-scans')">
-        <div class="kpi-val">11</div>
-        <div class="kpi-lbl">Подлинных сканов и документов</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 3. STICKY APPLICATION NAVIGATION -->
-<div class="app-nav-wrap">
-  <nav class="app-nav" role="tablist">
-    <button class="tab-btn active" data-tab="tab-tree">
-      <span>🌳 Интерактивное древо</span>
-      <span class="tab-count">22</span>
-    </button>
-    <button class="tab-btn" data-tab="tab-surnames" id="tab-btn-surnames">
-      <span>📖 О фамилиях</span>
-      <span class="tab-count">4 рода</span>
-    </button>
-    <button class="tab-btn" data-tab="tab-scans">
-      <span>📜 Архивные сканы</span>
-      <span class="tab-count">11 сканов</span>
-    </button>
-    <button class="tab-btn" data-tab="tab-nest">
-      <span>🏡 Семейное гнездо Агриппины</span>
-      <span class="tab-count">13 детей</span>
-    </button>
-    <button class="tab-btn" data-tab="tab-geo">
-      <span>🗺️ География и летопись</span>
-      <span class="tab-count">1800–1988</span>
-    </button>
-    <button class="tab-btn" data-tab="tab-queue">
-      <span>🔍 План поиска и база фактов</span>
-      <span class="tab-count">19</span>
-    </button>
-  </nav>
-</div>
 
 <!-- 4. MAIN APPLICATION STAGE -->
 <main class="app-main">
@@ -2247,8 +2288,9 @@ html, body {
   <!-- ====================================================================
        ВКЛАДКА 2: БОЛЬШОЕ СЕМЕЙНОЕ ГНЕЗДО ПРАБАБУШКИ АГРИППИНЫ (13 ДЕТЕЙ)
        ==================================================================== -->
-  <section class="tab-panel" id="tab-nest">
-    <div class="section-card">
+  <section class="tab-panel scrollable" id="tab-nest">
+    <div class="tab-scroll-inner">
+      <div class="section-card">
       <h2>Большое семейное гнездо прабабушки Агриппины Александровны (13 детей в одном доме)</h2>
       <p class="section-sub">
         Уникальная семейная история любви, милосердия и стойкости: прабабушка
@@ -2354,24 +2396,28 @@ html, body {
         </table>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- ====================================================================
        ВКЛАДКА 3: АРХИВНЫЕ СКАНЫ И ПЕРВОИСТОЧНИКИ
        ==================================================================== -->
-  <section class="tab-panel" id="tab-scans">
-    <div class="section-card">
-      <h2>Галерея верифицированных артефактов дела и семейных реликвий</h2>
-      <p class="section-sub">Подлинные оцифрованные документы Российского государственного военно-исторического архива (РГВИА, 1915 г.), картотеки военнопленных Первой мировой войны и рукописные семейные таблицы. Нажмите на любой документ для увеличения.</p>
-      <div class="archive-gallery" id="archive-gallery-container"></div>
+  <section class="tab-panel scrollable" id="tab-scans">
+    <div class="tab-scroll-inner">
+      <div class="section-card">
+        <h2>Галерея верифицированных артефактов дела и семейных реликвий</h2>
+        <p class="section-sub">Подлинные оцифрованные документы Российского государственного военно-исторического архива (РГВИА, 1915 г.), картотеки военнопленных Первой мировой войны и рукописные семейные таблицы. Нажмите на любой документ для увеличения.</p>
+        <div class="archive-gallery" id="archive-gallery-container"></div>
+      </div>
     </div>
   </section>
 
   <!-- ====================================================================
        ВКЛАДКА 4: ИСТОРИЧЕСКАЯ ГЕОГРАФИЯ И ХРОНОЛОГИЯ РОДА
        ==================================================================== -->
-  <section class="tab-panel" id="tab-geo">
-    <div class="section-card">
+  <section class="tab-panel scrollable" id="tab-geo">
+    <div class="tab-scroll-inner">
+      <div class="section-card">
       <h2>Хронологическая летопись семьи (1795–1988)</h2>
       <p class="section-sub">Ключевые вехи семейной истории, выстроенные по документальным свидетельствам и архивным фондам.</p>
       <div class="timeline">
@@ -2469,13 +2515,15 @@ html, body {
         </table>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- ====================================================================
        ВКЛАДКА 5: ПЛАН АРХИВНОГО ПОИСКА И БАЗА ФАКТОВ (GPS)
        ==================================================================== -->
-  <section class="tab-panel" id="tab-queue">
-    <div class="section-card">
+  <section class="tab-panel scrollable" id="tab-queue">
+    <div class="tab-scroll-inner">
+      <div class="section-card">
       <h2>План следующих архивных запросов (Готовые шаги для углубления древа)</h2>
       <p class="section-sub">Приоритетная очередь точечных запросов в архивы РФ, Казахстана и Узбекистана (готовые бланки запросов лежат в папке <code>queries/</code> проекта).</p>
       <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
@@ -2562,13 +2610,15 @@ html, body {
         </table>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- ====================================================================
        ВКЛАДКА 6: ПРОИСХОЖДЕНИЕ ФАМИЛИЙ И НОВЫЕ АРХИВНЫЕ НАХОДКИ
        ==================================================================== -->
-  <section class="tab-panel" id="tab-surnames">
-    <!-- ГЛАВНЫЙ БАННЕР РАЗДЕЛА «О ФАМИЛИЯХ» -->
+  <section class="tab-panel scrollable" id="tab-surnames">
+    <div class="tab-scroll-inner">
+      <!-- ГЛАВНЫЙ БАННЕР РАЗДЕЛА «О ФАМИЛИЯХ» -->
     <div class="surname-hero-banner" style="background:linear-gradient(135deg, #FAF7F0 0%, #F1ECE0 100%); border:1px solid var(--border-default); border-left:5px solid var(--accent-seal); border-radius:var(--radius-lg); padding:26px 24px; margin-bottom:22px; color:var(--ink-900); box-shadow:var(--shadow-sm);">
       <div style="display:inline-block; font-family:var(--font-mono); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent-seal); background:var(--accent-seal-soft); border:1px solid rgba(158,67,48,0.25); padding:3px 10px; border-radius:20px; margin-bottom:12px;">
         🏛️ Научно-исследовательский раздел · Ономастика & Антропонимика
@@ -2807,6 +2857,24 @@ html, body {
         </table>
       </div>
     </div>
+
+    <!-- CLEAN ARCHIVAL COLOPHON FOOTER INSIDE SCROLLABLE DOCUMENT -->
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand">Родословный архив семей Евдокимовых и Бароновых</div>
+          <div style="margin-top:4px;">Исследование выполнено по международному стандарту генеалогической доказанности (GPS) · Санкт-Петербург — Казань — Пермь — Костанай — Самарканд — Симферополь</div>
+        </div>
+        <div class="footer-meta">
+          <span>ПЕРСОН: <b>22</b></span>
+          <span>АРТЕФАКТОВ: <b>19</b></span>
+          <span>УТВЕРЖДЕНИЙ: <b>22</b></span>
+          <span>АУДИТ: <b style="color:#4ADE80;">PASSED (0 ERRORS)</b></span>
+        </div>
+      </div>
+    </footer>
+
+    </div>
   </section>
 
 </main>
@@ -2817,23 +2885,7 @@ html, body {
   <span id="mobile-dossier-btn-text">📋 Досье предка</span>
 </button>
 
-<!-- 6. CLEAN ARCHIVAL COLOPHON FOOTER -->
-<footer class="app-footer">
-  <div class="footer-inner">
-    <div>
-      <div class="footer-brand">Родословный архив семей Евдокимовых и Бароновых</div>
-      <div style="margin-top:4px;">Исследование выполнено по международному стандарту генеалогической доказанности (GPS) · Санкт-Петербург — Казань — Пермь — Костанай — Самарканд — Симферополь</div>
-    </div>
-    <div class="footer-meta">
-      <span>ПЕРСОН: <b>22</b></span>
-      <span>АРТЕФАКТОВ: <b>17</b></span>
-      <span>УТВЕРЖДЕНИЙ: <b>19</b></span>
-      <span>АУДИТ: <b style="color:#4ADE80;">PASSED (0 ERRORS)</b></span>
-    </div>
-  </div>
-</footer>
-
-<!-- 7. LIGHTBOX MODAL FOR HIGH-RES ARCHIVAL SCANS -->
+<!-- 6. LIGHTBOX MODAL FOR HIGH-RES ARCHIVAL SCANS -->
 <div class="lightbox" id="lightbox-modal" role="dialog" aria-modal="true">
   <div class="lightbox-inner">
     <div class="lightbox-bar">
@@ -3762,7 +3814,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 function activateTab(tabId) {
-  document.querySelectorAll(".tab-btn").forEach(b => {
+  document.querySelectorAll(".nav-tab-btn, .tab-btn").forEach(b => {
     b.classList.toggle("active", b.getAttribute("data-tab") === tabId);
   });
   document.querySelectorAll(".tab-panel").forEach(p => {
@@ -3773,11 +3825,14 @@ function activateTab(tabId) {
     mobBtn.style.visibility = (tabId === "tab-tree") ? "visible" : "hidden";
   }
   if (tabId === "tab-tree") {
-    setTimeout(() => updateCanvasTransform(false), 40);
+    setTimeout(() => {
+      clampCanvasBounds();
+      updateCanvasTransform(false);
+    }, 40);
   }
 }
 
-document.querySelectorAll(".tab-btn").forEach(btn => {
+document.querySelectorAll(".nav-tab-btn, .tab-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     activateTab(btn.getAttribute("data-tab"));
   });
@@ -3864,7 +3919,44 @@ let canvasState = {
   startY: 0
 };
 
+function clampCanvasBounds() {
+  const vp = document.getElementById("canvas-viewport");
+  if (!vp) return;
+  const vw = vp.clientWidth;
+  const vh = vp.clientHeight;
+  if (!vw || !vh) return;
+
+  const treeW = 2800 * canvasState.scale;
+  const treeH = 1720 * canvasState.scale;
+
+  // Margin buffer so user can pan to outer cards comfortably
+  const marginX = Math.min(vw * 0.22, 160);
+  const marginY = Math.min(vh * 0.22, 130);
+
+  let minX, maxX;
+  if (treeW <= vw) {
+    minX = (vw - treeW) / 2 - marginX;
+    maxX = (vw - treeW) / 2 + marginX;
+  } else {
+    minX = vw - treeW - marginX;
+    maxX = marginX;
+  }
+
+  let minY, maxY;
+  if (treeH <= vh) {
+    minY = (vh - treeH) / 2 - marginY;
+    maxY = (vh - treeH) / 2 + marginY;
+  } else {
+    minY = vh - treeH - marginY;
+    maxY = marginY;
+  }
+
+  canvasState.x = Math.max(minX, Math.min(maxX, canvasState.x));
+  canvasState.y = Math.max(minY, Math.min(maxY, canvasState.y));
+}
+
 function updateCanvasTransform(animate = false) {
+  clampCanvasBounds();
   const g = document.getElementById("canvas-pan-zoom-group");
   if (!g) return;
   g.style.transition = animate ? "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)" : "none";
@@ -3886,20 +3978,22 @@ function zoomCanvas(factor) {
 
 function resetCanvasZoom(animate = false) {
   const vp = document.getElementById("canvas-viewport");
-  const vw = vp ? vp.clientWidth : 1100;
-  const vh = vp ? vp.clientHeight : 700;
+  const vw = vp ? vp.clientWidth : window.innerWidth;
+  const vh = vp ? vp.clientHeight : window.innerHeight;
   const isMobile = window.innerWidth <= 900;
 
   if (isMobile) {
-    canvasState.scale = 0.68;
+    const scaleX = (vw - 16) / 2800;
+    const scaleY = (vh - 16) / 1720;
+    canvasState.scale = Math.min(Math.max(scaleX, scaleY), 0.65);
     canvasState.x = (vw - 2800 * canvasState.scale) / 2;
-    canvasState.y = Math.min(10, vh - 1650 * canvasState.scale);
+    canvasState.y = (vh - 1720 * canvasState.scale) / 2;
   } else {
-    const scaleX = (vw - 24) / 2800;
-    const scaleY = (vh - 20) / 1685;
-    canvasState.scale = Math.min(scaleX, scaleY, 0.82);
+    const scaleX = (vw - 28) / 2800;
+    const scaleY = (vh - 28) / 1720;
+    canvasState.scale = Math.min(Math.max(Math.min(scaleX, scaleY), 0.42), 0.85);
     canvasState.x = (vw - 2800 * canvasState.scale) / 2;
-    canvasState.y = Math.max(8, (vh - 1685 * canvasState.scale) / 2);
+    canvasState.y = (vh - 1720 * canvasState.scale) / 2;
   }
   updateCanvasTransform(animate);
 }
@@ -3948,21 +4042,13 @@ function initCanvasPanZoom() {
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchIntent = null; // null, "canvas", or "page"
-
   vp.addEventListener("touchstart", (e) => {
     if (e.target.closest(".canvas-node-card, .svg-node-foreign, .svg-node-group")) return;
     if (e.touches.length === 1) {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      touchIntent = null;
-      canvasState.isDragging = false;
+      canvasState.isDragging = true;
       canvasState.startX = e.touches[0].clientX - canvasState.x;
       canvasState.startY = e.touches[0].clientY - canvasState.y;
     } else if (e.touches.length === 2) {
-      touchIntent = "canvas";
       canvasState.isDragging = false;
       initialPinchDistance = getTouchDistance(e.touches);
       initialPinchScale = canvasState.scale;
@@ -3985,29 +4071,11 @@ function initCanvasPanZoom() {
       return;
     }
 
-    if (e.touches.length === 1) {
-      const dx = e.touches[0].clientX - touchStartX;
-      const dy = e.touches[0].clientY - touchStartY;
-
-      if (touchIntent === null) {
-        if (Math.abs(dx) > 7 || Math.abs(dy) > 7) {
-          if (Math.abs(dy) > Math.abs(dx) * 1.3) {
-            touchIntent = "page"; // Allow vertical scrolling of document
-            canvasState.isDragging = false;
-            return;
-          } else {
-            touchIntent = "canvas"; // Horizontal drag -> pan canvas
-            canvasState.isDragging = true;
-          }
-        }
-      }
-
-      if (touchIntent === "canvas") {
-        if (e.cancelable) e.preventDefault();
-        canvasState.x = e.touches[0].clientX - canvasState.startX;
-        canvasState.y = e.touches[0].clientY - canvasState.startY;
-        updateCanvasTransform(false);
-      }
+    if (e.touches.length === 1 && canvasState.isDragging) {
+      if (e.cancelable) e.preventDefault();
+      canvasState.x = e.touches[0].clientX - canvasState.startX;
+      canvasState.y = e.touches[0].clientY - canvasState.startY;
+      updateCanvasTransform(false);
     }
   }, { passive: false });
 
@@ -4015,9 +4083,13 @@ function initCanvasPanZoom() {
     if (e.touches.length < 2) initialPinchDistance = null;
     if (e.touches.length === 0) {
       canvasState.isDragging = false;
-      touchIntent = null;
     }
   }, { passive: true });
+
+  window.addEventListener("resize", () => {
+    clampCanvasBounds();
+    updateCanvasTransform(false);
+  });
 
   resetCanvasZoom(false);
 }
