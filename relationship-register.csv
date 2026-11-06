@@ -44,3 +44,7 @@ R-0042,P-0041,father-child,P-0040,biological-and-legal,C-0053,A-0048,,IG-RGVIA-K
 R-0043,P-0041,father-child,P-0027,biological-and-legal,C-0053,A-0048,,IG-RGVIA-KOVALENKO-1915,hypothesis,medium,Вероятный отец Афанасия Коваленко (P-0027) из села Землянка Тулиголовской волости
 R-0044,P-0040,sibling,P-0027,biological,C-0053,A-0048,,IG-RGVIA-KOVALENKO-1915,hypothesis,medium,Братское родство фронтовика Филиппа Андреевича Коваленко и Афанасия Коваленко в селе Землянка
 R-0045,P-0037,kin-cluster,P-0042,biological-or-clan,C-0054,A-0049,,IG-RGVIA-SHEPELENKO-1916,single-source,medium,Родственный кластер кустанайских переселенцев рода Шепеленко первой трети XX века
+R-0046,P-0014,father-child,P-0036,biological-and-legal,C-0060,A-0036;A-0042,,IG-MEMORIAL-RT;IG-CAMO-WW2,corroborated,high,Отец старшего техник-лейтенанта Владимира Александровича Белова (род. 23.06.1906 в Чистополе)
+R-0047,P-0036,sibling,P-0008,biological,C-0060,A-0036;A-0042,,IG-MEMORIAL-RT;IG-CAMO-WW2,corroborated,high,Родной младший брат прабабушки Агриппины Александровны Беловой (1889–1971)
+R-0048,P-0036,sibling,P-0030,biological,C-0060,A-0036;A-0042,,IG-MEMORIAL-RT;IG-CAMO-WW2,corroborated,high,Родной брат репрессированного крестьянина с. Галактионово Фёдора Александровича Белова (род. 1887)
+R-0049,P-0024,father-child,P-0017,biological-and-legal,C-0056,A-0017;A-0018;A-0047,,IG-HIST-KIRISHI-RGIA;IG-RGVIA-BARONOV-POW,corroborated,high,Отец прадеда Василия Николаевича Баронова по кластеру Николаевичей Солецкой волости в РГВИА и РГИА
