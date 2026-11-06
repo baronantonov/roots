@@ -4012,6 +4012,815 @@ html[data-theme="dark"] input {
   margin-bottom: 0;
 }
 
+/* ==========================================================================
+   TASK 1: FAMILY MEMORIAL & CELEBRATION CALENDAR STYLES
+   ========================================================================== */
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.calendar-hero {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.calendar-hero-content {
+  max-width: 680px;
+}
+.calendar-hero-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-seal);
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+}
+.calendar-hero-title {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--ink-900);
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+.calendar-hero-subtitle {
+  font-size: 14px;
+  color: var(--ink-700);
+  line-height: 1.5;
+  margin: 0;
+}
+.calendar-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cal-btn-export {
+  appearance: none;
+  background: var(--accent-seal);
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(158, 58, 38, 0.25);
+}
+.cal-btn-export:hover {
+  background: var(--accent-seal-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(158, 58, 38, 0.35);
+}
+.calendar-filter-bar {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cal-type-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.cal-type-filter-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-family: var(--font-mono);
+  margin-right: 4px;
+}
+.cal-filter-btn {
+  appearance: none;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
+  color: var(--ink-700);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cal-filter-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--ink-900);
+}
+.cal-filter-btn.active {
+  background: var(--accent-pat);
+  border-color: var(--accent-pat);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+.cal-filter-btn .badge {
+  background: rgba(255, 255, 255, 0.22);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+}
+.cal-filter-btn:not(.active) .badge {
+  background: var(--border-default);
+  color: var(--ink-700);
+}
+.cal-months-strip {
+  display: flex;
+  overflow-x: auto;
+  gap: 5px;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.cal-months-strip::-webkit-scrollbar { display: none; }
+.cal-month-btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--ink-700);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.12s ease;
+}
+.cal-month-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--ink-900);
+}
+.cal-month-btn.active {
+  background: var(--accent-seal-soft);
+  color: var(--accent-seal);
+  border-color: rgba(158, 58, 38, 0.25);
+}
+.cal-upcoming-highlight {
+  background: linear-gradient(135deg, rgba(158, 58, 38, 0.06), rgba(37, 82, 122, 0.05));
+  border: 1px solid rgba(158, 58, 38, 0.2);
+  border-radius: 10px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.cal-upcoming-icon {
+  font-size: 28px;
+}
+.cal-upcoming-text {
+  font-size: 13.5px;
+  color: var(--ink-800);
+  line-height: 1.45;
+}
+.cal-upcoming-text strong {
+  color: var(--accent-seal);
+}
+.calendar-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 16px;
+}
+.cal-event-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  position: relative;
+}
+.cal-event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  border-color: var(--border-strong);
+}
+.cal-event-card.jubilee {
+  border-left: 4px solid var(--accent-seal);
+  background: linear-gradient(to right, var(--accent-seal-soft), var(--bg-surface) 40%);
+}
+.cal-date-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  padding: 8px 6px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.cal-date-day {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-seal);
+}
+.cal-date-month {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+.cal-date-year {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--ink-400);
+  margin-top: 2px;
+}
+.cal-card-body {
+  flex: 1;
+  min-width: 0;
+}
+.cal-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.cal-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.cal-badge-birth {
+  background: rgba(37, 82, 122, 0.1);
+  color: var(--accent-pat);
+}
+.cal-badge-mem {
+  background: rgba(120, 113, 108, 0.12);
+  color: var(--ink-700);
+}
+.cal-badge-jubilee {
+  background: var(--accent-seal-soft);
+  color: var(--accent-seal);
+  font-weight: 700;
+}
+.cal-person-name {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin: 0 0 3px 0;
+  cursor: pointer;
+  transition: color 0.12s ease;
+}
+.cal-person-name:hover {
+  color: var(--accent-seal);
+  text-decoration: underline;
+}
+.cal-person-rel {
+  font-size: 12px;
+  color: var(--accent-pat);
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+.cal-event-desc {
+  font-size: 12.8px;
+  line-height: 1.5;
+  color: var(--ink-700);
+  margin: 0 0 10px 0;
+}
+.cal-card-actions {
+  display: flex;
+  gap: 8px;
+}
+.cal-btn-dossier {
+  appearance: none;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
+  color: var(--ink-800);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.12s ease;
+}
+.cal-btn-dossier:hover {
+  background: var(--border-default);
+  color: var(--ink-900);
+}
+
+/* ==========================================================================
+   TASK 2: FAMILY LEGENDS & FACT-CHECKING STYLES
+   ========================================================================== */
+.legends-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.legends-hero {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+.legends-hero-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-seal);
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+}
+.legends-hero-title {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--ink-900);
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+.legends-hero-subtitle {
+  font-size: 14px;
+  color: var(--ink-700);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 820px;
+}
+.legends-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.legend-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 22px 24px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.legend-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  border-color: var(--border-strong);
+}
+.legend-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.legend-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.legend-case-number {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--ink-500);
+}
+.legend-card-title {
+  font-size: 18.5px;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin: 0;
+  line-height: 1.3;
+}
+.legend-card-branch {
+  font-size: 12.5px;
+  color: var(--accent-pat);
+  font-weight: 600;
+}
+.legend-verdict-badge {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.verdict-busted {
+  background: rgba(220, 38, 38, 0.09);
+  color: #DC2626;
+  border: 1px solid rgba(220, 38, 38, 0.22);
+}
+.verdict-confirmed {
+  background: rgba(16, 185, 129, 0.09);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.22);
+}
+.verdict-sensational {
+  background: var(--accent-seal-soft);
+  color: var(--accent-seal);
+  border: 1px solid rgba(158, 58, 38, 0.28);
+}
+.legend-split-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (max-width: 768px) {
+  .legend-split-box {
+    grid-template-columns: 1fr;
+  }
+}
+.legend-col {
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.legend-col-myth {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+}
+.legend-col-truth {
+  background: rgba(37, 82, 122, 0.04);
+  border: 1px solid rgba(37, 82, 122, 0.18);
+}
+.legend-col-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend-col-myth .legend-col-title {
+  color: var(--ink-700);
+}
+.legend-col-truth .legend-col-title {
+  color: var(--accent-pat);
+}
+.legend-col-text {
+  color: var(--ink-800);
+  margin: 0;
+}
+.legend-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+.legend-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.legend-sources-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-500);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+.legend-source-chip {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-default);
+  color: var(--ink-700);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.legend-btn-link {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--border-default);
+  color: var(--ink-800);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.12s ease;
+}
+.legend-btn-link:hover {
+  background: var(--border-default);
+  color: var(--ink-900);
+}
+
+/* ==========================================================================
+   TASK 3: MILITARY GLORY & FAMILY RELICS STYLES
+   ========================================================================== */
+.glory-container {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.glory-hero {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+.glory-hero-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-seal);
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+}
+.glory-hero-title {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  line-height: 1.15;
+  color: var(--ink-900);
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+.glory-hero-subtitle {
+  font-size: 14px;
+  color: var(--ink-700);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 820px;
+}
+.glory-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: 10px;
+  margin-top: 10px;
+}
+.glory-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.glory-section-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: var(--bg-subtle);
+  color: var(--ink-700);
+  font-family: var(--font-mono);
+}
+.glory-heroes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 18px;
+}
+.war-hero-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  position: relative;
+}
+.war-hero-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  border-color: var(--border-strong);
+}
+.war-hero-header {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.war-hero-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-default);
+  flex-shrink: 0;
+  background: var(--bg-subtle);
+}
+.war-hero-avatar-fallback {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: var(--bg-subtle);
+  border: 2px solid var(--border-default);
+  flex-shrink: 0;
+}
+.war-hero-meta {
+  flex: 1;
+  min-width: 0;
+}
+.war-hero-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin: 0 0 3px 0;
+  cursor: pointer;
+}
+.war-hero-name:hover {
+  color: var(--accent-seal);
+  text-decoration: underline;
+}
+.war-hero-rank {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent-seal);
+  margin-bottom: 2px;
+}
+.war-hero-unit {
+  font-size: 11.5px;
+  color: var(--ink-500);
+  font-family: var(--font-mono);
+}
+.war-hero-awards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.award-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(158, 58, 38, 0.08);
+  color: var(--accent-seal);
+  border: 1px solid rgba(158, 58, 38, 0.2);
+}
+.war-hero-citation {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-800);
+  background: var(--bg-subtle);
+  padding: 10px 12px;
+  border-radius: 6px;
+  border-left: 3px solid var(--accent-seal);
+  margin: 0;
+}
+.war-hero-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+}
+.war-hero-archive {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--ink-500);
+}
+.war-hero-btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--border-default);
+  color: var(--ink-800);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.12s ease;
+}
+.war-hero-btn:hover {
+  background: var(--border-default);
+  color: var(--ink-900);
+}
+
+/* RELICS MUSEUM CARDS */
+.relics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
+.relic-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.relic-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+.relic-preview-wrap {
+  width: 100%;
+  height: 180px;
+  background: var(--bg-subtle);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.relic-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+.relic-card:hover .relic-preview-img {
+  transform: scale(1.04);
+}
+.relic-body {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.relic-epoch {
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-seal);
+  letter-spacing: 0.5px;
+}
+.relic-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin: 0;
+  line-height: 1.3;
+}
+.relic-desc {
+  font-size: 12.8px;
+  line-height: 1.5;
+  color: var(--ink-700);
+  margin: 0;
+  flex: 1;
+}
+.relic-custodian {
+  font-size: 11.5px;
+  color: var(--ink-500);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 8px;
+  margin-top: 4px;
+}
+
 </style>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
@@ -4064,6 +4873,18 @@ html[data-theme="dark"] input {
       <button class="nav-tab-btn" data-tab="tab-timeline" id="tab-btn-timeline" onclick="activateTab('tab-timeline')">
         <span>⏳ Хронология</span>
         <span class="nav-count">1500–1988</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-calendar" id="tab-btn-calendar" onclick="activateTab('tab-calendar')">
+        <span>📅 Календарь</span>
+        <span class="nav-count">14 дат</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-legends" id="tab-btn-legends" onclick="activateTab('tab-legends')">
+        <span>🕵️ Легенды</span>
+        <span class="nav-count">6 тайн</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-glory" id="tab-btn-glory" onclick="activateTab('tab-glory')">
+        <span>🎖️ Ратная слава</span>
+        <span class="nav-count">Герои & Реликвии</span>
       </button>
     </nav>
   </div>
@@ -4900,6 +5721,639 @@ html[data-theme="dark"] input {
         </div>
       </div>
     </footer>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       ВКЛАДКА: КАЛЕНДАРЬ ПАМЯТНЫХ ДАТ РОДА (Евдокимовы, Бароновы, Беловы, Шепеленко)
+       ==================================================================== -->
+  <section class="tab-panel scrollable" id="tab-calendar">
+    <div class="tab-scroll-inner calendar-container">
+      
+      <!-- HERO BANNER -->
+      <div class="calendar-hero">
+        <div class="calendar-hero-content">
+          <span class="calendar-hero-kicker">СЕМЕЙНЫЙ КРУГ И ПАМЯТЬ ПОКОЛЕНИЙ</span>
+          <h2 class="calendar-hero-title">Календарь памятных дат рода</h2>
+          <p class="calendar-hero-subtitle">Дни рождения ныне живущих родственников, дни светлой памяти ушедших предков, юбилеи и исторические вехи семьи (1886–2026).</p>
+        </div>
+        <div class="calendar-hero-actions">
+          <button type="button" class="cal-btn-export" onclick="exportRootsCalendarICS()" title="Скачать календарь для iPhone, Google Calendar, Outlook">
+            <span>📥</span> <span>Экспорт в iCal (.ics)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- FILTER & MONTH BAR -->
+      <div class="calendar-filter-bar">
+        <div class="cal-type-filters">
+          <span class="cal-type-filter-label">Категория:</span>
+          <button type="button" class="cal-filter-btn active" data-cal-filter="all" onclick="filterCalendar('all')">
+            <span>📅 Все события</span> <span class="badge" id="cal-count-all">14</span>
+          </button>
+          <button type="button" class="cal-filter-btn" data-cal-filter="living" onclick="filterCalendar('living')">
+            <span>🎉 Дни рождения</span> <span class="badge" id="cal-count-living">6</span>
+          </button>
+          <button type="button" class="cal-filter-btn" data-cal-filter="memorial" onclick="filterCalendar('memorial')">
+            <span>🕯️ Дни памяти</span> <span class="badge" id="cal-count-memorial">8</span>
+          </button>
+          <button type="button" class="cal-filter-btn" data-cal-filter="jubilee" onclick="filterCalendar('jubilee')">
+            <span>⭐ Юбилеи (2026)</span> <span class="badge" id="cal-count-jubilee">4</span>
+          </button>
+        </div>
+
+        <div class="cal-months-strip" id="cal-months-strip">
+          <button type="button" class="cal-month-btn active" data-month="all" onclick="filterCalendarMonth('all')">Весь год</button>
+          <button type="button" class="cal-month-btn" data-month="1" onclick="filterCalendarMonth(1)">Янв</button>
+          <button type="button" class="cal-month-btn" data-month="2" onclick="filterCalendarMonth(2)">Фев</button>
+          <button type="button" class="cal-month-btn" data-month="3" onclick="filterCalendarMonth(3)">Мар</button>
+          <button type="button" class="cal-month-btn" data-month="4" onclick="filterCalendarMonth(4)">Апр</button>
+          <button type="button" class="cal-month-btn" data-month="5" onclick="filterCalendarMonth(5)">Май</button>
+          <button type="button" class="cal-month-btn" data-month="6" onclick="filterCalendarMonth(6)">Июн</button>
+          <button type="button" class="cal-month-btn" data-month="7" onclick="filterCalendarMonth(7)">Июл</button>
+          <button type="button" class="cal-month-btn" data-month="8" onclick="filterCalendarMonth(8)">Авг</button>
+          <button type="button" class="cal-month-btn" data-month="9" onclick="filterCalendarMonth(9)">Сен</button>
+          <button type="button" class="cal-month-btn" data-month="10" onclick="filterCalendarMonth(10)">Окт</button>
+          <button type="button" class="cal-month-btn" data-month="11" onclick="filterCalendarMonth(11)">Ноя</button>
+          <button type="button" class="cal-month-btn" data-month="12" onclick="filterCalendarMonth(12)">Дек</button>
+        </div>
+      </div>
+
+      <!-- UPCOMING EVENT HIGHLIGHT -->
+      <div id="calendar-upcoming-banner" class="cal-upcoming-highlight" style="display:none;"></div>
+
+      <!-- CARDS CONTAINER -->
+      <div class="calendar-events-grid" id="calendar-events-container">
+        <!-- Rendered by renderCalendarEvents() -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       ВКЛАДКА: СЕМЕЙНЫЕ ЛЕГЕНДЫ & ФАКТЧЕКИНГ (МИФ VS РЕАЛЬНОСТЬ)
+       ==================================================================== -->
+  <section class="tab-panel scrollable" id="tab-legends">
+    <div class="tab-scroll-inner legends-container">
+
+      <!-- HERO BANNER -->
+      <div class="legends-hero">
+        <span class="legends-hero-kicker">ИСТОРИЧЕСКИЙ ДЕТЕКТИВ И СЕМЕЙНЫЙ ФАКТЧЕКИНГ</span>
+        <h2 class="legends-hero-title">Семейные легенды: Мифы vs Архивные открытия</h2>
+        <p class="legends-hero-subtitle">Что шептали за семейным столом против того, что хранили государственные архивы РГАДА, РГВИА, ЦАМО, лагерные списки Австро-Венгрии и рассекреченные следственные дела.</p>
+      </div>
+
+      <!-- LEGENDS GRID -->
+      <div class="legends-grid">
+
+        <!-- КАРТОЧКА 1: БАРОНОВЫ -->
+        <article class="legend-card">
+          <div class="legend-card-header">
+            <div class="legend-card-meta">
+              <span class="legend-case-number">ДЕЛО № 01 · ВЕТВЬ БАРОНОВЫХ</span>
+              <h3 class="legend-card-title">Тайна фамилии Бароновых: Шведские дворяне или волховские лоцманы?</h3>
+              <span class="legend-card-branch">Отцовская линия · село Сольцы (Кириши) ➔ Стрельна ➔ Санкт-Петербург</span>
+            </div>
+            <span class="legend-verdict-badge verdict-sensational">⚡ Миф развенчан, но правда круче</span>
+          </div>
+          <div class="legend-split-box">
+            <div class="legend-col legend-col-myth">
+              <div class="legend-col-title"><span>💬</span> <span>Семейное предание:</span></div>
+              <p class="legend-col-text">В семье бытовала романтическая версия о дворянском или шведско-немецком происхождении: якобы предки были остзейскими или скандинавскими баронами, осевшими под Петербургом во времена Северной войны или Петра Великого.</p>
+            </div>
+            <div class="legend-col legend-col-truth">
+              <div class="legend-col-title"><span>🏛️</span> <span>Архивный вердикт:</span></div>
+              <p class="legend-col-text">Писцовые книги Водской пятины 1500 г. и ревизии РГИА доказали: Бароновы — коренные новгородские крестьяне и отважные волховские судоходцы-лоцманы Солецкого на Волхове погоста. Они проводили барки сквозь смертоносные Волховские пороги. А фамилия возникла от поморско-новгородского диалектного глагола <em>«баро́нить»</em> (по Далю — жить с достоинством, независимо, по-хозяйски).</p>
+            </div>
+          </div>
+          <div class="legend-footer">
+            <div class="legend-sources">
+              <span class="legend-sources-label">Первоисточники:</span>
+              <span class="legend-source-chip">РГИА ф. 577 оп. 22</span>
+              <span class="legend-source-chip">Писцовая книга Водской пятины 1500 г.</span>
+              <span class="legend-source-chip">Словарь В. И. Даля</span>
+            </div>
+            <button type="button" class="legend-btn-link" onclick="openPersonModal('P-0005')">
+              <span>📋 Досье Валентина Баронова</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- КАРТОЧКА 2: НИКОЛАЙ ЕВДОКИМОВ -->
+        <article class="legend-card">
+          <div class="legend-card-header">
+            <div class="legend-card-meta">
+              <span class="legend-case-number">ДЕЛО № 02 · ВЕТВЬ ЕВДОКИМОВЫХ</span>
+              <h3 class="legend-card-title">Тайна «пропавшего без вести» прадеда Николая Евдокимова</h3>
+              <span class="legend-card-branch">Материнская линия · село Галактионово (Жукотино) ➔ Карпаты ➔ Австро-Венгрия</span>
+            </div>
+            <span class="legend-verdict-badge verdict-sensational">✓ Сенсация военных архивов</span>
+          </div>
+          <div class="legend-split-box">
+            <div class="legend-col legend-col-myth">
+              <div class="legend-col-title"><span>💬</span> <span>Семейное предание:</span></div>
+              <p class="legend-col-text">В роду считалось, что прадед Николай Никандрович бесследно пропал на фронтах Первой мировой войны около 1915 года, и семья ничего не знала о его плене или месте гибели.</p>
+            </div>
+            <div class="legend-col legend-col-truth">
+              <div class="legend-col-title"><span>🏛️</span> <span>Архивный вердикт:</span></div>
+              <p class="legend-col-text">В фондах РГВИА (ф. 16196) и австрийских картотеках бюро потерь обнаружена подлинная лагерная карточка военнопленного! 19 мая 1915 г. рядовой 127-го Путивльского полка Николай Евдокимов (записанный австрийцами со слуха как <em>«Ефтикимов»</em>) был взят в плен под Надворной в Карпатах и водворён в лагерь Дейч-Габель в Чехии. Он выжил, вернулся домой в Галактионово и вместе с Агриппиной воспитал 8 детей, включая деда Шуру в 1926 году!</p>
+            </div>
+          </div>
+          <div class="legend-footer">
+            <div class="legend-sources">
+              <span class="legend-sources-label">Первоисточники:</span>
+              <span class="legend-source-chip">РГВИА ф. 16196 оп. 3 д. 632</span>
+              <span class="legend-source-chip">Картотека потерь ящ. 6047-А (док. 22127826)</span>
+              <span class="legend-source-chip">Лагерь Дейч-Габель (Чехия)</span>
+            </div>
+            <button type="button" class="legend-btn-link" onclick="openPersonModal('P-0007')">
+              <span>📋 Досье Николая Евдокимова</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- КАРТОЧКА 3: БЕЛОВЫ -->
+        <article class="legend-card">
+          <div class="legend-card-header">
+            <div class="legend-card-meta">
+              <span class="legend-case-number">ДЕЛО № 03 · ВЕТВЬ БЕЛОВЫХ</span>
+              <h3 class="legend-card-title">«Беловы были бедными и безызвестными»</h3>
+              <span class="legend-card-branch">Линия прабабушки Агриппины · Савин Городок (Жукотино) ➔ Кама</span>
+            </div>
+            <span class="legend-verdict-badge verdict-busted">✓ Полностью опровергнуто</span>
+          </div>
+          <div class="legend-split-box">
+            <div class="legend-col legend-col-myth">
+              <div class="legend-col-title"><span>💬</span> <span>Семейное предание:</span></div>
+              <p class="legend-col-text">В устных воспоминаниях о предках-Беловых почти не говорили, предполагая, что это была маленькая, бедная и неприметная деревенская семья без яркой истории.</p>
+            </div>
+            <div class="legend-col legend-col-truth">
+              <div class="legend-col-title"><span>🏛️</span> <span>Архивный вердикт:</span></div>
+              <p class="legend-col-text">Документы РГАДА (ф. 350 с 1716 года) раскрыли, что Беловы — коренные первопоселенцы и строители села Никольское («Савин Городок» / Жукотино) в дворянской вотчине Аристовых с петровских времён! А в Великую Отечественную войну род дал Родине настоящих героев: гвардии сапёр Иван Белов награждён орденом Красной Звезды и медалью «За отвагу», пал смертью храбрых при форсировании Днепра; Владимир Белов обеспечивал полёты истребителей 147-го ИАП на Дороге Жизни.</p>
+            </div>
+          </div>
+          <div class="legend-footer">
+            <div class="legend-sources">
+              <span class="legend-sources-label">Первоисточники:</span>
+              <span class="legend-source-chip">РГАДА ф. 350 оп. 1, 2 (1716–1764)</span>
+              <span class="legend-source-chip">ЦАМО РФ шкаф 199 ящ. 2</span>
+              <span class="legend-source-chip">ЦАМО ф. 33 оп. 686044</span>
+            </div>
+            <button type="button" class="legend-btn-link" onclick="openPersonModal('P-0008')">
+              <span>📋 Досье Агриппины Беловой</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- КАРТОЧКА 4: КАЗАКИ КОВАЛЕНКО И БРИНЮК -->
+        <article class="legend-card">
+          <div class="legend-card-header">
+            <div class="legend-card-meta">
+              <span class="legend-case-number">ДЕЛО № 04 · ВЕТВЬ КОВАЛЕНКО И БРИНЮК</span>
+              <h3 class="legend-card-title">Казачьи корни бабушки Натальи: Правда ли, что в роду казаки?</h3>
+              <span class="legend-card-branch">Линия бабушки Натальи · Запорожское войско ➔ с. Землянка (Оренбуржье)</span>
+            </div>
+            <span class="legend-verdict-badge verdict-confirmed">✓ Подтверждено на 100% (300 лет рода)</span>
+          </div>
+          <div class="legend-split-box">
+            <div class="legend-col legend-col-myth">
+              <div class="legend-col-title"><span>💬</span> <span>Семейное предание:</span></div>
+              <p class="legend-col-text">Бабушка Наталья Афанасьевна упоминала, что её род происходит из казаков, но в советское время об этом не принято было расспрашивать подробно, и документальных подтверждений не было.</p>
+            </div>
+            <div class="legend-col legend-col-truth">
+              <div class="legend-col-title"><span>🏛️</span> <span>Архивный вердикт:</span></div>
+              <p class="legend-col-text">Метрические книги ДАСО и картотеки РГВИА подтвердили казачье происхождение с точностью до полков! Родоначальники Грицко Бринюк и Клим Бренюка зафиксированы в реестрах Нежинского и Глуховского казачьих полков ещё в 1730-х гг. В 1900-х казаки переселились по Столыпинской реформе в Оренбургские степи, основав село Землянка. Прадед Тимофей Бринюк — старший унтер-офицер 124-го пехотного Воронежского полка, георгиевский кавалер!</p>
+            </div>
+          </div>
+          <div class="legend-footer">
+            <div class="legend-sources">
+              <span class="legend-sources-label">Первоисточники:</span>
+              <span class="legend-source-chip">РГВИА ящ. 335-Б (док. 1165493)</span>
+              <span class="legend-source-chip">ДАСО ф. 1190 оп. 1</span>
+              <span class="legend-source-chip">Реестры Нежинского полка 1730-х</span>
+            </div>
+            <button type="button" class="legend-btn-link" onclick="openPersonModal('P-0006')">
+              <span>📋 Досье Натальи Коваленко</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- КАРТОЧКА 5: РЕПРЕССИИ И ФЁДОР БЕЛОВ -->
+        <article class="legend-card">
+          <div class="legend-card-header">
+            <div class="legend-card-meta">
+              <span class="legend-case-number">ДЕЛО № 05 · ВЕТВЬ БЕЛОВЫХ</span>
+              <h3 class="legend-card-title">«Репрессированный дед»: Кулак-мироед или защитник крестьян?</h3>
+              <span class="legend-card-branch">Линия Беловых · село Галактионово Чистопольского района ТАССР</span>
+            </div>
+            <span class="legend-verdict-badge verdict-confirmed">🛡️ Честь предка восстановлена</span>
+          </div>
+          <div class="legend-split-box">
+            <div class="legend-col legend-col-myth">
+              <div class="legend-col-title"><span>💬</span> <span>Семейное предание:</span></div>
+              <p class="legend-col-text">В 1930-е годы в семье с тревогой шептались, что деда Фёдора арестовали органы НКВД как опасного антисоветчика и «кулака-саботажника», что бросало тень на всю семью.</p>
+            </div>
+            <div class="legend-col legend-col-truth">
+              <div class="legend-col-title"><span>🏛️</span> <span>Архивный вердикт:</span></div>
+              <p class="legend-col-text">Рассекреченное архивное следственное дело Книги памяти жертв политических репрессий Республики Татарстан восстановило истину: плотник Фёдор Александрович Белов в 1935 году открыто выступил против грабительских хлебозаготовок и обмана крестьян местными уполномоченными. Приговорён к 3 годам лагерей. 20 января 1997 года полностью реабилитирован за отсутствием состава преступления. Честный деревенский мастер и защитник земляков!</p>
+            </div>
+          </div>
+          <div class="legend-footer">
+            <div class="legend-sources">
+              <span class="legend-sources-label">Первоисточники:</span>
+              <span class="legend-source-chip">Книга памяти жертв репрессий РТ (т. 4)</span>
+              <span class="legend-source-chip">Архив УФСБ по РТ д. 2-10878</span>
+              <span class="legend-source-chip">Реабилитация от 20.01.1997</span>
+            </div>
+            <button type="button" class="legend-btn-link" onclick="openPersonModal('P-0030')">
+              <span>📋 Досье Фёдора Белова</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- КАРТОЧКА 6: ЕВДОКИМОВЫ -->
+        <article class="legend-card">
+          <div class="legend-card-header">
+            <div class="legend-card-meta">
+              <span class="legend-case-number">ДЕЛО № 06 · ВЕТВЬ ЕВДОКИМОВЫХ</span>
+              <h3 class="legend-card-title">Рождение фамилии Евдокимов: Благородный титул или паспорт 1861 года?</h3>
+              <span class="legend-card-branch">Основная ветвь заявителя · село Никольское (Жукотино) ➔ Пермь ➔ Ленинград</span>
+            </div>
+            <span class="legend-verdict-badge verdict-sensational">✓ Документальный факт 1861 года</span>
+          </div>
+          <div class="legend-split-box">
+            <div class="legend-col legend-col-myth">
+              <div class="legend-col-title"><span>💬</span> <span>Семейное предание:</span></div>
+              <p class="legend-col-text">Считалось, что звучная фамилия Евдокимов тянется из глубокой древности и могла принадлежать церковнослужителям или старинному служилому дворянству.</p>
+            </div>
+            <div class="legend-col legend-col-truth">
+              <div class="legend-col-title"><span>🏛️</span> <span>Архивный вердикт:</span></div>
+              <p class="legend-col-text">Фамилия имеет задокументированный год рождения — <strong>1861 год</strong>! До отмены крепостного права крестьяне села Жукотино писались в ревизиях без фамилий. При манифесте Александра II прапрапрадед Михаил получил паспорт с наследственной фамилией <em>«Евдокимов»</em> по имени отца — крестьянина Евдокима (род. ок. 1795–1825). Это древнее каноническое имя (др.-греч. Εὐδόκιμος — «окружённый доброй славой»). А на Волге фамилию произносили со слуха как <em>«Ефтикимов»</em>.</p>
+            </div>
+          </div>
+          <div class="legend-footer">
+            <div class="legend-sources">
+              <span class="legend-sources-label">Первоисточники:</span>
+              <span class="legend-source-chip">Ревизские сказки X ревизии (1858 г.)</span>
+              <span class="legend-source-chip">НА РТ ф. 4 оп. 1</span>
+              <span class="legend-source-chip">Паспортная реформа 1861 г.</span>
+            </div>
+            <button type="button" class="legend-btn-link" onclick="openPersonModal('P-0010')">
+              <span>📋 Досье Михаила Евдокимова</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       ВКЛАДКА: ЗАЛ РАТНОЙ СЛАВЫ & СЕМЕЙНЫЕ РЕЛИКВИИ
+       ==================================================================== -->
+  <section class="tab-panel scrollable" id="tab-glory">
+    <div class="tab-scroll-inner glory-container">
+
+      <!-- HERO BANNER -->
+      <div class="glory-hero">
+        <span class="glory-hero-kicker">СВЯЩЕННАЯ ПАМЯТЬ ЗАЩИТНИКОВ ОТЕЧЕСТВА</span>
+        <h2 class="glory-hero-title">Зал ратной славы & Семейные реликвии</h2>
+        <p class="glory-hero-subtitle">Ратные подвиги дедов и прадедов на фронтах Великой Отечественной и Первой мировой войн по рассекреченным фондам ЦАМО РФ и РГВИА, цитаты из наградных листов и цифровой музей фамильных реликвий.</p>
+      </div>
+
+      <!-- SECTION 1: ВЕЛИКАЯ ОТЕЧЕСТВЕННАЯ ВОЙНА (1941–1945) -->
+      <div class="glory-section-header">
+        <h3 class="glory-section-title"><span>🎖️</span> <span>Герои Великой Отечественной войны (1941–1945)</span></h3>
+        <span class="glory-section-badge">ЦАМО РФ · 1418 ДНЕЙ</span>
+      </div>
+
+      <div class="glory-heroes-grid">
+
+        <!-- ИВАН БЕЛОВ -->
+        <article class="war-hero-card">
+          <div class="war-hero-header">
+            <img src="photos/portrait-p0032-ivan-belov.jpg" alt="Белов Иван Фёдорович" class="war-hero-avatar" onerror="this.outerHTML='<div class=\'war-hero-avatar-fallback\'>🎖️</div>'">
+            <div class="war-hero-meta">
+              <h4 class="war-hero-name" onclick="openPersonModal('P-0032')">Белов Иван Фёдорович</h4>
+              <div class="war-hero-rank">Гвардии рядовой / сапёр</div>
+              <div class="war-hero-unit">13-й отдельный гвардейский сапёрный батальон</div>
+            </div>
+          </div>
+          <div class="war-hero-awards">
+            <span class="award-pill">★ Орден Красной Звезды</span>
+            <span class="award-pill">🎖️ Медаль «За отвагу»</span>
+          </div>
+          <p class="war-hero-citation">
+            <strong>Цитата из наградных документов:</strong> Под ураганным огнём противника в ледяной воде наводил мостовые переправы и вёл инженерную разведку при форсировании Днепра. Обеспечил переправу передовых штурмовых групп. 12 октября 1943 г. скончался от тяжёлых осколочных ран в госпитале ХППГ 750.
+          </p>
+          <div class="war-hero-footer">
+            <span class="war-hero-archive">ЦАМО ф. 33 оп. 686044 / ХППГ 750</span>
+            <button type="button" class="war-hero-btn" onclick="openPersonModal('P-0032')">
+              <span>📋 Досье героя</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ВЛАДИМИР БЕЛОВ -->
+        <article class="war-hero-card">
+          <div class="war-hero-header">
+            <img src="photos/portrait-p0036-vladimir-belov.jpg" alt="Белов Владимир Александрович" class="war-hero-avatar" onerror="this.outerHTML='<div class=\'war-hero-avatar-fallback\'>✈️</div>'">
+            <div class="war-hero-meta">
+              <h4 class="war-hero-name" onclick="openPersonModal('P-0036')">Белов Владимир Александрович</h4>
+              <div class="war-hero-rank">Старший техник-лейтенант ВВС</div>
+              <div class="war-hero-unit">147-й истребительный авиаполк, 13-я Воздушная армия</div>
+            </div>
+          </div>
+          <div class="war-hero-awards">
+            <span class="award-pill">★ Ордена и медали за оборону Ленинграда</span>
+            <span class="award-pill">🛡️ Защитник Дороги Жизни</span>
+          </div>
+          <p class="war-hero-citation">
+            <strong>Боевой путь:</strong> С первых дней войны и всю блокаду Ленинграда руководил техническим обслуживанием и оперативным полевым ремонтом самолётов-истребителей, защищавших ленинградское небо, Дорогу Жизни через Ладожское озеро и наносивших удары по вражеским аэродромам.
+          </p>
+          <div class="war-hero-footer">
+            <span class="war-hero-archive">ЦАМО шкаф 199 ящик 2 (УПК офицеров)</span>
+            <button type="button" class="war-hero-btn" onclick="openPersonModal('P-0036')">
+              <span>📋 Досье героя</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ВАЛЕНТИН БАРОНОВ -->
+        <article class="war-hero-card">
+          <div class="war-hero-header">
+            <img src="photos/portrait-p0005-valentin-baronov.jpg" alt="Баронов Валентин Васильевич" class="war-hero-avatar" onerror="this.outerHTML='<div class=\'war-hero-avatar-fallback\'>⭐</div>'">
+            <div class="war-hero-meta">
+              <h4 class="war-hero-name" onclick="openPersonModal('P-0005')">Баронов Валентин Васильевич</h4>
+              <div class="war-hero-rank">Майор автомобильных войск СССР</div>
+              <div class="war-hero-unit">1-е ЛКВАУ (1951) · ЛенВО (в/ч 52611, Стрельна)</div>
+            </div>
+          </div>
+          <div class="war-hero-awards">
+            <span class="award-pill">⭐ Медали за безупречную службу ВС СССР</span>
+            <span class="award-pill">🎗️ Узник оккупации Волховского фронта</span>
+          </div>
+          <p class="war-hero-citation">
+            <strong>Судьба защитника:</strong> Двенадцатилетним мальчишкой пережил двухлетнюю вражескую оккупацию в огненных Киришах на Волховском фронте. Выстоял, поступил в 1-е Ленинградское Краснознамённое военно-автомобильное училище, отдав три десятилетия защите Родины и воспитанию военных шофёров.
+          </p>
+          <div class="war-hero-footer">
+            <span class="war-hero-archive">ЦАМО УПК офицеров / Личное дело 1-го ЛКВАУ</span>
+            <button type="button" class="war-hero-btn" onclick="openPersonModal('P-0005')">
+              <span>📋 Досье героя</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ПАВЕЛ БЕЛОВ -->
+        <article class="war-hero-card">
+          <div class="war-hero-header">
+            <img src="photos/portrait-p0031-pavel-belov.jpg" alt="Белов Павел Фёдорович" class="war-hero-avatar" onerror="this.outerHTML='<div class=\'war-hero-avatar-fallback\'>🎖️</div>'">
+            <div class="war-hero-meta">
+              <h4 class="war-hero-name" onclick="openPersonModal('P-0031')">Белов Павел Фёдорович</h4>
+              <div class="war-hero-rank">Сержант артиллерии</div>
+              <div class="war-hero-unit">349-й артиллерийский полк, 119-я стрелковая дивизия</div>
+            </div>
+          </div>
+          <div class="war-hero-awards">
+            <span class="award-pill">🎖️ Медали за боевые заслуги</span>
+            <span class="award-pill">🛡️ Ветеран Великой Отечественной</span>
+          </div>
+          <p class="war-hero-citation">
+            <strong>Боевой путь:</strong> Мобилизован 5 марта 1942 года. Прошёл тяжёлые артиллерийские дуэли и наступательные операции на фронте. Родной брат павшего героя-сапёра Ивана Белова. После войны восстанавливал народное хозяйство Поволжья.
+          </p>
+          <div class="war-hero-footer">
+            <span class="war-hero-archive">ЦАМО шкаф 9 ящик 27 / ГА РМЭ</span>
+            <button type="button" class="war-hero-btn" onclick="openPersonModal('P-0031')">
+              <span>📋 Досье героя</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ГРИГОРИЙ ШЕПЕЛЕНКО -->
+        <article class="war-hero-card">
+          <div class="war-hero-header">
+            <div class="war-hero-avatar-fallback">✍️</div>
+            <div class="war-hero-meta">
+              <h4 class="war-hero-name" onclick="openPersonModal('P-0038')">Шепеленко Григорий Иванович</h4>
+              <div class="war-hero-rank">Военный корреспондент / рядовой</div>
+              <div class="war-hero-unit">Литературный сотрудник фронтовой печати</div>
+            </div>
+          </div>
+          <div class="war-hero-awards">
+            <span class="award-pill">★ Пал смертью храбрых на передовой</span>
+            <span class="award-pill">🏛️ Имя выбито на мемориальной стеле</span>
+          </div>
+          <p class="war-hero-citation">
+            <strong>Подвиг пера и автомата:</strong> Добровольцем ушёл на фронт в первые недели войны. Освещал бои с передовой, поднимая боевой дух бойцов, и пал смертью храбрых в бою. Его имя увековечено на мемориале редакции газеты «Костанайские новости».
+          </p>
+          <div class="war-hero-footer">
+            <span class="war-hero-archive">Книга Памяти Костанайской обл.</span>
+            <button type="button" class="war-hero-btn" onclick="openPersonModal('P-0038')">
+              <span>📋 Досье героя</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ТРУЖЕНИКИ ТЫЛА -->
+        <article class="war-hero-card">
+          <div class="war-hero-header">
+            <div class="war-hero-avatar-fallback">🌾</div>
+            <div class="war-hero-meta">
+              <h4 class="war-hero-name">Александр Евдокимов и Наталья Коваленко</h4>
+              <div class="war-hero-rank">Труженики тыла Великой Отечественной войны</div>
+              <div class="war-hero-unit">Оборонные предприятия г. Молотова (Перми) и колхозы ТАССР</div>
+            </div>
+          </div>
+          <div class="war-hero-awards">
+            <span class="award-pill">🎖️ Трудовая доблесть тыла</span>
+            <span class="award-pill">🏭 Всё для фронта, всё для победы</span>
+          </div>
+          <p class="war-hero-citation">
+            <strong>Подвиг в тылу:</strong> Будучи подростками 15–17 лет, самоотверженно трудились на военных заводах и колхозных полях, производя вооружение и хлеб для фронта. Их трудовой вклад приблизил Великую Победу так же, как и оружие на передовой.
+          </p>
+          <div class="war-hero-footer">
+            <span class="war-hero-archive">Семейные свидетельства [A-0001, A-0006]</span>
+            <button type="button" class="war-hero-btn" onclick="openPersonModal('P-0004')">
+              <span>📋 Досье деда Шуры</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- SECTION 2: ПЕРВАЯ МИРОВАЯ ВОЙНА (1914–1918) -->
+      <div class="glory-section-header">
+        <h3 class="glory-section-title"><span>⚔️</span> <span>Герои Первой мировой войны (1914–1918)</span></h3>
+        <span class="glory-section-badge">РГВИА · ПЕРВИЧНЫЕ КАРТОЧКИ БЮРО ПОТЕРЬ</span>
+      </div>
+
+      <div class="glory-heroes-grid">
+
+        <!-- НИКОЛАЙ ЕВДОКИМОВ -->
+        <article class="war-hero-card">
+          <div class="war-hero-header">
+            <div class="war-hero-avatar-fallback">🇷🇺</div>
+            <div class="war-hero-meta">
+              <h4 class="war-hero-name" onclick="openPersonModal('P-0007')">Евдокимов Николай Никандрович</h4>
+              <div class="war-hero-rank">Рядовой 13-й роты</div>
+              <div class="war-hero-unit">127-й пехотный Путивльский полк (543-я Казанская дружина)</div>
+            </div>
+          </div>
+          <div class="war-hero-awards">
+            <span class="award-pill">⚔️ Карпатская битва 1915 г.</span>
+            <span class="award-pill">🛡️ Лагерь Дейч-Габель (Чехия)</span>
+          </div>
+          <p class="war-hero-citation">
+            <strong>Фронтовой путь:</strong> Участник ожесточённых арьергардных боёв в предгорьях Карпат. Взят в плен 19 мая 1915 г. под городом Надворна. Выдержал трёхлетний плен в австро-венгерском лагере Дейч-Габель, вернулся на родину и сохранил род.
+          </p>
+          <div class="war-hero-footer">
+            <span class="war-hero-archive">РГВИА Картотека потерь ящ. 6047-А</span>
+            <button type="button" class="war-hero-btn" onclick="openLightbox('A-0010')">
+              <span>🔍 Скан карточки пленного</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ТИМОФЕЙ БРИНЮК -->
+        <article class="war-hero-card">
+          <div class="war-hero-header">
+            <div class="war-hero-avatar-fallback">⚔️</div>
+            <div class="war-hero-meta">
+              <h4 class="war-hero-name" onclick="openPersonModal('P-0029')">Бринюк Тимофей Авдеевич</h4>
+              <div class="war-hero-rank">Старший унтер-офицер</div>
+              <div class="war-hero-unit">124-й пехотный Воронежский полк</div>
+            </div>
+          </div>
+          <div class="war-hero-awards">
+            <span class="award-pill">★ Георгиевский кавалер / Унтер-офицер</span>
+            <span class="award-pill">⚔️ Брусиловский прорыв 1916 г.</span>
+          </div>
+          <p class="war-hero-citation">
+            <strong>Боевой подвиг:</strong> За мужество и храбрость в боях произведён в старшие унтер-офицеры. В ходе грандиозного Брусиловского наступления 8 июля 1916 года был тяжело ранен в ожесточённом бою и эвакуирован в 4-й госпиталь г. Киева.
+          </p>
+          <div class="war-hero-footer">
+            <span class="war-hero-archive">РГВИА ящ. 335-Б док. № 25975 . 10</span>
+            <button type="button" class="war-hero-btn" onclick="openLightbox('A-0039')">
+              <span>🔍 Скан карточки РГВИА</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ВАСИЛИЙ БАРОНОВ -->
+        <article class="war-hero-card">
+          <div class="war-hero-header">
+            <img src="photos/portrait-p0017-vasiliy-baronov.jpg" alt="Баронов Василий Николаевич" class="war-hero-avatar" onerror="this.outerHTML='<div class=\'war-hero-avatar-fallback\'>⚔️</div>'">
+            <div class="war-hero-meta">
+              <h4 class="war-hero-name" onclick="openPersonModal('P-0017')">Баронов Василий Николаевич</h4>
+              <div class="war-hero-rank">Рядовой пехоты</div>
+              <div class="war-hero-unit">54-й пехотный Минский полк</div>
+            </div>
+          </div>
+          <div class="war-hero-awards">
+            <span class="award-pill">⚔️ Горлицкий прорыв 1915 г.</span>
+            <span class="award-pill">🛡️ Лагерь Терезиенштадт</span>
+          </div>
+          <p class="war-hero-citation">
+            <strong>Фронтовой путь:</strong> Призван из Петроградской губернии. 1 мая 1915 года в разгар немецкого наступления под Горлице попал в плен. Содержался в австро-венгерской крепости Терезиенштадт. Ровно через 14 лет после пленения (01.05.1929) у него родился сын Валентин.
+          </p>
+          <div class="war-hero-footer">
+            <span class="war-hero-archive">РГВИА шкаф 3 ящ. 5681-А (док. 30199905)</span>
+            <button type="button" class="war-hero-btn" onclick="openPersonModal('P-0017')">
+              <span>📋 Досье прадеда</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- СЕРГЕЙ ШЕПЕЛЕНКО -->
+        <article class="war-hero-card">
+          <div class="war-hero-header">
+            <div class="war-hero-avatar-fallback">🛡️</div>
+            <div class="war-hero-meta">
+              <h4 class="war-hero-name" onclick="openPersonModal('P-0042')">Шепеленко Сергей Никитич</h4>
+              <div class="war-hero-rank">Стрелок пехоты</div>
+              <div class="war-hero-unit">20-й стрелковый полк</div>
+            </div>
+          </div>
+          <div class="war-hero-awards">
+            <span class="award-pill">⚔️ Нарочская битва 1916 г.</span>
+            <span class="award-pill">🩸 Дважды ранен в боях</span>
+          </div>
+          <p class="war-hero-citation">
+            <strong>Доблесть первопроходца:</strong> Переселенец Кустанайского уезда. Дважды проявлял стойкость в ожесточённых боях Западного фронта: ранен 10 марта 1916 г. на озере Нарочь и повторно 13 июня 1916 г. Образец отваги тургайских казаков.
+          </p>
+          <div class="war-hero-footer">
+            <span class="war-hero-archive">РГВИА ф. 16196 оп. 1 д. 743 / ящ. 3891-Ш</span>
+            <button type="button" class="war-hero-btn" onclick="openPersonModal('P-0042')">
+              <span>📋 Досье бойца</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- SECTION 3: ЦИФРОВОЙ МУЗЕЙ СЕМЕЙНЫХ РЕЛИКВИЙ -->
+      <div class="glory-section-header">
+        <h3 class="glory-section-title"><span>🏺</span> <span>Цифровой музей семейных реликвий & первоисточников</span></h3>
+        <span class="glory-section-badge">4 БЕСЦЕННЫХ АРТЕФАКТА</span>
+      </div>
+
+      <div class="relics-grid">
+
+        <!-- РЕЛИКВИЯ 1: РОДОСЛОВНЫЙ СВИТОК СЕЛИХОВОЙ -->
+        <article class="relic-card">
+          <div class="relic-preview-wrap" onclick="openLightbox('A-0004')" title="Нажмите, чтобы развернуть скан высокого разрешения">
+            <img src="photos/evdokimov-tree-page1.jpg" alt="Родословная таблица Ларисы Селиховой 1952 г." class="relic-preview-img">
+          </div>
+          <div class="relic-body">
+            <span class="relic-epoch">СЕМЕЙНЫЙ АРХИВ · ГРОДНО / ЛЕНИНГРАД</span>
+            <h4 class="relic-title">Рукописная родословная таблица Селиховой (Борисовой)</h4>
+            <p class="relic-desc">Подлинный трёхстраничный свиток, составленный дочерью Наи Николаевны Евдокимовой. Спас для истории имена 8 детей прадеда Николая Никандровича и точные даты рождения деда Шуры (1926) и внука Антона (1988).</p>
+            <div class="relic-custodian">Хранитель: семейный архив Ларисы Селиховой (г. Гродно) · Артефакт [A-0004]</div>
+          </div>
+        </article>
+
+        <!-- РЕЛИКВИЯ 2: ПОРТРЕТ АГРИППИНЫ БЕЛОВОЙ НА ГРАНИТЕ -->
+        <article class="relic-card">
+          <div class="relic-preview-wrap" onclick="openLightbox('A-0007')" title="Нажмите, чтобы развернуть скан высокого разрешения">
+            <img src="photos/evdokimova-agripina-1889-1971-gravestone.jpg" alt="Памятник Агриппине Беловой" class="relic-preview-img">
+          </div>
+          <div class="relic-body">
+            <span class="relic-epoch">ГРАНИТНЫЙ ОБЛИК · 1889–1971 гг.</span>
+            <h4 class="relic-title">Гранитный медальон прабабушки Агриппины Беловой</h4>
+            <p class="relic-desc">Чудом уцелевший овальный фотопортрет на каменном надгробии, сохранивший подлинные черты лица волжской прабабушки, матери-героини 8 детей. Единственный прямой визуальный источник облика старшего поколения Беловых.</p>
+            <div class="relic-custodian">Мемориал с. Галактионово (Жукотино) · Артефакт [A-0007]</div>
+          </div>
+        </article>
+
+        <!-- РЕЛИКВИЯ 3: КАРТОЧКА ГОСПИТАЛЯ КИЕВА 1916 Г. -->
+        <article class="relic-card">
+          <div class="relic-preview-wrap" onclick="openLightbox('A-0039')" title="Нажмите, чтобы развернуть скан высокого разрешения">
+            <img src="photos/gwar-brinyuk-timofey-1165493.jpg" alt="Карточка РГВИА Тимофея Бринюка" class="relic-preview-img">
+          </div>
+          <div class="relic-body">
+            <span class="relic-epoch">РГВИА · 4-Й ГОСПИТАЛЬ Г. КИЕВА (1916 г.)</span>
+            <h4 class="relic-title">Госпитальная карточка № 25975 ст. унтер-офицера Бринюка</h4>
+            <p class="relic-desc">Подлинный формуляр Первой мировой войны с фиолетовыми чернильными штампами Российской Императорской армии, зафиксировавший ранение прадеда Тимофея Авдеевича Бринюка в победоносном Брусиловском прорыве.</p>
+            <div class="relic-custodian">Российский государственный военно-исторический архив · [A-0039]</div>
+          </div>
+        </article>
+
+        <!-- РЕЛИКВИЯ 4: ЛАГЕРНАЯ КАРТОЧКА АВСТРО-ВЕНГРИИ 1915 Г. -->
+        <article class="relic-card">
+          <div class="relic-preview-wrap" onclick="openLightbox('A-0010')" title="Нажмите, чтобы развернуть скан высокого разрешения">
+            <img src="photos/gwar-pow-card-30587701-front.jpg" alt="Карточка военнопленного Николая Евдокимова" class="relic-preview-img">
+          </div>
+          <div class="relic-body">
+            <span class="relic-epoch">DEUTSCH-GABEL · АВСТРО-ВЕНГРИЯ (1915 г.)</span>
+            <h4 class="relic-title">Лагерная карточка военнопленного № 30587701</h4>
+            <p class="relic-desc">Уникальный международный документ, подтвердивший место рождения прадеда Николая (с. Жукотино), точную дату (01.10.1888) и его чудесное спасение из лагеря пленных Дейч-Габель в Богемии.</p>
+            <div class="relic-custodian">РГВИА, Картотека потерь (пленные) ящ. 6047-А · [A-0010]</div>
+          </div>
+        </article>
+
+      </div>
 
     </div>
   </section>
@@ -8374,6 +9828,345 @@ function updateThemeToggleBtn(isDark) {
   }
 }
 
+/* ==========================================================================
+   TASK 1: CALENDAR OF MEMORIAL & CELEBRATION DATES LOGIC
+   ========================================================================== */
+const CALENDAR_EVENTS = [
+  {
+    id: "cal-1",
+    month: 1, day: 26, year: 1956,
+    type: "living",
+    person_id: "P-0002",
+    name: "Евдокимова Нина Александровна",
+    relation: "Мать заявителя",
+    branch: "Евдокимовы",
+    isJubilee: true,
+    jubileeLabel: "🎉 70 лет (Юбилей 2026)",
+    desc: "Родилась в Перми (Молотове). Инженер, хранительница семейного архива и памяти рода. В 2026 году отмечает славный 70-летний юбилей."
+  },
+  {
+    id: "cal-2",
+    month: 2, day: 12, year: 2004,
+    type: "living",
+    person_id: "P-0022",
+    name: "Баронова Анастасия Вадимовна",
+    relation: "Сестра заявителя по отцу",
+    branch: "Бароновы",
+    isJubilee: false,
+    jubileeLabel: "🎉 22 года",
+    desc: "Младшая дочь Вадима Баронова. Родилась в Санкт-Петербурге, студентка."
+  },
+  {
+    id: "cal-3",
+    month: 2, day: 14, year: 1953,
+    type: "living",
+    person_id: "P-0011",
+    name: "Евдокимов Виктор Александрович (Витя)",
+    relation: "Родной дядя заявителя по матери",
+    branch: "Евдокимовы",
+    isJubilee: false,
+    jubileeLabel: "🎉 73 года",
+    desc: "Родился в Молотове (Перми), старший сын Александра Николаевича и Натальи Афанасьевны. Инженер-судостроитель."
+  },
+  {
+    id: "cal-4",
+    month: 4, day: 13, year: 1925,
+    type: "memorial",
+    person_id: "P-0006",
+    name: "Коваленко (в замуж. Евдокимова) Наталья Афанасьевна",
+    relation: "Бабушка заявителя по матери",
+    branch: "Коваленко",
+    isJubilee: false,
+    jubileeLabel: "🕯️ 101 год со дня рожд.",
+    desc: "Родилась в селе Землянка Оренбургской губернии в казачьей семье. Ветеран тыла, трудилась на военных заводах Перми, душа семьи."
+  },
+  {
+    id: "cal-5",
+    month: 5, day: 1, year: 1929,
+    type: "memorial",
+    person_id: "P-0005",
+    name: "Баронов Валентин Васильевич",
+    relation: "Дед заявителя по отцу",
+    branch: "Бароновы",
+    isJubilee: false,
+    jubileeLabel: "🕯️ 97 лет со дня рожд.",
+    desc: "Родился в с. Сольцы (Кириши) на реке Волхов. Ребёнком пережил оккупацию, окончил 1-е ЛКВАУ, майор автомобильных войск, ветеран ВС СССР."
+  },
+  {
+    id: "cal-6",
+    month: 6, day: 23, year: 1906,
+    type: "memorial",
+    person_id: "P-0036",
+    name: "Белов Владимир Александрович",
+    relation: "Двоюродный дед по матери",
+    branch: "Беловы",
+    isJubilee: true,
+    jubileeLabel: "⭐ 120 лет со дня рожд. (Юбилей)",
+    desc: "Родился в Чистополе на Каме. Старший техник-лейтенант 147-го ИАП 13-й Воздушной армии Ленинградского фронта. Обеспечивал оборону Дороги Жизни и ленинградского неба."
+  },
+  {
+    id: "cal-7",
+    month: 7, day: 23, year: 1998,
+    type: "living",
+    person_id: "P-0021",
+    name: "Баронова Дарья Вадимовна",
+    relation: "Сестра заявителя по отцу",
+    branch: "Бароновы",
+    isJubilee: false,
+    jubileeLabel: "🎉 28 лет",
+    desc: "Старшая дочь Вадима Баронова. Родилась в Санкт-Петербурге, выпускница СПбГЭУ, экономист."
+  },
+  {
+    id: "cal-8",
+    month: 8, day: 16, year: 1988,
+    type: "living",
+    person_id: "P-0001",
+    name: "Евдокимов Антон Вадимович",
+    relation: "Заявитель расследования",
+    branch: "Евдокимовы",
+    isJubilee: false,
+    jubileeLabel: "🎉 38 лет",
+    desc: "Родился в Ленинграде. EdTech-продюсер, архитектор образовательных платформ, автор генеалогического расследования ROOTS."
+  },
+  {
+    id: "cal-9",
+    month: 8, day: 22, year: 1961,
+    type: "living",
+    person_id: "P-0003",
+    name: "Баронов Вадим Валентинович",
+    relation: "Отец заявителя",
+    branch: "Бароновы",
+    isJubilee: true,
+    jubileeLabel: "🎉 65 лет (Юбилей 2026)",
+    desc: "Родился в Стрельне под Ленинградом. Специалист-автомобилист, хранитель офицерских реликвий майора Баронова. В 2026 году отмечает 65-летний юбилей."
+  },
+  {
+    id: "cal-10",
+    month: 9, day: 16, year: 2014,
+    type: "memorial",
+    person_id: "P-0006",
+    name: "Коваленко (в замуж. Евдокимова) Наталья Афанасьевна",
+    relation: "Бабушка заявителя по матери",
+    branch: "Коваленко",
+    isJubilee: false,
+    jubileeLabel: "🕯️ 12 лет памяти",
+    desc: "Скончалась в Санкт-Петербурге на 90-м году жизни, оставив светлую память детям, внукам и правнукам."
+  },
+  {
+    id: "cal-11",
+    month: 10, day: 1, year: 1888,
+    type: "memorial",
+    person_id: "P-0007",
+    name: "Евдокимов Николай Никандрович",
+    relation: "Прадед заявителя по матери",
+    branch: "Евдокимовы",
+    isJubilee: false,
+    jubileeLabel: "🕯️ 138 лет со дня рожд.",
+    desc: "Родился в с. Галактионово (Жукотино) Чистопольского уезда. Участник Первой мировой войны, перенёс карпатские бои 1915 г. и австрийский плен."
+  },
+  {
+    id: "cal-12",
+    month: 10, day: 12, year: 1943,
+    type: "memorial",
+    person_id: "P-0032",
+    name: "Белов Иван Фёдорович",
+    relation: "Двоюродный дед по матери",
+    branch: "Беловы",
+    isJubilee: false,
+    jubileeLabel: "🎖️ День воинской памяти (ВОВ)",
+    desc: "Гвардии рядовой / сапёр 13-го ОГСБ. Кавалер ордена Красной Звезды и медали «За отвагу». Смертельно ранен в бою при форсировании Днепра."
+  },
+  {
+    id: "cal-13",
+    month: 10, day: 16, year: 1952,
+    type: "living",
+    person_id: "P-0007",
+    name: "Селихова (урожд. Борисова) Лариса Николаевна",
+    relation: "Троюродная тётя / хранительница памяти",
+    branch: "Евдокимовы",
+    isJubilee: false,
+    jubileeLabel: "🎉 74 года",
+    desc: "Внучка Николая Никандровича Евдокимова (г. Гродно). Автор рукописной родословной схемы [A-0006], сохранившей ключевые звенья рода."
+  },
+  {
+    id: "cal-14",
+    month: 12, day: 19, year: 1935,
+    type: "memorial",
+    person_id: "P-0016",
+    name: "Шепеленко Нина Степановна",
+    relation: "Бабушка заявителя по отцу",
+    branch: "Шепеленко",
+    isJubilee: false,
+    jubileeLabel: "🕯️ 91 год со дня рожд.",
+    desc: "Родилась в Кустанайской области, казачий род Шепеленко. Сотрудница оборонного НИИ, верная спутница жизни майора Валентина Баронова."
+  }
+];
+
+const MONTH_NAMES_RU = [
+  "января", "февраля", "марта", "апреля", "мая", "июня",
+  "июля", "августа", "сентября", "октября", "ноября", "декабря"
+];
+const MONTH_SHORT_RU = [
+  "ЯНВ", "ФЕВ", "МАР", "АПР", "МАЙ", "ИЮН",
+  "ИЮЛ", "АВГ", "СЕН", "ОКТ", "НОЯ", "ДЕК"
+];
+
+let currentCalFilter = "all";
+let currentCalMonth = "all";
+
+function renderCalendarEvents() {
+  const container = document.getElementById("calendar-events-container");
+  if (!container) return;
+
+  const countAll = CALENDAR_EVENTS.length;
+  const countLiving = CALENDAR_EVENTS.filter(e => e.type === "living").length;
+  const countMemorial = CALENDAR_EVENTS.filter(e => e.type === "memorial").length;
+  const countJubilee = CALENDAR_EVENTS.filter(e => e.isJubilee).length;
+
+  const elAll = document.getElementById("cal-count-all");
+  const elLiving = document.getElementById("cal-count-living");
+  const elMemorial = document.getElementById("cal-count-memorial");
+  const elJubilee = document.getElementById("cal-count-jubilee");
+
+  if (elAll) elAll.textContent = countAll;
+  if (elLiving) elLiving.textContent = countLiving;
+  if (elMemorial) elMemorial.textContent = countMemorial;
+  if (elJubilee) elJubilee.textContent = countJubilee;
+
+  let list = CALENDAR_EVENTS.slice();
+  if (currentCalFilter === "living") list = list.filter(e => e.type === "living");
+  else if (currentCalFilter === "memorial") list = list.filter(e => e.type === "memorial");
+  else if (currentCalFilter === "jubilee") list = list.filter(e => e.isJubilee);
+
+  if (currentCalMonth !== "all") {
+    const m = parseInt(currentCalMonth, 10);
+    list = list.filter(e => e.month === m);
+  }
+
+  list.sort((a, b) => (a.month * 100 + a.day) - (b.month * 100 + b.day));
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--ink-500); background: var(--bg-surface); border: 1px dashed var(--border-default); border-radius: 10px;">
+        <span style="font-size: 32px; display: block; margin-bottom: 8px;">📅</span>
+        <div style="font-weight: 600; font-size: 15px;">В выбранном месяце или категории пока нет дат</div>
+        <div style="font-size: 13px; margin-top: 4px;">Выберите «Весь год» или другую категорию фильтра</div>
+      </div>
+    `;
+    return;
+  }
+
+  let html = "";
+  list.forEach(item => {
+    const monthShort = MONTH_SHORT_RU[item.month - 1];
+    const isJubileeClass = item.isJubilee ? " jubilee" : "";
+    const badgeType = item.type === "living" 
+      ? `<span class="cal-badge cal-badge-birth">🎉 День рождения</span>` 
+      : `<span class="cal-badge cal-badge-mem">🕯️ День памяти</span>`;
+    const jubileeBadge = item.isJubilee 
+      ? `<span class="cal-badge cal-badge-jubilee">${item.jubileeLabel}</span>` 
+      : (item.jubileeLabel ? `<span class="cal-badge cal-badge-birth">${item.jubileeLabel}</span>` : "");
+
+    html += `
+      <div class="cal-event-card${isJubileeClass}">
+        <div class="cal-date-badge">
+          <span class="cal-date-day">${item.day < 10 ? '0' + item.day : item.day}</span>
+          <span class="cal-date-month">${monthShort}</span>
+          <span class="cal-date-year">${item.year}</span>
+        </div>
+        <div class="cal-card-body">
+          <div class="cal-card-badges">
+            ${badgeType}
+            ${jubileeBadge}
+          </div>
+          <h4 class="cal-person-name" onclick="openPersonModal('${item.person_id}')" title="Открыть досье персоны">
+            ${item.name}
+          </h4>
+          <div class="cal-person-rel">${item.relation} · Ветвь ${item.branch}</div>
+          <p class="cal-event-desc">${item.desc}</p>
+          <div class="cal-card-actions">
+            <button type="button" class="cal-btn-dossier" onclick="openPersonModal('${item.person_id}')">
+              <span>📋 Досье</span>
+            </button>
+            <button type="button" class="cal-btn-dossier" onclick="jumpToPersonInTree('${item.person_id}')">
+              <span>🌳 В древо</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+function filterCalendar(filterType) {
+  currentCalFilter = filterType;
+  document.querySelectorAll("[data-cal-filter]").forEach(btn => {
+    btn.classList.toggle("active", btn.getAttribute("data-cal-filter") === filterType);
+  });
+  renderCalendarEvents();
+}
+
+function filterCalendarMonth(month) {
+  currentCalMonth = month;
+  document.querySelectorAll("[data-month]").forEach(btn => {
+    btn.classList.toggle("active", btn.getAttribute("data-month") == month);
+  });
+  renderCalendarEvents();
+}
+
+function jumpToPersonInTree(personId) {
+  activateTab("tab-tree");
+  selectPerson(personId, false);
+  if (typeof jumpToPerson === "function") {
+    setTimeout(() => jumpToPerson(personId), 60);
+  }
+}
+
+function exportRootsCalendarICS() {
+  let ics = "BEGIN:VCALENDAR\r\n";
+  ics += "VERSION:2.0\r\n";
+  ics += "PRODID:-//ROOTS Family Archive//Hermitage//RU\r\n";
+  ics += "CALSCALE:GREGORIAN\r\n";
+  ics += "METHOD:PUBLISH\r\n";
+  ics += "X-WR-CALNAME:Памятные даты рода ROOTS\r\n";
+  ics += "X-WR-TIMEZONE:Europe/Moscow\r\n";
+
+  CALENDAR_EVENTS.forEach(ev => {
+    const mm = ev.month < 10 ? "0" + ev.month : "" + ev.month;
+    const dd = ev.day < 10 ? "0" + ev.day : "" + ev.day;
+    const yyyy = ev.year;
+    const isBirth = ev.type === "living";
+    const prefix = isBirth ? "🎉 День рождения" : "🕯️ День памяти";
+    const summary = `${prefix}: ${ev.name} (${ev.relation})`;
+    const description = `${ev.desc} (Родословный свод ROOTS)`;
+
+    ics += "BEGIN:VEVENT\r\n";
+    ics += `UID:roots-${ev.id}@roots.archive\r\n`;
+    ics += `DTSTAMP:20261107T000000Z\r\n`;
+    ics += `DTSTART;VALUE=DATE:${yyyy}${mm}${dd}\r\n`;
+    ics += `RRULE:FREQ=YEARLY\r\n`;
+    ics += `SUMMARY:${summary}\r\n`;
+    ics += `DESCRIPTION:${description}\r\n`;
+    ics += `STATUS:CONFIRMED\r\n`;
+    ics += `TRANSP:TRANSPARENT\r\n`;
+    ics += "END:VEVENT\r\n";
+  });
+
+  ics += "END:VCALENDAR\r\n";
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "roots-family-calendar.ics";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 function initThemeUI() {
   const isDark = document.documentElement.getAttribute("data-theme") === "dark";
   updateThemeToggleBtn(isDark);
@@ -8389,6 +10182,7 @@ renderSvgCanvas();
 initCanvasPanZoom();
 renderGallery();
 renderClaims();
+renderCalendarEvents();
 if (window.innerWidth <= 768) {
   selectPerson("P-0001", false);
   setTimeout(() => jumpToPerson("P-0001"), 60);
