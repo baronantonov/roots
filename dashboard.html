@@ -1818,10 +1818,176 @@ html, body {
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
+  z-index: 2500;
   padding: 24px;
 }
 .lightbox.open { display: flex; }
+
+/* ==========================================================================
+   11. PERSON DOSSIER MODAL (Universal for Map, Timeline, Trees)
+   ========================================================================== */
+.person-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 25, 23, 0.72);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2100;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.person-modal.open {
+  display: flex !important;
+}
+.person-modal-backdrop {
+  position: absolute;
+  inset: 0;
+}
+.person-modal-dialog {
+  position: relative;
+  max-width: 680px;
+  width: 100%;
+  max-height: 88vh;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2;
+  animation: slideUpPersonModal 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideUpPersonModal {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.person-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-default);
+  gap: 12px;
+}
+.person-modal-kicker {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--accent-seal);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: block;
+}
+.person-modal-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin: 1px 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 380px;
+}
+.person-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.person-modal-tree-btn {
+  appearance: none;
+  background: var(--accent-seal);
+  color: #FFFFFF;
+  border: 1px solid var(--accent-seal);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+.person-modal-tree-btn:hover {
+  background: #842817;
+  box-shadow: 0 2px 8px rgba(158, 58, 38, 0.25);
+}
+.person-modal-close {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--ink-700);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.person-modal-close:hover {
+  background: var(--bg-subtle);
+  color: var(--ink-900);
+  border-color: var(--ink-500);
+}
+.person-modal-body {
+  padding: 18px 20px;
+  overflow-y: auto;
+  flex: 1;
+  background: var(--bg-surface);
+}
+
+@media (max-width: 768px) {
+  .person-modal {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .person-modal-dialog {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 18px 18px 0 0;
+    border-bottom: none;
+  }
+  .person-modal-title {
+    max-width: 200px;
+  }
+}
+
+html[data-theme="dark"] .person-modal {
+  background: rgba(0, 0, 0, 0.82);
+}
+html[data-theme="dark"] .person-modal-dialog {
+  background: #141822;
+  border-color: #263043;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+}
+html[data-theme="dark"] .person-modal-header {
+  background: #1A202C;
+  border-color: #263043;
+}
+html[data-theme="dark"] .person-modal-title {
+  color: #F8FAFC;
+}
+html[data-theme="dark"] .person-modal-close {
+  border-color: #263043;
+  color: #94A3B8;
+}
+html[data-theme="dark"] .person-modal-close:hover {
+  background: #252D3D;
+  color: #FFFFFF;
+}
+html[data-theme="dark"] .person-modal-body {
+  background: #141822;
+}
 .lightbox-inner {
   max-width: 1120px;
   width: 100%;
@@ -3109,9 +3275,29 @@ html, body {
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
-  padding: 4px 6px;
+  padding: 5px 7px;
   background: var(--bg-subtle);
-  border-radius: 4px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.map-popup-person-item:hover {
+  background: #FFFFFF;
+  border-color: var(--accent-seal);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.map-popup-view-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  opacity: 0.65;
+  transition: opacity 0.15s ease;
+}
+.map-popup-person-item:hover .map-popup-view-chip {
+  opacity: 1;
 }
 .map-popup-person-name {
   font-weight: 600;
@@ -3119,7 +3305,7 @@ html, body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 190px;
+  max-width: 175px;
 }
 .map-popup-detail-btn {
   appearance: none;
@@ -3300,11 +3486,13 @@ html, body {
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-subtle);
   transition: all 0.15s ease;
+  cursor: pointer;
 }
 .map-relative-row:hover {
   background: #FFFFFF;
-  border-color: var(--border-default);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  border-color: var(--accent-seal);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
 }
 .map-relative-left {
   display: flex;
@@ -3313,11 +3501,11 @@ html, body {
   min-width: 0;
 }
 .map-rel-avatar {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: var(--bg-elevated);
-  border: 1px solid var(--border-default);
+  border: 1.5px solid var(--border-default);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3326,6 +3514,10 @@ html, body {
   color: var(--ink-700);
   flex-shrink: 0;
   overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+.map-relative-row:hover .map-rel-avatar {
+  border-color: var(--accent-seal);
 }
 .map-rel-avatar img {
   width: 100%;
@@ -3343,9 +3535,18 @@ html, body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.map-relative-row:hover .map-rel-name {
+  color: var(--accent-seal);
+}
 .map-rel-role {
   font-size: 11px;
   color: var(--ink-500);
+}
+.map-rel-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
 }
 .map-rel-action-btn {
   appearance: none;
@@ -3356,14 +3557,28 @@ html, body {
   font-family: var(--font-sans);
   font-size: 11px;
   font-weight: 600;
-  color: var(--accent-seal);
+  color: var(--ink-700);
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.15s ease;
 }
-.map-rel-action-btn:hover {
+.map-rel-action-btn.card-btn {
   background: var(--accent-seal-soft);
-  border-color: var(--accent-seal);
+  color: var(--accent-seal);
+  border-color: var(--accent-seal-soft);
+}
+.map-rel-action-btn.card-btn:hover {
+  background: var(--accent-seal);
+  color: #FFFFFF;
+}
+.map-rel-action-btn.tree-btn {
+  background: var(--bg-surface);
+  color: var(--ink-700);
+}
+.map-rel-action-btn.tree-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--ink-900);
+  border-color: var(--ink-400);
 }
 
 /* Places scroll list in sidebar */
@@ -3626,6 +3841,11 @@ html[data-theme="dark"] .map-popup-person-item {
   background: #1C2230;
   color: #F8FAFC;
 }
+html[data-theme="dark"] .map-popup-person-item:hover {
+  background: #252D3D;
+  border-color: var(--accent-seal);
+  color: #FFFFFF;
+}
 html[data-theme="dark"] .map-popup-detail-btn {
   background: #202737;
   border-color: #263043;
@@ -3636,8 +3856,22 @@ html[data-theme="dark"] .map-popup-detail-btn:hover {
   border-color: var(--accent-seal);
 }
 
+html[data-theme="dark"] .map-relative-row {
+  background: #151922;
+  border-color: #263043;
+}
 html[data-theme="dark"] .map-relative-row:hover {
-  background: var(--bg-elevated);
+  background: #1C2333;
+  border-color: var(--accent-seal);
+}
+html[data-theme="dark"] .map-rel-action-btn.tree-btn {
+  background: #1A202C;
+  color: #CBD5E1;
+  border-color: #2D3748;
+}
+html[data-theme="dark"] .map-rel-action-btn.tree-btn:hover {
+  background: #2D3748;
+  color: #FFFFFF;
 }
 
 html[data-theme="dark"] select,
@@ -4598,7 +4832,29 @@ html[data-theme="dark"] input {
   <span id="mobile-dossier-btn-text">📋 Досье предка</span>
 </button>
 
-<!-- 6. LIGHTBOX MODAL FOR HIGH-RES ARCHIVAL SCANS -->
+<!-- 6. PERSON DOSSIER MODAL (Universal for Map, Timeline, Trees) -->
+<div class="person-modal" id="person-dossier-modal" role="dialog" aria-modal="true" style="display:none;">
+  <div class="person-modal-backdrop" onclick="closePersonModal()"></div>
+  <div class="person-modal-dialog">
+    <div class="person-modal-header">
+      <div class="person-modal-title-wrap">
+        <span class="person-modal-kicker">КАРТОЧКА ПРЕДКА</span>
+        <h3 class="person-modal-title" id="person-modal-title">Досье персоны</h3>
+      </div>
+      <div class="person-modal-actions">
+        <button type="button" class="person-modal-tree-btn" id="person-modal-tree-btn" onclick="jumpToTreeFromModal()" title="Перейти к персоне на интерактивном древе">
+          <span>🌳</span> <span>В древо</span>
+        </button>
+        <button type="button" class="person-modal-close" onclick="closePersonModal()" title="Закрыть карточку (Esc)">✕</button>
+      </div>
+    </div>
+    <div class="person-modal-body" id="person-modal-content">
+      <!-- Наполняется динамически через buildPersonDossierHtml() -->
+    </div>
+  </div>
+</div>
+
+<!-- 7. LIGHTBOX MODAL FOR HIGH-RES ARCHIVAL SCANS -->
 <div class="lightbox" id="lightbox-modal" role="dialog" aria-modal="true">
   <div class="lightbox-inner">
     <div class="lightbox-bar">
@@ -5960,26 +6216,8 @@ function renderTree() {
   // Tree is exclusively interactive graphic SVG canvas
 }
 
-function selectPerson(personId, shouldOpenMobile = true) {
-  const btnText = document.getElementById("mobile-dossier-btn-text");
-  const personObj = PERSONS.find(item => item.id === personId);
-  if (btnText && personObj) {
-    btnText.textContent = `📋 Досье: ${personObj.name.split(" ")[0]} (${personObj.role})`;
-  }
-  const p = PERSONS.find(item => item.id === personId) || PERSONS[4];
-  if (shouldOpenMobile && window.innerWidth <= 1024) {
-    openMobileDossierSheet();
-  }
-  document.querySelectorAll(".node-card").forEach(btn => {
-    btn.classList.toggle("selected", btn.getAttribute("data-person-id") === p.id);
-  });
-  document.querySelectorAll(".canvas-node-card").forEach(card => {
-    card.classList.toggle("selected", card.getAttribute("data-person-id") === p.id);
-  });
-
-  const sel = document.getElementById("person-jump-select");
-  if (sel && sel.value !== p.id) sel.value = p.id;
-
+function buildPersonDossierHtml(personId) {
+  const p = PERSONS.find(item => item.id === personId) || PERSONS[0];
   const artCards = p.artifacts.map(aid => ARTIFACTS[aid]).filter(Boolean);
   const visualArts = artCards.filter(a => a.img);
 
@@ -5987,7 +6225,12 @@ function selectPerson(personId, shouldOpenMobile = true) {
                       p.status === "corroborated" ? "✓ Подтверждено независимыми источниками" :
                       p.status === "single-source" ? "Зафиксировано по семейным воспоминаниям" : "Рабочая гипотеза (в очереди архивного поиска)";
 
-  const html = `
+  const formattedRelatives = (p.relatives || "").replace(
+    /\b(P-\d{4})\b/g,
+    '<span class="person-link-chip" onclick="openPersonFromAnywhere(\'$1\')" style="cursor:pointer;display:inline-flex;align-items:center;margin:0 2px;">$1</span>'
+  );
+
+  return `
     <div class="insp-header">
       ${PERSON_AVATARS[p.id] ? `
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;">
@@ -6009,6 +6252,16 @@ function selectPerson(personId, shouldOpenMobile = true) {
       `}
     </div>
 
+    <!-- Quick Navigation Toolbar in Dossier -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border-default);border-radius:8px;">
+      <button type="button" class="ctrl-btn" onclick="openPersonFromAnywhere('${p.id}')" style="margin:0;padding:6px 12px;font-size:12px;height:auto;display:inline-flex;align-items:center;gap:6px;background:var(--accent-seal);color:#fff;border-color:var(--accent-seal);" title="Открыть персону на интерактивном холсте древа">
+        <span>🌳</span> <span>Показать в древе</span>
+      </button>
+      <button type="button" class="ctrl-btn" onclick="openPersonOnMap('${p.id}'); closePersonModal();" style="margin:0;padding:6px 12px;font-size:12px;height:auto;display:inline-flex;align-items:center;gap:6px;" title="Сфокусировать место на карте">
+        <span>📍</span> <span>На карте</span>
+      </button>
+    </div>
+
     <div class="insp-section">
       <h4>Основные биографические сведения</h4>
       <div class="kv-list">
@@ -6022,7 +6275,7 @@ function selectPerson(personId, shouldOpenMobile = true) {
         <div class="kv-val">
           ${p.jurisdiction}
           <div style="margin-top:6px;">
-            <button type="button" class="person-link-chip" onclick="openPersonOnMap('${p.id}')" style="display:inline-flex;align-items:center;gap:4px;font-size:11.5px;padding:3px 8px;background:var(--bg-subtle);border:1px solid var(--border-default);border-radius:4px;cursor:pointer;">
+            <button type="button" class="person-link-chip" onclick="openPersonOnMap('${p.id}'); closePersonModal();" style="display:inline-flex;align-items:center;gap:4px;font-size:11.5px;padding:3px 8px;background:var(--bg-subtle);border:1px solid var(--border-default);border-radius:4px;cursor:pointer;">
               🗺️ Показать на карте
             </button>
           </div>
@@ -6030,7 +6283,7 @@ function selectPerson(personId, shouldOpenMobile = true) {
         <div class="kv-key">Сословие / род занятий:</div>
         <div class="kv-val">${p.occupation}</div>
         <div class="kv-key">Семья и близкие:</div>
-        <div class="kv-val">${p.relatives}</div>
+        <div class="kv-val">${formattedRelatives}</div>
       </div>
     </div>
 
@@ -6072,16 +6325,87 @@ function selectPerson(personId, shouldOpenMobile = true) {
       `).join("")}
     </div>
   `;
+}
+
+function selectPerson(personId, shouldOpenMobile = true) {
+  const p = PERSONS.find(item => item.id === personId) || PERSONS[4];
+  const btnText = document.getElementById("mobile-dossier-btn-text");
+  if (btnText && p) {
+    btnText.textContent = `📋 Досье: ${p.name.split(" ")[0]} (${p.role})`;
+  }
+  const isTreeActive = document.getElementById("tab-tree") && document.getElementById("tab-tree").classList.contains("active");
+  if (shouldOpenMobile && isTreeActive && window.innerWidth <= 1024) {
+    openMobileDossierSheet();
+  }
+  document.querySelectorAll(".node-card").forEach(btn => {
+    btn.classList.toggle("selected", btn.getAttribute("data-person-id") === p.id);
+  });
+  document.querySelectorAll(".canvas-node-card").forEach(card => {
+    card.classList.toggle("selected", card.getAttribute("data-person-id") === p.id);
+  });
+
+  const sel = document.getElementById("person-jump-select");
+  if (sel && sel.value !== p.id) sel.value = p.id;
 
   const contentEl = document.getElementById("inspector-content");
-  if (contentEl) contentEl.innerHTML = html;
+  if (contentEl) contentEl.innerHTML = buildPersonDossierHtml(p.id);
+}
+
+let currentModalPersonId = null;
+
+function openPersonModal(personId) {
+  const p = PERSONS.find(item => item.id === personId);
+  if (!p) return;
+  currentModalPersonId = personId;
+
+  // Background sync tree selection
+  selectPerson(personId, false);
+
+  const modal = document.getElementById("person-dossier-modal");
+  const modalContent = document.getElementById("person-modal-content");
+  const modalTitle = document.getElementById("person-modal-title");
+
+  if (modalTitle) {
+    modalTitle.textContent = `${p.name} (${p.role})`;
+  }
+  if (modalContent) {
+    modalContent.innerHTML = buildPersonDossierHtml(personId);
+  }
+  if (modal) {
+    modal.classList.add("open");
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+}
+
+function closePersonModal() {
+  const modal = document.getElementById("person-dossier-modal");
+  if (modal) {
+    modal.classList.remove("open");
+    modal.style.display = "none";
+  }
+  currentModalPersonId = null;
+  const panel = document.getElementById("inspector-panel");
+  if (!panel || !panel.classList.contains("sheet-open")) {
+    document.body.style.overflow = "";
+  }
+}
+
+function jumpToTreeFromModal() {
+  const pid = currentModalPersonId;
+  closePersonModal();
+  if (pid) {
+    openPersonFromAnywhere(pid);
+  }
 }
 
 function openPersonFromAnywhere(personId) {
+  closePersonModal();
+  closeMobileMapSheet();
   activateTab("tab-tree");
   setTimeout(() => {
-    jumpToPerson(personId);
-  }, 60);
+    jumpToPerson(personId, true);
+  }, 70);
 }
 
 function jumpToPerson(personId, openSheet = false) {
@@ -6209,11 +6533,19 @@ document.getElementById("lightbox-modal").addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeLightbox();
+    closePersonModal();
     closeMobileDossierSheet();
+    closeMobileMapSheet();
   }
 });
 
 function activateTab(tabId) {
+  if (tabId !== "tab-tree") {
+    closeMobileDossierSheet();
+  }
+  if (tabId !== "tab-map") {
+    closeMobileMapSheet();
+  }
   document.querySelectorAll(".nav-tab-btn, .tab-btn").forEach(b => {
     b.classList.toggle("active", b.getAttribute("data-tab") === tabId);
   });
@@ -7556,10 +7888,21 @@ function renderMapMarkers() {
     const personsHtml = loc.persons.map(pid => {
       const p = PERSONS.find(item => item.id === pid);
       if (!p) return "";
+      const hasAvatar = !!PERSON_AVATARS[p.id];
+      const avatarThumb = hasAvatar
+        ? `<img src="${PERSON_AVATARS[p.id].src}" alt="${p.name}" style="width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid var(--border-default);">`
+        : `<span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--bg-elevated);font-size:10px;font-weight:700;flex-shrink:0;">${p.name[0]}</span>`;
+
       return `
-        <div class="map-popup-person-item">
-          <span class="map-popup-person-name"><b>${p.name.split(" ")[0]}</b> ${p.name.split(" ").slice(1).join(" ")}</span>
-          <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--ink-500);">${p.dates.split("·")[0].trim()}</span>
+        <div class="map-popup-person-item" onclick="openPersonModal('${p.id}')" title="Открыть карточку предка: ${p.name}">
+          <div style="display:flex;align-items:center;gap:6px;min-width:0;overflow:hidden;">
+            ${avatarThumb}
+            <span class="map-popup-person-name"><b>${p.name.split(" ")[0]}</b> ${p.name.split(" ").slice(1).join(" ")}</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">
+            <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--ink-500);">${p.dates.split("·")[0].trim()}</span>
+            <span class="map-popup-view-chip" title="Открыть карточку">📋</span>
+          </div>
         </div>
       `;
     }).join("");
@@ -7572,6 +7915,7 @@ function renderMapMarkers() {
         <div class="map-popup-desc">${loc.roleText}</div>
         <div class="map-popup-persons-title">Родственники в этом месте (${loc.persons.length}):</div>
         <div class="map-popup-persons-list">${personsHtml}</div>
+        <div style="font-size:11px;color:var(--ink-500);margin:4px 0 8px;font-style:italic;">💡 Нажмите на персону, чтобы открыть её карточку</div>
         <button type="button" class="map-popup-detail-btn" onclick="selectMapPlace('${loc.id}', true)">
           Открыть досье места и персоналий →
         </button>
@@ -7651,7 +7995,7 @@ function renderSelectedPlaceDossier(loc) {
       : `<span>${p.name[0]}</span>`;
 
     return `
-      <div class="map-relative-row">
+      <div class="map-relative-row" onclick="openPersonModal('${p.id}')" title="Открыть карточку предка: ${p.name}">
         <div class="map-relative-left">
           <div class="map-rel-avatar">${avatarInner}</div>
           <div class="map-relative-meta">
@@ -7659,9 +8003,14 @@ function renderSelectedPlaceDossier(loc) {
             <div class="map-rel-role">${p.role} · <span class="mono">${p.dates}</span></div>
           </div>
         </div>
-        <button type="button" class="map-rel-action-btn" onclick="openPersonFromAnywhere('${p.id}')" title="Открыть карточку предка в семейном древе">
-          🌳 В древо
-        </button>
+        <div class="map-rel-actions" onclick="event.stopPropagation();">
+          <button type="button" class="map-rel-action-btn card-btn" onclick="openPersonModal('${p.id}')" title="Открыть карточку предка">
+            📋 Карточка
+          </button>
+          <button type="button" class="map-rel-action-btn tree-btn" onclick="openPersonFromAnywhere('${p.id}')" title="Показать в древе">
+            🌳 Древо
+          </button>
+        </div>
       </div>
     `;
   }).join("");
