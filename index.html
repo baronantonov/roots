@@ -3882,6 +3882,136 @@ html[data-theme="dark"] input {
   border-color: var(--border-default);
 }
 
+/* ==========================================================================
+   CONFLUENCE SCHEMA & CHRONICLE CHAPTERS (Refactoring UI / Master Details)
+   ========================================================================== */
+.confluence-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 18px 0;
+}
+@media (max-width: 768px) {
+  .confluence-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+.confluence-branch-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+.confluence-branch-card.pat {
+  border-top: 4px solid var(--accent-pat);
+}
+.confluence-branch-card.mat {
+  border-top: 4px solid var(--accent-mat);
+}
+.confluence-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.confluence-sub-stream {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.confluence-merge-node {
+  background: var(--accent-seal-soft);
+  border: 1.5px dashed var(--accent-seal);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: auto;
+  font-size: 13px;
+  font-weight: 600;
+}
+.confluence-destination {
+  background: linear-gradient(135deg, rgba(160, 48, 48, 0.08), rgba(212, 160, 23, 0.12));
+  border: 2px solid var(--accent-seal);
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  margin: 16px 0 24px;
+  box-shadow: var(--shadow-md);
+}
+.confluence-dest-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--accent-seal);
+  margin-bottom: 6px;
+}
+.confluence-dest-sub {
+  font-size: 13.5px;
+  color: var(--ink-700);
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+.chronicle-chapter {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.chronicle-chap-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.chronicle-chap-num {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent-seal);
+  letter-spacing: 0.6px;
+  background: var(--accent-seal-soft);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.chronicle-chap-title {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin: 0;
+}
+.chronicle-chap-meta {
+  font-size: 12px;
+  color: var(--ink-500);
+  margin-left: auto;
+  font-family: var(--font-mono);
+}
+.chronicle-text {
+  font-size: 13.5px;
+  line-height: 1.68;
+  color: var(--ink-800);
+  margin-bottom: 10px;
+}
+.chronicle-text:last-child {
+  margin-bottom: 0;
+}
+
 </style>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
@@ -3917,34 +4047,23 @@ html[data-theme="dark"] input {
     </div>
 
     <!-- Основное верхнее меню по разделам архива -->
+    <!-- Основное верхнее меню по разделам архива: 4 ключевых раздела -->
     <nav class="header-nav" role="tablist" aria-label="Разделы семейного архива">
-      <button class="nav-tab-btn active" data-tab="tab-tree" onclick="activateTab('tab-tree')">
+      <button class="nav-tab-btn active" data-tab="tab-tree" id="tab-btn-tree" onclick="activateTab('tab-tree')">
         <span>🌳 Древо</span>
         <span class="nav-count">42</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-map" id="tab-btn-map" onclick="activateTab('tab-map')">
         <span>🗺️ Карта</span>
-        <span class="nav-count">42 чел.</span>
+        <span class="nav-count">14 очагов</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-surnames" id="tab-btn-surnames" onclick="activateTab('tab-surnames')">
-        <span>📖 О фамилиях</span>
-        <span class="nav-count">6 родов</span>
+        <span>📖 Фамилии</span>
+        <span class="nav-count">4 рода</span>
       </button>
-      <button class="nav-tab-btn" data-tab="tab-scans" onclick="activateTab('tab-scans')">
-        <span>📜 Сканы</span>
-        <span class="nav-count">11</span>
-      </button>
-      <button class="nav-tab-btn" data-tab="tab-nest" onclick="activateTab('tab-nest')">
-        <span>🏡 Семья (13 детей)</span>
-        <span class="nav-count">13</span>
-      </button>
-      <button class="nav-tab-btn" data-tab="tab-geo" onclick="activateTab('tab-geo')">
+      <button class="nav-tab-btn" data-tab="tab-timeline" id="tab-btn-timeline" onclick="activateTab('tab-timeline')">
         <span>⏳ Хронология</span>
-        <span class="nav-count">1647–1988</span>
-      </button>
-      <button class="nav-tab-btn" data-tab="tab-queue" onclick="activateTab('tab-queue')">
-        <span>📑 Запросы GPS</span>
-        <span class="nav-count">22</span>
+        <span class="nav-count">1500–1988</span>
       </button>
     </nav>
   </div>
@@ -4022,122 +4141,7 @@ html[data-theme="dark"] input {
   </section>
 
   <!-- ====================================================================
-       ВКЛАДКА 2: БОЛЬШОЕ СЕМЕЙНОЕ ГНЕЗДО ПРАБАБУШКИ АГРИППИНЫ (13 ДЕТЕЙ)
-       ==================================================================== -->
-  <section class="tab-panel scrollable" id="tab-nest">
-    <div class="tab-scroll-inner">
-      <div class="section-card">
-      <h2>Большое семейное гнездо прабабушки Агриппины Александровны (13 детей в одном доме)</h2>
-      <p class="section-sub">
-        Уникальная семейная история любви, милосердия и стойкости: прабабушка
-        <b>Агриппина Александровна Евдокимова (урожд. Белова, 1889–1971)</b> и прадед
-        <b>Николай Никандрович Евдокимов (1888–ок. 1926)</b> дали жизнь и вырастили в селе Жукотино (Галактионово) тринадцать детей.
-      </p>
-
-      <div class="nest-summary-grid">
-        <div class="nest-stat-box">
-          <div class="nest-stat-num">8 своих детей</div>
-          <div class="nest-stat-title">Родные дети Николая и Агриппины</div>
-          <p class="nest-stat-desc">Серёжа, Миша, Таня, Вера (1919), Ная (1922), Федя, дед Антона — <b>7. Шура (1926)</b> и Дуня.</p>
-        </div>
-        <div class="nest-stat-box" style="border-left-color:var(--accent-pat);">
-          <div class="nest-stat-num" style="color:var(--accent-pat);">+3 племянника</div>
-          <div class="nest-stat-title">Сироты брата Ефима Никандровича</div>
-          <p class="nest-stat-desc">Когда брат прадеда Ефим умер от холеры вслед за женой, Николай и Агриппина забрали его троих детей (Колю, Саню, Митю) как родных.</p>
-        </div>
-        <div class="nest-stat-box" style="border-left-color:var(--accent-gold);">
-          <div class="nest-stat-num" style="color:var(--accent-gold);">+4 детей Егора</div>
-          <div class="nest-stat-title">Дети от второго брака с Егором</div>
-          <p class="nest-stat-desc">После ранней смерти прадеда Николая от последствий австрийского плена прабабушка подняла ещё четверых детей второго мужа Егора (Анну, Олю, Дуню, Сашу).</p>
-        </div>
-      </div>
-
-      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Ветвь в доме</th>
-              <th>Имя в семейной росписи</th>
-              <th>Годы жизни</th>
-              <th>Супруг(а) и город</th>
-              <th>Дети и внуки (двоюродная родня мамы Антона)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="badge badge-single">Свои дети (1/8)</span></td>
-              <td><b>1. Серёжа</b> (Евдокимов Сергей Николаевич)</td>
-              <td class="mono">ок. 1910–1914</td>
-              <td>+ Настя · <b>г. Пермь</b></td>
-              <td>1. Люба (10.11.1938–12.1989); 2. Коля (04.02.1941); 3. Толя (09.10.1943–26.05.2003); 4. Таня (+ Коля Белкин)</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-single">Свои дети (2/8)</span></td>
-              <td><b>2. Миша</b> (Евдокимов Михаил Николаевич)</td>
-              <td class="mono">ок. 1912–1917</td>
-              <td>+ Саня · <b>г. Пермь</b></td>
-              <td>1. Мария (27.09.1936); 2. Володя (14.08.1944); 3. Валя (15.07.1947)</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-single">Свои дети (3/8)</span></td>
-              <td><b>3. Таня</b> (Антипова Татьяна Николаевна)</td>
-              <td class="mono">ок. 1914–1918</td>
-              <td>+ Вася Антипов · <b>г. Волжск</b></td>
-              <td>1. Женя (01.01.1939); 2. Боря (23.07.1941); 3. Толя (1947); 4. Витя (26.09.1950); 5. Гена (13.09.1952)</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-single">Свои дети (4/8)</span></td>
-              <td><b>4. Вера</b> (Евдокимова Вера Николаевна)</td>
-              <td class="mono">1919–10.02.1997</td>
-              <td>+ Иван · <b>г. Пермь</b></td>
-              <td>1. Валя (25.07.1941); 2. Галя (04.04.1947); 3. Витя (23.11.1950–29.01.1999); 4. Наташа (03.10.1953)</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-single">Свои дети (5/8)</span></td>
-              <td><b>5. Ная</b> (Борисова Ная Николаевна)</td>
-              <td class="mono">04.02.1922–23.01.1992</td>
-              <td>+ Борисов Николай (15.04.1918–29.07.1996) · <b>г. Гродно</b></td>
-              <td>1. Юра (18.04.1946–04.12.2000); 2. <b>Лора (Лариса Селихова, род. 16.10.1952 — составительница родословной таблицы!)</b></td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-single">Свои дети (6, 8)</span></td>
-              <td><b>6. Федя</b> и <b>8. Дуня</b></td>
-              <td class="mono">ум. в младенчестве</td>
-              <td>с. Галактионово (Жукотино)</td>
-              <td>—</td>
-            </tr>
-            <tr style="background:var(--accent-seal-soft);">
-              <td><span class="badge badge-corr">Прямая ветвь (7/8)</span></td>
-              <td><b>7. Шура (Евдокимов Александр Николаевич)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">P-0004</span></td>
-              <td class="mono"><b>род. 1926</b></td>
-              <td>+ <b>Наташа</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0006')">P-0006</span> · Пермь (Молотов) → <b>пос. Перово, г. Симферополь</b></td>
-              <td>1. <b>Витя (14.02.1953)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0011')">P-0011</span> → дочь Инна (1979) → Лена (2003);<br>2. <b>Нина (26.01.1956)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0002')">P-0002</span> → <b>Антон (16.08.1988)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0001')">P-0001</span></td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-single">Дети брата Ефима (+3)</span></td>
-              <td>Сироты <b>Ефима Никандровича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0012')">P-0012</span> и Марии</td>
-              <td class="mono">усыновлены ок. 1920</td>
-              <td>Воспитаны Николаем Никандровичем и Агриппиной</td>
-              <td><b>Коля</b> (+ Оля, 4 детей); <b>Саня</b> (+ Павел, 6 детей); <b>Митя</b> (+ Женя → Люда → Оля 1968 г.р., Киев)</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-single">Дети 2-го мужа Егора (+4)</span></td>
-              <td>Пасынки и падчерицы от второго брака прабабушки с <b>Егором</b></td>
-              <td class="mono">после 1926 г.</td>
-              <td>Выращены Агриппиной Александровной</td>
-              <td><b>Анна, Оля, Дуня, Саша</b></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    </div>
-  </section>
-
-  
-  <!-- ====================================================================
-       ВКЛАДКА: ИНТЕРАКТИВНАЯ ГЕОГРАФИЧЕСКАЯ КАРТА РОДА
+       ВКЛАДКА 2: ИНТЕРАКТИВНАЯ ГЕОГРАФИЧЕСКАЯ КАРТА РОДА
        ==================================================================== -->
   <section class="tab-panel" id="tab-map">
     <div class="map-workspace-grid">
@@ -4252,244 +4256,320 @@ html[data-theme="dark"] input {
 
 
   <!-- ====================================================================
-       ВКЛАДКА 3: АРХИВНЫЕ СКАНЫ И ПЕРВОИСТОЧНИКИ
+       ВКЛАДКА: ХРОНОЛОГИЯ И ИСТОРИЯ ВСЕГО РОДА (1500–1988)
        ==================================================================== -->
-  <section class="tab-panel scrollable" id="tab-scans">
+  <section class="tab-panel scrollable" id="tab-timeline">
     <div class="tab-scroll-inner">
+
+      <!-- ГЛАВНЫЙ БАННЕР РАЗДЕЛА «ХРОНОЛОГИЯ» -->
+      <div class="doc-header">
+        <div class="doc-header-kicker">⏳ Семейная летопись · Четыре реки рода · 1500–1988</div>
+        <h2 class="doc-header-title">Хронология: как четыре рода сошлись в Антоне</h2>
+        <p class="doc-header-desc">
+          Историческая реконструкция путей четырёх ветвей рода — <b>Бароновых</b> (Кириши, р. Волхов), <b>Шепеленко</b> (Лебединщина → Кустанай → Самарканд), <b>Евдокимовых и Беловых</b> (древний Джукетау, р. Кама) и <b>Коваленко с Бринюк</b> (Сумщина → Крым). Триста лет войн, реформ, переселений и созидательного труда, соединившиеся в единую точку судьбы — <b>16 августа 1988 года в Ленинграде</b>.
+        </p>
+      </div>
+
+      <!-- ИНТЕРАКТИВНАЯ СХЕМА СЛИЯНИЯ ЧЕТЫРЁХ ИСТОКОВ РОДА -->
       <div class="section-card">
-        <h2>Галерея верифицированных артефактов дела и семейных реликвий</h2>
-        <p class="section-sub">Подлинные оцифрованные документы Российского государственного военно-исторического архива (РГВИА, 1915 г.), картотеки военнопленных Первой мировой войны и рукописные семейные таблицы. Нажмите на любой документ для увеличения.</p>
-        <div class="archive-gallery" id="archive-gallery-container"></div>
-      </div>
-    </div>
-  </section>
+        <h2>Схема схождения истоков: четыре реки в одно русло</h2>
+        <p class="section-sub">Нажмите на карточку любого предка, чтобы открыть его персональное архивное досье.</p>
 
-  <!-- ====================================================================
-       ВКЛАДКА 4: ИСТОРИЧЕСКАЯ ГЕОГРАФИЯ И ХРОНОЛОГИЯ РОДА
-       ==================================================================== -->
-  <section class="tab-panel scrollable" id="tab-geo">
-    <div class="tab-scroll-inner">
+        <div class="confluence-grid">
+          <!-- Левая колонка: Отцовская линия -->
+          <div class="confluence-branch-card pat">
+            <div class="confluence-title" style="color:var(--accent-pat);">
+              <span>⚓</span> <span>Отцовская линия: Бароновы & Шепеленко</span>
+            </div>
+
+            <div class="confluence-sub-stream">
+              <b>1. Северный исток (Бароновы · р. Волхов):</b><br>
+              Приход церкви Рождества Богородицы в с. Сольцы (1717 г.) и Кириши Новоладожского уезда Санкт-Петербургской губ. Крестьяне имения Бестужевых.
+              <div style="margin-top:6px;">
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0017')">Василий Баронов (P-0017)</span> → 
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">майор Валентин Баронов (P-0005)</span>
+              </div>
+            </div>
+
+            <div class="confluence-sub-stream">
+              <b>2. Степной исток (Шепеленко · Слобожанщина → Тургай → Самарканд):</b><br>
+              Слободские казаки Лебединщины → переселение по Столыпинской реформе 1912 г. в Кустанайский уезд → эвакуация 1946 г. в Самарканд (Узбекистан).
+              <div style="margin-top:6px;">
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0020')">Иван Шепеленко (P-0020)</span> → 
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">Клавдия Шепеленко (P-0018)</span> → 
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0016')">Нина Шепеленко (P-0016)</span>
+              </div>
+            </div>
+
+            <div class="confluence-merge-node">
+              ⚓ <b>Отец:</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0003')">Вадим Валентинович Баронов (P-0003)</span><br>
+              <span style="font-size:11.5px;color:var(--ink-600);font-weight:normal;">род. 22.08.1961, р.п. Стрельна (Петродворец, Ленинград)</span>
+            </div>
+          </div>
+
+          <!-- Правая колонка: Материнская линия -->
+          <div class="confluence-branch-card mat">
+            <div class="confluence-title" style="color:var(--accent-mat);">
+              <span>🌾</span> <span>Материнская линия: Евдокимовы & Коваленко</span>
+            </div>
+
+            <div class="confluence-sub-stream">
+              <b>3. Камский исток (Евдокимовы & Беловы · р. Кама):</b><br>
+              Савин Городок у Закамской черты (1647 г., крепость Джукетау), с. Никольское (Жукотино) Чистопольского уезда. Крестьяне Аристовых.
+              <div style="margin-top:6px;">
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0015')">Евдоким (P-0015)</span> → 
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0010')">Михаил (P-0010)</span> → 
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0009')">Никандр (P-0009)</span> → 
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0007')">Николай (P-0007)</span> + 
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0008')">Агриппина Белова (P-0008)</span> → 
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">Александр Евдокимов (P-0004)</span>
+              </div>
+            </div>
+
+            <div class="confluence-sub-stream">
+              <b>4. Южный исток (Коваленко & Бринюк · Сумщина → Крым):</b><br>
+              Глуховщина и Северщина (Украина) → переезд в Крым (пос. Перово, Симферопольский район).
+              <div style="margin-top:6px;">
+                <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0006')">Наталья Коваленко (P-0006)</span>
+              </div>
+            </div>
+
+            <div class="confluence-merge-node">
+              🌾 <b>Мама:</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0002')">Нина Александровна Евдокимова (P-0002)</span><br>
+              <span style="font-size:11.5px;color:var(--ink-600);font-weight:normal;">род. 26.01.1956, гор. Молотов (Пермь) → пос. Перово (Крым)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Центральная точка схождения -->
+        <div class="confluence-destination">
+          <div class="confluence-dest-title">⭐ Точка схождения: Антон Вадимович Евдокимов</div>
+          <div class="confluence-dest-sub">
+            <b>Родился 16 августа 1988 года в Ленинграде</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0001')">P-0001</span>).<br>
+            В этой точке соединились кровь волховских крестьян Бестужевых, слободских казаков и туркестанских переселенцев, камских хлебопашцев Савина Городка и южных мастеров Сумщины.
+          </div>
+        </div>
+      </div>
+
+      <!-- ЛИТЕРАТУРНО-ИСТОРИЧЕСКИЙ ОЧЕРК: 5 ГЛАВ СУДЬБЫ РОДА -->
       <div class="section-card">
-      <h2>Хронологическая летопись семьи (1647–1988)</h2>
-      <p class="section-sub">Ключевые вехи семейной истории, выстроенные по документальным свидетельствам и архивным фондам.</p>
-      <div class="timeline">
-        <div class="tl-item">
-          <span class="tl-date">1647–1656 гг.</span><span class="tl-place">Закамская засечная черта, р. Кама (РГАДА, ф. 350)</span>
-          <div class="tl-desc">Основание родового села <b>Никольское (Жукотино тож, «Савин Городок»)</b> дворянином <b>Саввой Тимофеевичем Аристовым</b> на месте булгарской крепости Джукетау. Род дворян Аристовых владел вотчиной и крестьянами села вплоть до реформы 1861 года.</div>
+        <h2>Летопись рода: как сквозь эпохи и бури созидалась эта жизнь</h2>
+        <p class="section-sub">Документальное повествование, восстановленное по ревизским сказкам, метрическим книгам, выкупным делам РГИА и фронтовым документам РГВИА и ЦАМО.</p>
+
+        <div class="chronicle-chapter">
+          <div class="chronicle-chap-head">
+            <span class="chronicle-chap-num">Глава I</span>
+            <h3 class="chronicle-chap-title">Северный исток — Бароновы на берегах седого Волхова</h3>
+            <span class="chronicle-chap-meta">1700-е – 1943 гг.</span>
+          </div>
+          <p class="chronicle-text">
+            Северная ветвь твоего отца ведёт к каменистым порогам реки Волхов, где ещё в 1717 году по указу Петра I и благословению Новгородского владыки возвели белокаменную церковь Рождества Пресвятой Богородицы в селе Сольцы (будущий город Кириши). Именно здесь, в приходе Рождественского храма, из поколения в поколение жили крестьяне <b>Бароновы</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0017')">Василий Баронов, P-0017</span>).
+          </p>
+          <p class="chronicle-text">
+            Эти земли принадлежали старинному дворянскому роду Бестужевых. В усадьбе Сольцы провёл молодые годы Александр Федосеевич Бестужев — просветитель, артиллерийский офицер, сподвижник Радищева и создатель знаменитого пансиона, где выросли четверо братьев-декабристов: Александр Бестужев-Марлинский, Николай, Михаил и Пётр. Предки Бароновых обрабатывали эту землю, пахали скудные северные суглинки, тянули барки по Волхову и пережили освобождение от крепостной зависимости по уставным грамотам 1861 года (фонд 577 РГИА).
+          </p>
+          <p class="chronicle-text">
+            В Великую Отечественную войну на эти места обрушилась страшная трагедия: с сентября 1941 по октябрь 1943 года Кириши превратились в огнедышащий «Киришский плацдарм». Село Сольцы и Кириши были стёрты с лица земли артиллерией и бомбёжками. 12-летний мальчишка, твой дед <b>Валентин Васильевич Баронов</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span>), выжил в голодном оккупационном аду, не сломался, а после Победы в 1948 году поступил в 1-е Ленинградское военно-автомобильное училище, стал кадровым офицером Советской Армии, майором и командиром автобата в Петродворце и Стрельне.
+          </p>
         </div>
-                <div class="tl-item">
-          <span class="tl-date">1717 год</span><span class="tl-place">с. Сольцы (Кириши), Новоладожский уезд (ЦГИА СПб, ф. 19)</span>
-          <div class="tl-desc">Строительство каменной церкви <b>Рождества Пресвятой Богородицы</b> в селе Сольцы на берегу Волхова с приделами свт. Николая Чудотворца и вмц. Параскевы. Храм стал главным приходским и метрическим центром крестьянского рода <b>Бароновых</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0017')">P-0017</span>), к приходу которого относилась и деревня Кириши (<code>[A-0027]</code>).</div>
+
+        <div class="chronicle-chapter">
+          <div class="chronicle-chap-head">
+            <span class="chronicle-chap-num">Глава II</span>
+            <h3 class="chronicle-chap-title">Степной исток — Шепеленко: от казачьей Слобожанщины до Самарканда</h3>
+            <span class="chronicle-chap-meta">1700-е – 1950-е гг.</span>
+          </div>
+          <p class="chronicle-text">
+            Вторая ветвь отца — род <b>Шепеленко</b>. Своими корнями фамилия уходит в казачью вольницу Слободской Украины (Лебединский и Ахтырский полки XVII–XVIII веков). Прозвище «Шепель» или «Шепеля» давали бойким, говорливым, неунывающим людям с ярким характером.
+          </p>
+          <p class="chronicle-text">
+            В 1912 году во время Столыпинской аграрной реформы прапрадед <b>Иван Шепеленко</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0020')">P-0020</span>) вместе с юной дочерью <b>Клавдией Ивановной</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span>) погрузил домашний скарб в переселенческий вагон и отправился поднимать целинные чернозёмы Кустанайского уезда Тургайской области. Там, в посёлке Ново-Троицком, они распахали вековую степь, построили добротный дом и пустили новые корни.
+          </p>
+          <p class="chronicle-text">
+            В грозном 1941-м брат прабабушки, талантливый журналист кустанайской газеты «Сталинский путь» Григорий Иванович Шепеленко, ушёл добровольцем на фронт и пал смертью храбрых в 1942 году. В Кустанае по ул. Толстого, 78 осталась семья из 5 человек, включая юную <b>Нину Александровну Шепеленко</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0016')">P-0016</span>). Получив пособие от отдела Гособеспечения (дело 907 ГАКО от 22 апреля 1946 г.), Клавдия Ивановна вместе с родными и <b>дедом Степаном</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0019')">P-0019</span>) переехала в древний Самарканд (Узбекская ССР), спасаясь от послевоенной разрухи.
+          </p>
         </div>
-        <div class="tl-item">
-          <span class="tl-date">конец XVIII в. – 1840-е гг.</span><span class="tl-place">с. Сольцы и д. Кириши, Новоладожский уезд Санкт-Петербургской губ.</span>
-          <div class="tl-desc">Родовое село Бароновых — <b>Сольцы (будущие Кириши)</b> на р. Волхов — имение литератора и офицера <b>Александра Федосеевича Бестужева</b>, где прошло детство знаменитых четырёх братьев-декабристов (Николая, Александра-Марлинского, Михаила, Петра). В 1861 г. крестьяне выкупали наделы по уставным грамотам фонда 577 оп. 35 РГИА (<code>[A-0025]</code>).</div>
+
+        <div class="chronicle-chapter">
+          <div class="chronicle-chap-head">
+            <span class="chronicle-chap-num">Глава III</span>
+            <h3 class="chronicle-chap-title">Камский исток — Евдокимовы и Беловы на кручах древнего Джукетау</h3>
+            <span class="chronicle-chap-meta">1647 – 1926 гг.</span>
+          </div>
+          <p class="chronicle-text">
+            Материнская ветвь ведёт на берега Камы — в село <b>Никольское (Жукотино тож, «Савин Городок»)</b> Чистопольского уезда Казанской губернии. Это место с многовековой историей: прямо на месте булгарского домонгольского города Джукетау («Липовая гора») в 1647–1656 годах дворянин Савва Тимофеевич Аристов основал вотчину у Закамской засечной черты. В переписных книгах РГАДА и ревизиях НА РТ (1834, 1850, 1858 гг.) по селу Жукотино зафиксирован крестьянский двор родоначальника <b>Евдокима</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0015')">P-0015</span>) и его сына <b>Михаила Евдокимовича</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0010')">P-0010</span>), от имени которого после отмены крепостного права в 1861 году возникла родовая фамилия <b>Евдокимовы</b>.
+          </p>
+          <p class="chronicle-text">
+            Здесь родился прапрадед <b>Никандр Михайлович Евдокимов</b> (1869 г., <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0009')">P-0009</span>), его сын <b>Николай Никандрович</b> (01.10.1888 г., <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0007')">P-0007</span>) и его суженая — прабабушка <b>Агриппина Александровна Белова</b> (1889 г., <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0008')">P-0008</span>). В Первую мировую войну Николай служил рядовым 13-й роты 127-го пехотного Путивльского полка, в мае 1915 года в кровопролитном бою под Надворной в Карпатах попал в плен и провёл тяжёлые годы в лагере Дейч-Габель в Богемии (Австро-Венгрия).
+          </p>
+          <p class="chronicle-text">
+            Вернувшись на родину с подорванным здоровьем, прадед застал страшное бедствие — эпидемию холеры 1921 года, унёсшую жизнь его родного брата Ефима (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0012')">P-0012</span>) и невестки. Николай и Агриппина совершили подвиг истинно христианского милосердия: они забрали троих сирот-племянников к себе. А после безвременной кончины Николая прабабушка Агриппина Александровна вступила во второй брак и подняла в одном жукотинском доме <b>тринадцать детей</b> — 8 своих, 3 племянников и 4 детей второго мужа. Седьмым родным сыном был твой дед — <b>Александр Николаевич («7. Шура», род. 1926)</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">P-0004</span>).
+          </p>
         </div>
-        <div class="tl-item">
-          <span class="tl-date">1834, 1850 и 1858 гг.</span><span class="tl-place">с. Никольское (Жукотино), Чистопольский уезд (НА РТ, ф. 3, оп. 2)</span>
-          <div class="tl-desc">VIII ревизия 1834 г. (д. 139, л. 55–86), IX ревизия 1850 г. (д. 259, л. 185–198) и X ревизия 1858 г. (д. 390, л. 36–46): государственная фиксация крестьянского двора родоначальника <b>Евдокима</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0015')">P-0015</span> и его сына <b>Михаила Евдокимовича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0010')">P-0010</span> среди помещичьих крестьян Аристовых (<code>[A-0020; A-0021; A-0022]</code>).</div>
+
+        <div class="chronicle-chapter">
+          <div class="chronicle-chap-head">
+            <span class="chronicle-chap-num">Глава IV</span>
+            <h3 class="chronicle-chap-title">Южный исток — Коваленко и Бринюк: Сумщина, Крым и возрождение</h3>
+            <span class="chronicle-chap-meta">1800-е – 1960-е гг.</span>
+          </div>
+          <p class="chronicle-text">
+            Четвёртый исток — род бабушки <b>Натальи</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0006')">P-0006</span>), объединивший славные фамилии <b>Коваленко</b> и <b>Бринюк</b>. Коваленко — исконно казачий род мастеров кузнечного дела («ковалей»), почитавшихся на селе первыми людьми за силу, умение укрощать металл и ковать оружие для защиты родных рубежей Сумщины и Глуховщины. Фамилия Бринюк хранит память о древнеславянском «брынеть» — звучать струной, звенеть кольчугой, жить чутко и звонко.
+          </p>
+          <p class="chronicle-text">
+            Пройдя через горнило Великой Отечественной войны, эта семья переехала на юг — в цветущий Крым, в посёлок Перово под Симферополем. Здесь соединились трудолюбие северян и жизнелюбие южан, заложив крепкий фундамент для следующего поколения.
+          </p>
         </div>
-        <div class="tl-item">
-          <span class="tl-date">1861 год</span><span class="tl-place">Старо-Иванаевская волость, Чистопольский уезд</span>
-          <div class="tl-desc">После Манифеста 19 февраля 1861 г. об отмене крепостного права прапрапрадед <b>Михаил Евдокимович</b> получает паспорт и официальную наследственную фамилию <b>Евдокимов</b> по имени своего отца Евдокима (<code>[A-0004]</code>).</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">1869, 1888 и 1889 гг.</span><span class="tl-place">с. Жукотино (приход Никольской церкви), Казанская губ.</span>
-          <div class="tl-desc">Рождение прапрадеда <b>Никандра Михайловича Евдокимова (1869)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0009')">P-0009</span>, его сына — прадеда <b>Николая Никандровича (01.10.1888)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0007')">P-0007</span> и прабабушки <b>Агриппины Александровны Беловой (1889)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0008')">P-0008</span>.</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">1912 год</span><span class="tl-place">Харьковская губерния → Кустанайский уезд (пос. Ново-Троицкий)</span>
-          <div class="tl-desc">В ходе Столыпинской аграрной реформы предки бабушки по отцу — род <b>Шепеленко</b> во главе с <b>Иваном Шепеленко</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0020')">P-0020</span>) и дочерью <b>Клавдией Ивановной</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span>) — переселяются из Харьковской губернии в Кустанайский уезд Тургайской области (<code>[A-0014; A-0015]</code>).</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">19 мая — 8 июня 1915 г.</span><span class="tl-place">г. Надворна (Галиция) → лагерь Дейч-Габель (Австро-Венгрия)</span>
-          <div class="tl-desc">В Первую мировую войну рядовой 13-й роты <b>127-го пехотного Путивльского полка</b> <b>Николай Никандрович Евдокимов</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0007')">P-0007</span> в бою под г. Надворна попадает в австро-венгерский плен (в полку числится пропавшим без вести, запись № 1227 <code>[A-0008]</code>). 8 июня 1915 г. доставлен в лагерь <b>Дейч-Габель (Deutsch-Gabel, Богемия)</b> (<code>[A-0010]</code>).</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">01 мая 1929 г.</span><span class="tl-place">посёлок Кириши (село Сольцы), Андреевский район Ленобласти</span>
-          <div class="tl-desc">Рождение деда заявителя — <b>Валентина Васильевича Баронова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span> в семье коренных уроженцев Солецкой волости (сын Василия Баронова, <code>[A-0017; A-0018]</code>).</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">1941–1943 гг.</span><span class="tl-place">Киришский плацдарм, Ленинградская область</span>
-          <div class="tl-desc">Немецкая оккупация и ожесточённые позиционные бои за Киришский плацдарм (сентябрь 1941 — 4 октября 1943 г.). Посёлок Кириши полностью разрушен; 12–14 летний дед <b>Валентин Васильевич Баронов</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span> с мальчишками выживает в голодной оккупации (<code>[A-0019; A-0026]</code>).</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">22 апреля 1946 г.</span><span class="tl-place">г. Кустанай, ул. Толстого, 78 → г. Самарканд (Узбекская ССР)</span>
-          <div class="tl-desc">Прабабушка по отцу <b>Шепеленко Клавдия Ивановна</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span> (семья из 5 человек, включая юную <b>Нину Шепеленко</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0016')">P-0016</span>) получает государственную помощь по спискам отдела Гособеспечения в Кустанае (<b>ГАКО ф. Р-268 оп. 1 д. 907</b>) как семья погибшего на фронте журналиста газеты «Сталинский путь» <b>Григория Ивановича Шепеленко</b> (<code>[A-0023; A-0024]</code>), после чего со всей роднёй и <b>дедом Степаном</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0019')">P-0019</span> переезжает в Самарканд.</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">1948–1951 гг.</span><span class="tl-place">1-е Ленинградское военно-автомобильное училище → гарнизон Петродворец</span>
-          <div class="tl-desc">Поступление 19-летнего <b>Валентина Васильевича Баронова</b> в военное автомобильное училище (1948 г.); выпуск офицером в 1951 г., служба в 471-м отдельном автобате ЛенВО (в/ч 52611 в Петергофе) и на военной автобазе МО СССР в Стрельне (<code>[A-0012; A-0019]</code>).</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">1918–1926 гг.</span><span class="tl-place">с. Жукотино (с 05.06.1922 — с. Галактионово), Чистопольский кантон ТАССР</span>
-          <div class="tl-desc">Возвращение прадеда из плена. Смерть брата <b>Ефима Никандровича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0012')">P-0012</span> от холеры — Николай и Агриппина усыновляют его троих детей. В <b>1926 г.</b> рождается седьмой ребёнок — дед Антона <b>Александр Николаевич Евдокимов («7. Шура»)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">P-0004</span>.</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">22 апреля 1946 г.</span><span class="tl-place">г. Кустанай, ул. Толстого, 78 → г. Самарканд (Узбекская ССР)</span>
-          <div class="tl-desc">Прабабушка по отцу <b>Шепеленко Клавдия Ивановна</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span> (вдова погибшего воина ВОВ, семья из 5 человек, включая юную <b>Нину Шепеленко</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0016')">P-0016</span>) получает мануфактуру по спискам отдела Гособеспечения в Кустанае (<b>ГАКО ф. Р-268 оп. 1 д. 907</b>, запись № 37), после чего со всей роднёй и <b>дедом Степаном</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0019')">P-0019</span> переезжает в Самарканд.</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">14.02.1953 и 26.01.1956</span><span class="tl-place">гор. Молотов (Пермь) → пос. Перово (Симферополь)</span>
-          <div class="tl-desc">В семье деда <b>Александра Николаевича Евдокимова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">P-0004</span> и бабушки <b>Натальи</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0006')">P-0006</span> рождаются сын <b>Виктор (1953)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0011')">P-0011</span> и дочь <b>Нина Александровна Евдокимова (26.01.1956)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0002')">P-0002</span>.</div>
-        </div>
-        <div class="tl-item">
-          <span class="tl-date">22.08.1961 и 16.08.1988</span><span class="tl-place">р.п. Стрельна (ул. Лодыгина, 10) → гор. Ленинград</span>
-          <div class="tl-desc">В семье командира автобата майора <b>Валентина Васильевича Баронова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span> и <b>Нины Александровны Шепеленко</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0016')">P-0016</span> в Стрельне рождается отец <b>Вадим Валентинович Баронов (22.08.1961)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0003')">P-0003</span>. <b>16.08.1988</b> в Ленинграде рождается <b>Антон Вадимович Евдокимов</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0001')">P-0001</span>.</div>
+
+        <div class="chronicle-chapter">
+          <div class="chronicle-chap-head">
+            <span class="chronicle-chap-num">Глава V</span>
+            <h3 class="chronicle-chap-title">Встреча берегов — рождение Антона на невских берегах</h3>
+            <span class="chronicle-chap-meta">1961 – 1988 гг.</span>
+          </div>
+          <p class="chronicle-text">
+            В Стрельне под Ленинградом в семье офицера Валентина Васильевича Баронова и восточной красавицы Нины Александровны Шепеленко 22 августа 1961 года родился сын — <b>Вадим Валентинович Баронов</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0003')">P-0003</span>).
+          </p>
+          <p class="chronicle-text">
+            А на Урале, в городе Молотове (Перми), в семье Александра Николаевича Евдокимова и Натальи 26 января 1956 года родилась дочь — <b>Нина Александровна Евдокимова</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0002')">P-0002</span>), чьё детство и юность прошли между Камой и солнечным Симферополем.
+          </p>
+          <p class="chronicle-text" style="font-weight:600;color:var(--accent-seal);">
+            Их пути пересеклись в Ленинграде. 16 августа 1988 года на берегах Невы родился ты — Антон Вадимович Евдокимов. В тебе соединились четыре реки, четыре характера: стойкость и прямота волховских Бароновых, вольнолюбие и предприимчивость степных Шепеленко, глубинное спокойствие и милосердие камских Евдокимовых-Беловых, энергия и мастерство сумско-крымских Коваленко. Ты — продолжение их побед и хранитель их памяти.
+          </p>
         </div>
       </div>
-    </div>
 
-    <div class="section-card">
-      <h2>Историко-географическая матрица юрисдикций (АТД строго на дату события)</h2>
-      <p class="section-sub">Архивный поиск ведётся строго по административно-территориальному делению, действовавшему в день события.</p>
-      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Топоним в семье</th>
-              <th>Период</th>
-              <th>Официальная юрисдикция на дату события</th>
-              <th>Государственный архив и точные фонды</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><b>с. Галактионово (Жукотино)</b></td>
-              <td class="mono">до 05.06.1922 (1861, 1869, 1888, 1915)</td>
-              <td><b>село Никольское (Жукотино тож), Старо-Иванаевская волость, Чистопольский уезд, Казанская губерния</b></td>
-              <td><b>ГАРТ (г. Казань):</b> Ревизия 1858 г. (<code>ф. 3, оп. 2, д. 390, 391</code>); Метрики 1860–1918 (<code>ф. 4, оп. 176 / оп. 2</code>); <b>РГВИА:</b> <code>ф. 16196, оп. 1, д. 260</code></td>
-            </tr>
-            <tr>
-              <td><b>Харьковская губ. → г. Кустанай</b></td>
-              <td class="mono">1912 – 1946 гг.</td>
-              <td><b>Лебединский уезд Харьковской губ. → Кустанайский уезд Тургайской обл. → г. Кустанай Казахской ССР (ул. Толстого, 78)</b></td>
-              <td><b>ГАКО (г. Костанай, Казахстан):</b> <code>ф. Р-268, оп. 1, д. 907</code> (списки семей погибших воинов 1946 г., запись № 37 — Шепеленко К.И.); <code>ф. 268</code> (переселенцы 1912 г.)</td>
-            </tr>
-            <tr>
-              <td><b>г. Самарканд</b></td>
-              <td class="mono">после 1946 г.</td>
-              <td><b>город Самарканд, Самаркандская область, Узбекская ССР</b></td>
-              <td><b>Госархив Самаркандской области / «Узархив»:</b> домовые книги и акты ЗАГС о смерти Клавдии Ивановны Шепеленко и деда Степана</td>
-            </tr>
-            <tr>
-              <td><b>гор. Пермь (Молотов)</b></td>
-              <td class="mono">08.03.1940 – 02.10.1957</td>
-              <td><b>город Молотов, Молотовская область, РСФСР</b></td>
-              <td>Управление ЗАГС г. Перми / <b>ФГИС «ЕГР ЗАГС»</b>; <b>МБУ «Архив города Перми»</b> (домовые книги 1950-х гг.)</td>
-            </tr>
-            <tr>
-              <td><b>р.п. Стрельна и Петродворец</b></td>
-              <td class="mono">1950–1960-е гг.</td>
-              <td><b>рабочий посёлок Стрельна (ул. Лодыгина, д. 10), Петродворцовый райсовет г. Ленинграда</b></td>
-              <td><b>ЦАМО РФ (г. Подольск):</b> УПК офицера В. В. Баронова; <b>ЦГА СПб, фонд Р-7965:</b> домовые книги Стрельны</td>
-            </tr>
-            <tr>
-              <td><b>пос. Перово, г. Симферополь</b></td>
-              <td class="mono">1960–1990-е гг.</td>
-              <td><b>с. Перово, Симферопольский район, Крымская область УССР / АРК</b></td>
-              <td>Военный комиссариат Республики Крым / Симферопольский РВК, книги ЗАГС Симферопольского района</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    </div>
-  </section>
-
-  <!-- ====================================================================
-       ВКЛАДКА 5: ПЛАН АРХИВНОГО ПОИСКА И БАЗА ФАКТОВ (GPS)
-       ==================================================================== -->
-  <section class="tab-panel scrollable" id="tab-queue">
-    <div class="tab-scroll-inner">
+      <!-- ХРОНОЛОГИЧЕСКАЯ ЛЕНТА КЛЮЧЕВЫХ ВЕХ (1647–1988) -->
       <div class="section-card">
-      <h2>План следующих архивных запросов (Готовые шаги для углубления древа)</h2>
-      <p class="section-sub">Приоритетная очередь точечных запросов в архивы РФ, Казахстана и Узбекистана (готовые бланки запросов лежат в папке <code>queries/</code> проекта).</p>
-      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Шаг</th>
-              <th>Цель проверки</th>
-              <th>Точный архив и шифр фонда</th>
-              <th>Ожидаемый результат</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="badge badge-strong">ШАГ 1</span></td>
-              <td><b>НА РТ (Казань):</b> Найти двор <b>Михаила Евдокимовича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0010')">P-0010</span> и его отца <b>Евдокима</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0015')">P-0015</span></td>
-              <td><b>НА РТ, ф. 3, оп. 2, д. 390 (1858 г., л. 36–46), д. 259 (1850 г., л. 185–198) и д. 139 (1834 г., л. 55–86)</b> · <a href="queries/09_nart_kazan_revizii_zhukotino_1834_1858.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">Запрос 09_nart.md ↗</a></td>
-              <td>Точный возраст Михаила и Евдокима, состав двора помещиков Аристовых накануне 1861 г., имена прапрабабушек и предков XVIII века</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-strong">ШАГ 2</span></td>
-              <td>Метрические записи о рождении <b>Никандра (1869)</b>, <b>Николая (01.10.1888)</b> и <b>Агриппины Беловой (1889)</b></td>
-              <td><b>НА РТ (Казань), ф. 4, оп. 176</b> (Метрические книги Николаевской церкви с. Никольское / Жукотино Чистопольского уезда)</td>
-              <td>Откроет имена прапрабабушек и полное ФИО родителей Агриппины Беловой (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0014')">P-0014</span>)</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-corr">ШАГ 3-А</span></td>
-              <td><b>РГИА (Санкт-Петербург, `rgia.su`):</b> Выкупные дела крестьян с. Сольцы / Кириши Новоладожского уезда</td>
-              <td><b>РГИА, фонд 577, опись 35</b> (Главное выкупное учреждение — имение отца декабристов А. Ф. Бестужева) · <a href="queries/06_rgia_baronov_vykupnye_dela.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">Запрос 06_rgia.md ↗</a></td>
-              <td>Пофамильные уставные грамоты и выкупные договоры домохозяев Бароновых в Солецкой волости 1861–1890 гг.</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-corr">ШАГ 3-Б</span></td>
-              <td><b>ЦГИА СПб (`spbarchives.ru`):</b> Метрические книги церкви Рождества Богородицы с. Сольцы (Кириши)</td>
-              <td><b>ЦГИА СПб, фонд 19, описи 125–127</b> (Петроградская духовная консистория) · <a href="queries/07_cgia_spb_metriki_kirishi_soltsy.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">Запрос 07_cgia.md ↗</a></td>
-              <td>Запись о рождении прадеда Василия Баронова (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0017')">P-0017</span>) ок. 1880–1886 гг. с именами прапрадедов</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-corr">ШАГ 3-В</span></td>
-              <td><b>ЦГА СПб (`spbarchives.ru`):</b> Актовая запись ЗАГС о рождении Валентина Баронова от 01.05.1929</td>
-              <td><b>ЦГА СПб, фонд Р-6143</b> (отдел ЗАГС Андреевского/Киришского района ЛО) · <a href="queries/08_cga_spb_zags_kirishi_valentin_1929.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">Запрос 08_cga.md ↗</a></td>
-              <td>Точное отчество прадеда Василия Баронова, девичья фамилия и отчество прабабушки, точная деревня</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-corr">ШАГ 3-Г</span></td>
-              <td><b>ЦАМО РФ (г. Подольск):</b> Учётно-послужная карта майора Баронова Валентина Васильевича <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span></td>
-              <td><b>ЦАМО РФ</b> (г. Подольск) · <a href="queries/01_camo_rf_baronov_upk.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">Запрос 01_camo.md ↗</a></td>
-              <td>Послужной список майора, партийность, награды, военное автоучилище (1948 г.), подтверждение Киришей и семьи</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-strong">ШАГ 4</span></td>
-              <td><b>ГАКО (Костанай):</b> Личное дело журналиста <b>Шепеленко Григория Ивановича</b> и выплатное дело <b>Шепеленко К. И.</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span></td>
-              <td><b>ГАКО, ф. Р-268, оп. 1, д. 907, № 37</b> (список от 22.04.1946, ул. Толстого, 78) + фонд газеты «Сталинский путь» · <a href="queries/10_gako_kostanay_shepelenko_fallen_journalist.md" target="_blank" style="color:var(--gold-600);font-weight:600;text-decoration:underline;">Запрос 10_gako.md ↗</a></td>
-              <td>Анкета погибшего на фронте брата прабабушки — Григория Шепеленко, список всех 5 членов семьи Клавдии Ивановны и точное село выхода 1912 г. из Харьковской губернии</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-corr">ШАГ 5</span></td>
-              <td>Записи о смерти <b>Клавдии Ивановны Шепеленко</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span> и <b>деда Степана</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0019')">P-0019</span></td>
-              <td><b>Госархив Самаркандской области (Узбекистан)</b> / Агентство «Узархив» (1946–1985 гг.)</td>
-              <td>Установит точные годы жизни прабабушки Клавдии Ивановны, фамилию деда Степана и семейный адрес в Самарканде</td>
-            </tr>
-          </tbody>
-        </table>
+        <h2>Хронологическая лента семьи: ключевые вехи (1647–1988)</h2>
+        <p class="section-sub">Факты, подтверждённые архивными шифрами РГАДА, РГВИА, НА РТ, ГАКО, ЦГИА СПб и ЦАМО РФ.</p>
+        <div class="timeline">
+          <div class="tl-item">
+            <span class="tl-date">1647–1656 гг.</span><span class="tl-place">Закамская засечная черта, р. Кама (РГАДА, ф. 350)</span>
+            <div class="tl-desc">Основание родового села <b>Никольское (Жукотино тож, «Савин Городок»)</b> дворянином <b>Саввой Тимофеевичем Аристовым</b> на месте булгарской крепости Джукетау. Род дворян Аристовых владел вотчиной и крестьянами села вплоть до реформы 1861 года.</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">1717 год</span><span class="tl-place">с. Сольцы (Кириши), Новоладожский уезд (ЦГИА СПб, ф. 19)</span>
+            <div class="tl-desc">Строительство каменной церкви <b>Рождества Пресвятой Богородицы</b> в селе Сольцы на берегу Волхова с приделами свт. Николая Чудотворца и вмц. Параскевы. Храм стал главным приходским и метрическим центром крестьянского рода <b>Бароновых</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0017')">P-0017</span>), к приходу которого относилась и деревня Кириши (<code>[A-0027]</code>).</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">конец XVIII в. – 1840-е гг.</span><span class="tl-place">с. Сольцы и д. Кириши, Новоладожский уезд Санкт-Петербургской губ.</span>
+            <div class="tl-desc">Родовое село Бароновых — <b>Сольцы (будущие Кириши)</b> на р. Волхов — имение литератора и офицера <b>Александра Федосеевича Бестужева</b>, где прошло детство знаменитых четырёх братьев-декабристов (Николая, Александра-Марлинского, Михаила, Петра). В 1861 г. крестьяне выкупали наделы по уставным грамотам фонда 577 оп. 35 РГИА (<code>[A-0025]</code>).</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">1834, 1850 и 1858 гг.</span><span class="tl-place">с. Никольское (Жукотино), Чистопольский уезд (НА РТ, ф. 3, оп. 2)</span>
+            <div class="tl-desc">VIII ревизия 1834 г. (д. 139, л. 55–86), IX ревизия 1850 г. (д. 259, л. 185–198) и X ревизия 1858 г. (д. 390, л. 36–46): государственная фиксация крестьянского двора родоначальника <b>Евдокима</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0015')">P-0015</span> и его сына <b>Михаила Евдокимовича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0010')">P-0010</span> среди помещичьих крестьян Аристовых (<code>[A-0020; A-0021; A-0022]</code>).</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">1861 год</span><span class="tl-place">Старо-Иванаевская волость, Чистопольский уезд</span>
+            <div class="tl-desc">После Манифеста 19 февраля 1861 г. об отмене крепостного права прапрапрадед <b>Михаил Евдокимович</b> получает паспорт и официальную наследственную фамилию <b>Евдокимов</b> по имени своего отца Евдокима (<code>[A-0004]</code>).</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">1869, 1888 и 1889 гг.</span><span class="tl-place">с. Жукотино (приход Никольской церкви), Казанская губ.</span>
+            <div class="tl-desc">Рождение прапрадеда <b>Никандра Михайловича Евдокимова (1869)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0009')">P-0009</span>, его сына — прадеда <b>Николая Никандровича (01.10.1888)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0007')">P-0007</span> и прабабушки <b>Агриппины Александровны Беловой (1889)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0008')">P-0008</span>.</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">1912 год</span><span class="tl-place">Харьковская губерния → Кустанайский уезд (пос. Ново-Троицкий)</span>
+            <div class="tl-desc">В ходе Столыпинской аграрной реформы предки бабушки по отцу — род <b>Шепеленко</b> во главе с <b>Иваном Шепеленко</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0020')">P-0020</span>) и дочерью <b>Клавдией Ивановной</b> (<span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span>) — переселяются из Харьковской губернии в Кустанайский уезд Тургайской области (<code>[A-0014; A-0015]</code>).</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">19 мая — 8 июня 1915 г.</span><span class="tl-place">г. Надворна (Галиция) → лагерь Дейч-Габель (Австро-Венгрия)</span>
+            <div class="tl-desc">В Первую мировую войну рядовой 13-й роты <b>127-го пехотного Путивльского полка</b> <b>Николай Никандрович Евдокимов</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0007')">P-0007</span> в бою под г. Надворна попадает в австро-венгерский плен (в полку числится пропавшим без вести, запись № 1227 <code>[A-0008]</code>). 8 июня 1915 г. доставлен в лагерь <b>Дейч-Габель (Deutsch-Gabel, Богемия)</b> (<code>[A-0010]</code>).</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">1918–1926 гг.</span><span class="tl-place">с. Жукотино (с 05.06.1922 — с. Галактионово), Чистопольский кантон ТАССР</span>
+            <div class="tl-desc">Возвращение прадеда из плена. Смерть брата <b>Ефима Никандровича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0012')">P-0012</span> от холеры — Николай и Агриппина усыновляют его троих детей. В <b>1926 г.</b> рождается седьмой ребёнок — дед Антона <b>Александр Николаевич Евдокимов («7. Шура»)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">P-0004</span>. Прабабушка Агриппина Александровна растит 13 детей.</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">01 мая 1929 г.</span><span class="tl-place">посёлок Кириши (село Сольцы), Андреевский район Ленобласти</span>
+            <div class="tl-desc">Рождение деда заявителя — <b>Валентина Васильевича Баронова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span> в семье коренных уроженцев Солецкой волости (сын Василия Баронова, <code>[A-0017; A-0018]</code>).</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">1941–1943 гг.</span><span class="tl-place">Киришский плацдарм, Ленинградская область</span>
+            <div class="tl-desc">Немецкая оккупация и ожесточённые позиционные бои за Киришский плацдарм (сентябрь 1941 — 4 октября 1943 г.). Посёлок Кириши полностью разрушен; 12–14 летний дед <b>Валентин Васильевич Баронов</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span> с мальчишками выживает в голодной оккупации (<code>[A-0019; A-0026]</code>).</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">22 апреля 1946 г.</span><span class="tl-place">г. Кустанай, ул. Толстого, 78 → г. Самарканд (Узбекская ССР)</span>
+            <div class="tl-desc">Прабабушка по отцу <b>Шепеленко Клавдия Ивановна</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0018')">P-0018</span> (вдова погибшего воина ВОВ, семья из 5 человек, включая юную <b>Нину Шепеленко</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0016')">P-0016</span>) получает государственную помощь по спискам отдела Гособеспечения в Кустанае (<b>ГАКО ф. Р-268 оп. 1 д. 907</b>) как семья погибшего военного журналиста <b>Григория Шепеленко</b>, после чего со всей роднёй и <b>дедом Степаном</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0019')">P-0019</span> переезжает в Самарканд.</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">1948–1951 гг.</span><span class="tl-place">1-е Ленинградское военно-автомобильное училище → гарнизон Петродворец</span>
+            <div class="tl-desc">Поступление 19-летнего <b>Валентина Васильевича Баронова</b> в военное автомобильное училище (1948 г.); выпуск офицером в 1951 г., служба в 471-м отдельном автобате ЛенВО (в/ч 52611 в Петергофе) и на военной автобазе МО СССР в Стрельне (<code>[A-0012; A-0019]</code>).</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">14.02.1953 и 26.01.1956</span><span class="tl-place">гор. Молотов (Пермь) → пос. Перово (Симферополь)</span>
+            <div class="tl-desc">В семье деда <b>Александра Николаевича Евдокимова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">P-0004</span> и бабушки <b>Натальи</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0006')">P-0006</span> рождаются сын <b>Виктор (1953)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0011')">P-0011</span> и дочь <b>Нина Александровна Евдокимова (26.01.1956)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0002')">P-0002</span>.</div>
+          </div>
+          <div class="tl-item">
+            <span class="tl-date">22.08.1961 г.</span><span class="tl-place">р.п. Стрельна (ул. Лодыгина, 10), Петродворцовый район</span>
+            <div class="tl-desc">В семье командира автобата майора <b>Валентина Васильевича Баронова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0005')">P-0005</span> и <b>Нины Александровны Шепеленко</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0016')">P-0016</span> в Стрельне рождается отец <b>Вадим Валентинович Баронов</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0003')">P-0003</span>.</div>
+          </div>
+          <div class="tl-item" style="border-left-color:var(--accent-gold);">
+            <span class="tl-date" style="color:var(--accent-seal);font-weight:800;">16 августа 1988 года</span><span class="tl-place" style="font-weight:700;">город Ленинград</span>
+            <div class="tl-desc" style="background:var(--accent-seal-soft);padding:10px 12px;border-radius:6px;border:1px solid var(--accent-seal);">
+              Рождение <b>Антона Вадимовича Евдокимова</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0001')">P-0001</span> в семье <b>Вадима Валентиновича Баронова</b> и <b>Нины Александровны Евдокимовой</b>. Схождение четырёх ветвей рода в одной колыбели.
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="section-card">
-      <h2>Реестр доказанных утверждений (Genealogical Proof Standard — 37 фактов)</h2>
-      <p class="section-sub">Каждое утверждение проверено на независимость источников скриптом строгого аудита <code>audit_evidence.py --strict</code> (0 ошибок, 0 предупреждений).</p>
-      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Историко-генеалогическое утверждение</th>
-              <th>Статус GPS</th>
-              <th>Артефакты</th>
-              <th>Независимые группы источников</th>
-            </tr>
-          </thead>
-          <tbody id="claims-table-body"></tbody>
-        </table>
+      <!-- ИСТОРИКО-ГЕОГРАФИЧЕСКАЯ МАТРИЦА ЮРИСДИКЦИЙ (АТД) -->
+      <div class="section-card">
+        <h2>Историко-географическая матрица юрисдикций (АТД строго на дату события)</h2>
+        <p class="section-sub">Архивный поиск ведётся строго по административно-территориальному делению, действовавшему в день события.</p>
+        <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Топоним в семье</th>
+                <th>Период</th>
+                <th>Официальная юрисдикция на дату события</th>
+                <th>Государственный архив и точные фонды</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>с. Галактионово (Жукотино)</b></td>
+                <td class="mono">до 05.06.1922 (1861, 1869, 1888, 1915)</td>
+                <td><b>село Никольское (Жукотино тож), Старо-Иванаевская волость, Чистопольский уезд, Казанская губерния</b></td>
+                <td><b>ГАРТ (г. Казань):</b> Ревизия 1858 г. (<code>ф. 3, оп. 2, д. 390, 391</code>); Метрики 1860–1918 (<code>ф. 4, оп. 176 / оп. 2</code>); <b>РГВИА:</b> <code>ф. 16196, оп. 1, д. 260</code></td>
+              </tr>
+              <tr>
+                <td><b>Харьковская губ. → г. Кустанай</b></td>
+                <td class="mono">1912 – 1946 гг.</td>
+                <td><b>Лебединский уезд Харьковской губ. → Кустанайский уезд Тургайской обл. → г. Кустанай Казахской ССР (ул. Толстого, 78)</b></td>
+                <td><b>ГАКО (г. Костанай, Казахстан):</b> <code>ф. Р-268, оп. 1, д. 907</code> (списки семей погибших воинов 1946 г., запись № 37 — Шепеленко К.И.); <code>ф. 268</code> (переселенцы 1912 г.)</td>
+              </tr>
+              <tr>
+                <td><b>г. Самарканд</b></td>
+                <td class="mono">после 1946 г.</td>
+                <td><b>город Самарканд, Самаркандская область, Узбекская ССР</b></td>
+                <td><b>Госархив Самаркандской области / «Узархив»:</b> домовые книги и акты ЗАГС о смерти Клавдии Ивановны Шепеленко и деда Степана</td>
+              </tr>
+              <tr>
+                <td><b>гор. Пермь (Молотов)</b></td>
+                <td class="mono">08.03.1940 – 02.10.1957</td>
+                <td><b>город Молотов, Молотовская область, РСФСР</b></td>
+                <td>Управление ЗАГС г. Перми / <b>ФГИС «ЕГР ЗАГС»</b>; <b>МБУ «Архив города Перми»</b> (домовые книги 1950-х гг.)</td>
+              </tr>
+              <tr>
+                <td><b>р.п. Стрельна и Петродворец</b></td>
+                <td class="mono">1950–1960-е гг.</td>
+                <td><b>рабочий посёлок Стрельна (ул. Лодыгина, д. 10), Петродворцовый райсовет г. Ленинграда</b></td>
+                <td><b>ЦАМО РФ (г. Подольск):</b> УПК офицера В. В. Баронова; <b>ЦГА СПб, фонд Р-7965:</b> домовые книги Стрельны</td>
+              </tr>
+              <tr>
+                <td><b>пос. Перово, г. Симферополь</b></td>
+                <td class="mono">1960–1990-е гг.</td>
+                <td><b>с. Перово, Симферопольский район, Крымская область УССР / АРК</b></td>
+                <td>Военный комиссариат Республики Крым / Симферопольский РВК, книги ЗАГС Симферопольского района</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+
     </div>
   </section>
 
@@ -6216,6 +6296,115 @@ function renderTree() {
   // Tree is exclusively interactive graphic SVG canvas
 }
 
+function buildNestChildrenHtml() {
+  return `
+    <div class="insp-section nest-children-card" style="background:var(--paper-50);border:1px solid var(--border-subtle);border-left:4px solid var(--accent-pat);border-radius:8px;padding:14px 16px;margin-top:14px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <span style="font-size:20px;">🏡</span>
+        <h4 style="margin:0;font-size:13.5px;font-weight:700;color:var(--ink-900);text-transform:uppercase;letter-spacing:0.5px;">Большое семейное гнездо: 13 детей в одном доме</h4>
+      </div>
+      <p style="font-size:12.5px;color:var(--ink-700);line-height:1.5;margin-bottom:12px;">
+        Уникальная семейная история любви, милосердия и стойкости: прабабушка <b>Агриппина Александровна Белова</b> и прадед <b>Николай Никандрович Евдокимов</b> вырастили в селе Галактионово (Жукотино) 13 детей.
+      </p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:8px;margin-bottom:12px;">
+        <div style="background:var(--bg-elevated);padding:8px 10px;border-radius:6px;border-left:3px solid var(--accent-seal);font-size:11.5px;">
+          <b style="color:var(--accent-seal);">8 своих детей</b><br>
+          Серёжа, Миша, Таня, Вера (1919), Ная (1922), Федя, <b>7. Шура (1926, дед Антона)</b>, Дуня
+        </div>
+        <div style="background:var(--bg-elevated);padding:8px 10px;border-radius:6px;border-left:3px solid var(--accent-pat);font-size:11.5px;">
+          <b style="color:var(--accent-pat);">+3 сироты брата Ефима</b><br>
+          Коля, Саня, Митя (усыновлены после холеры ок. 1920 г.)
+        </div>
+        <div style="background:var(--bg-elevated);padding:8px 10px;border-radius:6px;border-left:3px solid var(--accent-gold);font-size:11.5px;">
+          <b style="color:var(--accent-gold);">+4 детей Егора</b><br>
+          Анна, Оля, Дуня, Саша (дети второго мужа Агриппины)
+        </div>
+      </div>
+
+      <div class="mobile-table-hint">👉 Прокручивайте таблицу вправо для просмотра всех колонок 👈</div>
+      <div class="table-wrap" style="max-height:360px;overflow-y:auto;border:1px solid var(--border-default);border-radius:6px;">
+        <table class="data-table" style="font-size:12px;">
+          <thead>
+            <tr>
+              <th>Ветвь в доме</th>
+              <th>Имя в росписи</th>
+              <th>Годы</th>
+              <th>Супруг(а) и город</th>
+              <th>Потомки (двоюродная родня)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge badge-single">Свой (1/8)</span></td>
+              <td><b>1. Серёжа</b> (Сергей Николаевич)</td>
+              <td class="mono">ок. 1910–1914</td>
+              <td>+ Настя · г. Пермь</td>
+              <td>Люба (1938–1989), Коля (1941), Толя (1943–2003), Таня</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-single">Свой (2/8)</span></td>
+              <td><b>2. Миша</b> (Михаил Николаевич)</td>
+              <td class="mono">ок. 1912–1917</td>
+              <td>+ Саня · г. Пермь</td>
+              <td>Мария (1936), Володя (1944), Валя (1947)</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-single">Свой (3/8)</span></td>
+              <td><b>3. Таня</b> (Татьяна Николаевна)</td>
+              <td class="mono">ок. 1914–1918</td>
+              <td>+ Вася Антипов · г. Волжск</td>
+              <td>Женя (1939), Боря (1941), Толя (1947), Витя (1950), Гена (1952)</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-single">Свой (4/8)</span></td>
+              <td><b>4. Вера</b> (Вера Николаевна)</td>
+              <td class="mono">1919–1997</td>
+              <td>+ Иван · г. Пермь</td>
+              <td>Валя (1941), Галя (1947), Витя (1950–1999), Наташа (1953)</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-single">Свой (5/8)</span></td>
+              <td><b>5. Ная</b> (Борисова Ная Николаевна)</td>
+              <td class="mono">1922–1992</td>
+              <td>+ Николай Борисов · г. Гродно</td>
+              <td>Юра (1946–2000), <b>Лора (Лариса Селихова, род. 1952 — автор семейной таблицы!)</b></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-single">Свои (6, 8)</span></td>
+              <td><b>6. Федя</b> и <b>8. Дуня</b></td>
+              <td class="mono">младенчество</td>
+              <td>с. Галактионово (Жукотино)</td>
+              <td>—</td>
+            </tr>
+            <tr style="background:var(--accent-seal-soft);">
+              <td><span class="badge badge-corr">Прямой (7/8)</span></td>
+              <td><b>7. Шура (Александр Евдокимов)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0004')">P-0004</span></td>
+              <td class="mono"><b>род. 1926</b></td>
+              <td>+ <b>Наташа</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0006')">P-0006</span> · Пермь → Симферополь</td>
+              <td><b>Витя (1953)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0011')">P-0011</span>, <b>Нина (1956)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0002')">P-0002</span> → <b>Антон (1988)</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0001')">P-0001</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-single">Сироты (+3)</span></td>
+              <td>Сироты брата <b>Ефима Никандровича</b> <span class="person-link-chip" onclick="openPersonFromAnywhere('P-0012')">P-0012</span> и Марии</td>
+              <td class="mono">ок. 1920 г.</td>
+              <td>Воспитаны Николаем и Агриппиной</td>
+              <td><b>Коля</b> (4 детей), <b>Саня</b> (6 детей), <b>Митя</b> (Люда → Оля 1968 г.р., Киев)</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-single">2-й муж (+4)</span></td>
+              <td>Дети второго мужа <b>Егора</b></td>
+              <td class="mono">после 1926 г.</td>
+              <td>Выращены Агриппиной Александровной</td>
+              <td><b>Анна, Оля, Дуня, Саша</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
 function buildPersonDossierHtml(personId) {
   const p = PERSONS.find(item => item.id === personId) || PERSONS[0];
   const artCards = p.artifacts.map(aid => ARTIFACTS[aid]).filter(Boolean);
@@ -6229,6 +6418,8 @@ function buildPersonDossierHtml(personId) {
     /\b(P-\d{4})\b/g,
     '<span class="person-link-chip" onclick="openPersonFromAnywhere(\'$1\')" style="cursor:pointer;display:inline-flex;align-items:center;margin:0 2px;">$1</span>'
   );
+
+  const nestHtml = ["P-0008", "P-0007", "P-0004", "P-0012"].includes(p.id) ? buildNestChildrenHtml() : "";
 
   return `
     <div class="insp-header">
@@ -6299,6 +6490,8 @@ function buildPersonDossierHtml(personId) {
       <h4>Историческое досье и доказательная база (GPS)</h4>
       <p style="font-size:13.5px;line-height:1.6;margin:0;color:var(--ink-900);">${p.rationale}</p>
     </div>
+
+    ${nestHtml}
 
     ${visualArts.length ? `
     <div class="insp-section">
@@ -6395,11 +6588,20 @@ function jumpToTreeFromModal() {
   const pid = currentModalPersonId;
   closePersonModal();
   if (pid) {
-    openPersonFromAnywhere(pid);
+    openPersonFromAnywhere(pid, true);
   }
 }
 
-function openPersonFromAnywhere(personId) {
+function openPersonFromAnywhere(personId, forceTree = false) {
+  const treeTab = document.getElementById("tab-tree");
+  const isTreeActive = treeTab && treeTab.classList.contains("active");
+
+  if (!forceTree && !isTreeActive) {
+    // В режимах «Карта», «Хронология» и «Фамилии» открываем карточку-модалку на месте
+    openPersonModal(personId);
+    return;
+  }
+
   closePersonModal();
   closeMobileMapSheet();
   activateTab("tab-tree");
@@ -6540,6 +6742,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 function activateTab(tabId) {
+  if (tabId === "tab-geo") tabId = "tab-timeline";
   if (tabId !== "tab-tree") {
     closeMobileDossierSheet();
   }
