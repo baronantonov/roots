@@ -3713,40 +3713,9 @@ html[data-theme="dark"] input {
   <section class="tab-panel active" id="tab-tree">
     <div class="tree-workspace-grid">
 
-      <!-- ЛЕВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЙ ХОЛСТ С ПЛАВАЮЩИМИ КОНТРОЛАМИ -->
+      <!-- ЛЕВАЯ КОЛОНКА: ИНТЕРАКТИВНЫЙ ХОЛСТ -->
       <div class="canvas-workspace">
-        
-        <!-- СТАТИЧНЫЙ ТУЛБАР ХОЛСТА (НЕ ПЕРЕКРЫВАЕТ ДРЕВО, МЕСТА ХВАТАЕТ ДЛЯ ВСЕХ КНОПОК) -->
-        <div class="tree-toolbar">
-          <div class="tree-toolbar-left">
-            <div class="branch-filter-pills">
-              <button type="button" class="filter-pill active" id="filter-all" onclick="filterCanvasBranch('all')">Все персоны (39)</button>
-              <button type="button" class="filter-pill pat" id="filter-pat" onclick="filterCanvasBranch('pat')">⚓ Ветвь папы</button>
-              <button type="button" class="filter-pill mat" id="filter-mat" onclick="filterCanvasBranch('mat')">🌾 Ветвь мамы</button>
-            </div>
-
-            <div class="view-mode-switch">
-              <button type="button" class="btn-mode active" id="btn-view-canvas" onclick="switchTreeView('canvas')" title="Интерактивная схема">Схема</button>
-              <button type="button" class="btn-mode" id="btn-view-grid" onclick="switchTreeView('grid')" title="Поколенный список">Список</button>
-            </div>
-          </div>
-
-          <div class="tree-toolbar-right">
-            <select class="person-jump-select" id="person-jump-select" onchange="jumpToPerson(this.value)" aria-label="Быстрый переход к предку">
-              <option value="">🔍 Найти персону (39)...</option>
-            </select>
-
-            <div class="zoom-btn-group" id="canvas-zoom-controls">
-              <button type="button" class="ctrl-btn" onclick="zoomCanvas(1.2)" title="Приблизить">+</button>
-              <span class="zoom-indicator" id="zoom-level-text">100%</span>
-              <button type="button" class="ctrl-btn" onclick="zoomCanvas(0.83)" title="Отдалить">−</button>
-              <button type="button" class="ctrl-btn" onclick="fitCanvasToScreen(true)" title="Показать всё древо целиком" style="font-size:11px;padding:0 8px;width:auto;">🔍 Всё древо</button>
-              <button type="button" class="ctrl-btn" onclick="jumpToPerson('P-0001')" title="К Антону (центр древа)" style="font-size:11px;padding:0 8px;width:auto;">🎯 К Антону</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ВИД 1: ИНТЕРАКТИВНЫЙ SVG ХОЛСТ -->
+        <!-- ГРАФИЧЕСКИЙ ИНТЕРАКТИВНЫЙ SVG ХОЛСТ -->
         <div class="canvas-viewport" id="canvas-viewport">
           <svg id="tree-svg-canvas" width="100%" height="100%" style="position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;">
             <defs>
@@ -3782,11 +3751,6 @@ html[data-theme="dark"] input {
               <g id="canvas-nodes-group"></g>
             </g>
           </svg>
-        </div>
-
-        <!-- ВИД 2: ПОКОЛЕННАЯ СЕТКА (ПО УМОЛЧАНИЮ СКРЫТА) -->
-        <div id="tree-grid-view-container" class="tree-grid-scroll" style="display:none;">
-          <div class="gen-grid" id="gen-grid-container"></div>
         </div>
 
         <!-- ПЛАВАЮЩАЯ МИНИ-ЛЕГЕНДА -->
@@ -5983,41 +5947,7 @@ function populateJumpSelect() {
 }
 
 function renderTree() {
-  const container = document.getElementById("gen-grid-container");
-  if (!container) return;
-  const gens = [7, 6, 5, 4, 3, 2, 1];
-  container.innerHTML = gens.map(g => {
-    const items = PERSONS.filter(p => p.gen === g);
-    if (!items.length) return "";
-    const meta = items[0];
-    return `
-      <div class="gen-row">
-        <div class="gen-meta">
-          <div class="gen-roman">${meta.genRoman}</div>
-          <div class="gen-title">${meta.genTitle}</div>
-          <div class="gen-era">${meta.genEra}</div>
-        </div>
-        <div class="gen-cards">
-          ${items.map(p => `
-            <button type="button" class="node-card ${p.statusClass}" data-person-id="${p.id}" onclick="selectPerson('${p.id}')">
-              <div class="node-top">
-                <span class="node-id">${p.id}</span>
-                <span class="badge ${p.badgeClass}">${
-                  p.status === "strongly-corroborated" ? "✓ В архивах" :
-                  p.status === "corroborated" ? "✓ Подтверждено" :
-                  p.status === "single-source" ? "Из памяти" : "Поиск"
-                }</span>
-              </div>
-              <div class="node-role">${p.role}</div>
-              <div class="node-name">${p.name}</div>
-              <div class="node-dates">${p.dates}</div>
-              <div class="node-place">📍 ${p.place}</div>
-            </button>
-          `).join("")}
-        </div>
-      </div>
-    `;
-  }).join("");
+  // Tree is exclusively interactive graphic SVG canvas
 }
 
 function selectPerson(personId, shouldOpenMobile = true) {
@@ -6394,7 +6324,7 @@ const PERSON_AVATARS = {
   "P-0014": { src: "photos/portrait-p0014-aleksandr-belov.jpg", title: "Историческая реконструкция: крестьянин Поволжья конца XIX в. Александр Белов", badge: "🎨", type: "reconstruction" },
   "P-0015": { src: "photos/portrait-p-0015-medallion.jpg", title: "Архивный медальон: Евдоким […] (патриарх рода Евдокимовых, ок. 1795 г.р.)", badge: "🏛️", type: "medallion" },
   "P-0016": { src: "photos/portrait-p0016-nina-shepelenko.jpg", title: "Историческая реконструкция: Нина Александровна Шепеленко за пультом БЭСМ-6 (1968 г.)", badge: "🎨", type: "reconstruction" },
-  "P-0017": { src: "photos/portrait-p-0017-medallion.jpg", title: "Архивный медальон: Баронов Василий (рядовой 54-го Минского полка ПМВ)", badge: "🏛️", type: "medallion" },
+  "P-0017": { src: "photos/portrait-p0017-vasiliy-baronov.jpg", title: "Реконструкция: Баронов Василий (1886 г.р., рядовой 54-го Минского полка ПМВ)", badge: "🎨", type: "reconstruction" },
   "P-0018": { src: "photos/portrait-p0018-klavdiya-shepelenko.jpg", title: "Историческая реконструкция: Клавдия Ивановна Шепеленко (Кустанай, 1946 г.)", badge: "🎨", type: "reconstruction" },
   "P-0019": { src: "photos/portrait-p0019-ded-stepan.jpg", title: "Историческая реконструкция: «дед Степан» (Кустанай, 1946 г.)", badge: "🎨", type: "reconstruction" },
   "P-0020": { src: "photos/portrait-p-0020-medallion.jpg", title: "Архивный медальон: Шепеленко Иван Андреевич (переселенец 1912 г. из Харькова)", badge: "🏛️", type: "medallion" },
@@ -6995,25 +6925,7 @@ function renderSvgCanvas() {
 
 function switchTreeView(viewType) {
   const canvasCont = document.getElementById("canvas-viewport");
-  const gridCont = document.getElementById("tree-grid-view-container");
-  const btnCanvas = document.getElementById("btn-view-canvas");
-  const btnGrid = document.getElementById("btn-view-grid");
-  const zoomCtrls = document.getElementById("canvas-zoom-controls");
-
-  if (viewType === "canvas") {
-    if (canvasCont) canvasCont.style.display = "block";
-    if (gridCont) gridCont.style.display = "none";
-    if (btnCanvas) btnCanvas.classList.add("active");
-    if (btnGrid) btnGrid.classList.remove("active");
-    if (zoomCtrls) zoomCtrls.style.display = "inline-flex";
-    setTimeout(() => fitCanvasToScreen(false), 40);
-  } else {
-    if (canvasCont) canvasCont.style.display = "none";
-    if (gridCont) gridCont.style.display = "block";
-    if (btnCanvas) btnCanvas.classList.remove("active");
-    if (btnGrid) btnGrid.classList.add("active");
-    if (zoomCtrls) zoomCtrls.style.display = "none";
-  }
+  if (canvasCont) canvasCont.style.display = "block";
 }
 
 
