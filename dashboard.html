@@ -3566,10 +3566,11 @@ html[data-theme="dark"] .map-floating-reset-btn:hover {
 
 /* Dark Mode Leaflet Map Tiles & Controls */
 html[data-theme="dark"] .roots-map-element {
-  background: #0F131C !important;
+  background: #0B0E14 !important;
 }
+html[data-theme="dark"] .roots-map-element .leaflet-tile,
 html[data-theme="dark"] .roots-map-element .leaflet-tile-pane {
-  filter: none !important;
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%) !important;
 }
 html[data-theme="dark"] .leaflet-control-zoom a {
   background: #141822 !important;
@@ -7464,25 +7465,8 @@ const MAP_LOCATIONS = [
 
 let rootsMap = null;
 let rootsMapMarkers = {};
-let rootsTileLayer = null;
 let currentMapBranch = "all";
 let currentSelectedPlaceId = "galaktionovo";
-
-function updateMapTileLayer(isDark) {
-  if (!rootsMap || typeof L === "undefined") return;
-  if (rootsTileLayer) {
-    rootsMap.removeLayer(rootsTileLayer);
-  }
-  const tileUrl = isDark
-    ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-    : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-
-  rootsTileLayer = L.tileLayer(tileUrl, {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(rootsMap);
-}
 
 function initRootsMap() {
   const container = document.getElementById("roots-leaflet-map");
@@ -7516,9 +7500,11 @@ function initRootsMap() {
   // Add zoom controls at bottom right
   L.control.zoom({ position: "bottomright" }).addTo(rootsMap);
 
-  // Apply native theme tile layer (CartoDB Dark Matter / Positron)
-  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-  updateMapTileLayer(isDark);
+  // OpenStreetMap tile layer with high resolution Russian labels and instant dark mode
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19
+  }).addTo(rootsMap);
 
   // Render markers
   renderMapMarkers();
@@ -7818,9 +7804,6 @@ function toggleTheme() {
   updateThemeToggleBtn(next === "dark");
   if (typeof renderSvgCanvas === "function") {
     renderSvgCanvas();
-  }
-  if (typeof updateMapTileLayer === "function") {
-    updateMapTileLayer(next === "dark");
   }
 }
 
