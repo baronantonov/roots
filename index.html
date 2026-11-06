@@ -7464,8 +7464,25 @@ const MAP_LOCATIONS = [
 
 let rootsMap = null;
 let rootsMapMarkers = {};
+let rootsTileLayer = null;
 let currentMapBranch = "all";
 let currentSelectedPlaceId = "galaktionovo";
+
+function updateMapTileLayer(isDark) {
+  if (!rootsMap || typeof L === "undefined") return;
+  if (rootsTileLayer) {
+    rootsMap.removeLayer(rootsTileLayer);
+  }
+  const tileUrl = isDark
+    ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+    : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+
+  rootsTileLayer = L.tileLayer(tileUrl, {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(rootsMap);
+}
 
 function initRootsMap() {
   const container = document.getElementById("roots-leaflet-map");
@@ -7499,11 +7516,9 @@ function initRootsMap() {
   // Add zoom controls at bottom right
   L.control.zoom({ position: "bottomright" }).addTo(rootsMap);
 
-  // OpenStreetMap tile layer (reliable, Russian labels, zero API key)
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom: 19
-  }).addTo(rootsMap);
+  // Apply native theme tile layer (CartoDB Dark Matter / Positron)
+  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  updateMapTileLayer(isDark);
 
   // Render markers
   renderMapMarkers();
