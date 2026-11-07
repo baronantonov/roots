@@ -4,6 +4,11 @@
 <script>
 (function() {
   try {
+    if (window.location.pathname === '/roots') {
+      window.history.replaceState(null, '', '/roots/' + window.location.search + window.location.hash);
+    }
+  } catch(e) {}
+  try {
     var params = new URLSearchParams(window.location.search);
     var urlTheme = params.get('theme');
     if (urlTheme === 'dark' || urlTheme === 'light') {
@@ -19,6 +24,20 @@
     }
   } catch(e) {}
 })();
+
+function getAssetUrl(relPath) {
+  if (!relPath) return '';
+  if (relPath.startsWith('http://') || relPath.startsWith('https://') || relPath.startsWith('data:')) return relPath;
+  try {
+    var u = new URL(window.location.href);
+    if (!u.pathname.endsWith('/') && !u.pathname.split('/').pop().includes('.')) {
+      u.pathname += '/';
+    }
+    return new URL(relPath, u.href).href;
+  } catch (e) {
+    return relPath;
+  }
+}
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes, viewport-fit=cover">
@@ -1121,25 +1140,33 @@ html, body {
 /* ==========================================================================
    DESIGNER NODE CARDS (Vertical Compact Orientation for Mobile & Desktop)
    ========================================================================== */
+.svg-node-foreign {
+  overflow: visible;
+}
+
 .canvas-node-card {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   background: var(--bg-surface);
   border: 1px solid var(--border-default);
+  border-top-width: 4px;
+  border-top-style: solid;
+  border-top-color: var(--border-strong);
   border-radius: 12px;
-  padding: 8px 7px 7px;
+  padding: 6px 6px 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   text-align: center;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(28, 25, 23, 0.04), 0 2px 8px rgba(28, 25, 23, 0.02);
   transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease, border-color 0.18s ease, opacity 0.2s;
   user-select: none;
   overflow: hidden;
-  position: relative;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 [data-theme="dark"] .canvas-node-card {
   background: #151922;
@@ -1147,27 +1174,17 @@ html, body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* Gradient branch indicator strip on the TOP of vertical card */
-.canvas-node-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3.5px;
-  background: var(--border-strong);
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  transition: height 0.15s ease, background 0.15s ease;
+.canvas-node-card.pat {
+  border-top-color: #3B82F6;
 }
-.canvas-node-card.pat::before {
-  background: linear-gradient(90deg, #25527A 0%, #4D97FF 100%);
+.canvas-node-card.mat {
+  border-top-color: #E06C53;
 }
-.canvas-node-card.mat::before {
-  background: linear-gradient(90deg, #9E3A26 0%, #E06C53 100%);
+.canvas-node-card.self {
+  border-top-color: #15803D;
 }
-.canvas-node-card.self::before {
-  background: linear-gradient(90deg, #D4AF37 0%, #15803D 100%);
+[data-theme="dark"] .canvas-node-card.self {
+  border-top-color: #22C55E;
 }
 
 .canvas-node-card:hover {
@@ -1181,18 +1198,21 @@ html, body {
 }
 .canvas-node-card.pat:hover {
   border-color: var(--accent-pat);
+  border-top-color: #60A5FA;
 }
 [data-theme="dark"] .canvas-node-card.pat:hover {
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6), 0 0 16px rgba(77, 151, 255, 0.2);
 }
 .canvas-node-card.mat:hover {
   border-color: var(--accent-mat);
+  border-top-color: #F87171;
 }
 [data-theme="dark"] .canvas-node-card.mat:hover {
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6), 0 0 16px rgba(224, 108, 83, 0.2);
 }
 .canvas-node-card.self:hover {
   border-color: var(--accent-gold);
+  border-top-color: #4ADE80;
 }
 [data-theme="dark"] .canvas-node-card.self:hover {
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6), 0 0 16px rgba(229, 184, 66, 0.2);
@@ -1200,12 +1220,14 @@ html, body {
 
 .canvas-node-card.selected {
   border-color: var(--accent-seal) !important;
+  border-top-color: var(--accent-seal) !important;
   box-shadow: 0 0 0 2px var(--accent-seal-soft), 0 8px 24px rgba(158, 58, 38, 0.18) !important;
   background: #FFFDFB;
 }
 [data-theme="dark"] .canvas-node-card.selected {
   background: #1B212D !important;
   border-color: var(--accent-seal) !important;
+  border-top-color: var(--accent-seal) !important;
   box-shadow: 0 0 0 2px var(--accent-seal-soft), 0 8px 26px rgba(224, 93, 68, 0.3) !important;
 }
 
@@ -1216,47 +1238,41 @@ html, body {
 
 /* Card Avatar */
 .card-avatar-wrap {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
+  max-width: 34px;
+  max-height: 34px;
+  box-sizing: border-box;
   flex-shrink: 0;
   border-radius: 50%;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-subtle);
   border: 1.5px solid var(--border-default);
-  box-shadow: var(--shadow-xs);
-  margin: 1px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  margin: 0 auto 3px auto;
+  overflow: hidden;
 }
 [data-theme="dark"] .card-avatar-wrap {
   background: #1C2332;
   border-color: rgba(255, 255, 255, 0.12);
 }
 .card-avatar-img {
-  width: 100%;
-  height: 100%;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
   object-fit: cover;
   border-radius: 50%;
-}
-.card-avatar-badge {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  background: #15803D;
-  color: #FFF;
-  font-size: 7.5px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid var(--bg-surface);
+  display: block;
 }
 .card-avatar-emoji {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1;
+  display: block;
 }
 .card-avatar-rank {
   font-family: var(--font-mono);
@@ -1275,7 +1291,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1.5px;
+  margin-top: 1px;
 }
 .card-meta-row {
   width: 100%;
@@ -1283,8 +1299,9 @@ html, body {
   align-items: center;
   justify-content: space-between;
   gap: 3px;
-  line-height: 1;
+  line-height: 1.1;
   padding: 0 1px;
+  margin-bottom: 2px;
 }
 .card-id {
   font-family: var(--font-mono);
@@ -1292,6 +1309,8 @@ html, body {
   font-weight: 700;
   color: var(--ink-500) !important;
   letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
 }
 .card-badge {
   font-family: var(--font-mono);
@@ -1314,7 +1333,7 @@ html, body {
   max-width: 138px;
   display: block;
   line-height: 1.1;
-  margin-top: 1px;
+  margin-bottom: 2px;
 }
 .canvas-node-card.pat .card-role { color: var(--accent-pat); }
 .canvas-node-card.self .card-role { color: #15803D; }
@@ -1333,7 +1352,7 @@ html, body {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   word-break: break-word;
-  margin: 1px 0;
+  margin-bottom: 2px;
 }
 .card-name.long-name {
   font-size: 11px;
@@ -1348,7 +1367,7 @@ html, body {
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
-  line-height: 1.15;
+  margin-bottom: 1px;
 }
 .card-place {
   font-size: 8.5px;
@@ -7947,7 +7966,7 @@ function buildPersonDossierHtml(personId) {
       ${PERSON_AVATARS[p.id] ? `
         <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;">
           <div style="position:relative;width:76px;height:76px;border-radius:50%;overflow:hidden;border:2.5px solid var(--accent-seal);box-shadow:0 3px 10px rgba(0,0,0,0.25);flex-shrink:0;">
-            <img src="${PERSON_AVATARS[p.id].src}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;">
+            <img src="${getAssetUrl(PERSON_AVATARS[p.id].src)}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;">
             <div style="position:absolute;bottom:0;right:0;background:var(--accent-seal);color:#fff;font-size:11px;padding:2px 5px;border-radius:4px;" title="${PERSON_AVATARS[p.id].title}">${PERSON_AVATARS[p.id].badge}</div>
           </div>
           <div>
@@ -8899,70 +8918,38 @@ function renderSvgCanvas() {
                          p.status === "single-source" ? "ПАМЯТЬ" : "ПОИСК";
       const badgeClass = p.badgeClass;
 
-      let avatarHtml = "";
-      if (PERSON_AVATARS[p.id]) {
-        const av = PERSON_AVATARS[p.id];
-        avatarHtml = `
-          <img class="card-avatar-img" src="${av.src}" alt="${p.name}">
-          <div class="card-avatar-badge" title="${av.title}">${av.badge}</div>
-        `;
-      } else if (p.id === "P-0005") {
-        avatarHtml = `
-          <div style="display:flex;flex-direction:column;align-items:center;">
-            <span class="card-avatar-emoji">🎖️</span>
-            <span class="card-avatar-rank">МАЙОР</span>
-          </div>
-        `;
-      } else if (p.id === "P-0007") {
-        avatarHtml = `
-          <div style="display:flex;flex-direction:column;align-items:center;">
-            <span class="card-avatar-emoji">⚔️</span>
-            <span class="card-avatar-rank" style="color:#8C2D19;">1914 г.</span>
-          </div>
-        `;
-      } else if (p.id === "P-0003") {
-        avatarHtml = `
-          <div style="display:flex;flex-direction:column;align-items:center;">
-            <span class="card-avatar-emoji">🏍️</span>
-            <span class="card-avatar-rank">СТРЕЛЬНА</span>
-          </div>
-        `;
-      } else if (p.id === "P-0002") {
-        avatarHtml = `
-          <div style="display:flex;flex-direction:column;align-items:center;">
-            <span class="card-avatar-emoji">🎭</span>
-            <span class="card-avatar-rank" style="color:#9E3A26;">ТЕАТР</span>
-          </div>
-        `;
-      } else if (p.id === "P-0001") {
-        avatarHtml = `
-          <div style="display:flex;flex-direction:column;align-items:center;">
-            <span class="card-avatar-emoji">🧭</span>
-            <span class="card-avatar-rank" style="color:#15803D;">АВТОР</span>
-          </div>
-        `;
-      } else if (p.id === "P-0038") {
-        avatarHtml = `
-          <div style="display:flex;flex-direction:column;align-items:center;">
-            <span class="card-avatar-emoji">📰</span>
-            <span class="card-avatar-rank">ГАЗЕТА</span>
-          </div>
-        `;
-      } else if (p.id === "P-0039") {
-        avatarHtml = `
-          <div style="display:flex;flex-direction:column;align-items:center;">
-            <span class="card-avatar-emoji">⚔️</span>
-            <span class="card-avatar-rank" style="color:#8C2D19;">117-й п.</span>
-          </div>
-        `;
-      } else if (p.id === "P-0010" || p.id === "P-0015" || p.id === "P-0009" || p.id === "P-0037") {
-        avatarHtml = `<span class="card-avatar-emoji">👴</span>`;
+      let fallbackEmoji = "👨";
+      if (p.id === "P-0010" || p.id === "P-0015" || p.id === "P-0009" || p.id === "P-0037") {
+        fallbackEmoji = "👴";
       } else if (p.id === "P-0016" || p.id === "P-0018" || p.id === "P-0006" || p.id === "P-0013" || p.id === "P-0021" || p.id === "P-0022" || p.id === "P-0023" || p.id === "P-0028") {
-        avatarHtml = `<span class="card-avatar-emoji">👩</span>`;
-      } else {
-        avatarHtml = `<span class="card-avatar-emoji">👨</span>`;
+        fallbackEmoji = "👩";
+      } else if (p.id === "P-0001") {
+        fallbackEmoji = "🧭";
+      } else if (p.id === "P-0005") {
+        fallbackEmoji = "🎖️";
+      } else if (p.id === "P-0007" || p.id === "P-0039") {
+        fallbackEmoji = "⚔️";
+      } else if (p.id === "P-0003") {
+        fallbackEmoji = "🏍️";
+      } else if (p.id === "P-0002") {
+        fallbackEmoji = "🎭";
+      } else if (p.id === "P-0038") {
+        fallbackEmoji = "📰";
       }
 
+      let avatarHtml = "";
+      const av = PERSON_AVATARS[p.id];
+      if (av && av.src) {
+        const fullSrc = getAssetUrl(av.src);
+        const objPos = (av.type === 'medallion') ? 'center 36%' : 'center center';
+        avatarHtml = `
+          <img class="card-avatar-img" src="${fullSrc}" width="34" height="34" style="object-position:${objPos};" alt="${p.name}" loading="eager" onerror="this.onerror=null;this.style.display='none';this.parentElement.innerHTML='<span class=\\'card-avatar-emoji\\'>${fallbackEmoji}</span>';">
+        `;
+      } else {
+        avatarHtml = `<span class="card-avatar-emoji">${fallbackEmoji}</span>`;
+      }
+
+      const avBadge = (av && av.badge) ? `<span title="${av.title || ''}" style="margin-left:2px;font-size:9.5px;line-height:1;">${av.badge}</span>` : '';
       const cleanDates = (p.dates || '').replace(/\s*\([^)]*\)/g, '').trim();
       const cardName = p.name || p.namesAsWritten || p.id;
       const isLongName = (cardName.length > 30);
@@ -8976,7 +8963,7 @@ function renderSvgCanvas() {
             </div>
             <div class="card-content-wrap">
               <div class="card-meta-row">
-                <span class="card-id">${p.id}</span>
+                <span class="card-id">${p.id}${avBadge}</span>
                 <span class="card-badge ${badgeClass}">${badgeLabel}</span>
               </div>
               <span class="card-role">${p.role || ''}</span>
@@ -9616,7 +9603,7 @@ function renderMapMarkers() {
       if (!p) return "";
       const hasAvatar = !!PERSON_AVATARS[p.id];
       const avatarThumb = hasAvatar
-        ? `<img src="${PERSON_AVATARS[p.id].src}" alt="${p.name}" style="width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid var(--border-default);">`
+        ? `<img src="${getAssetUrl(PERSON_AVATARS[p.id].src)}" alt="${p.name}" style="width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid var(--border-default);">`
         : `<span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--bg-elevated);font-size:10px;font-weight:700;flex-shrink:0;">${p.name[0]}</span>`;
 
       return `
@@ -9717,7 +9704,7 @@ function renderSelectedPlaceDossier(loc) {
     if (!p) return "";
     const hasAvatar = !!PERSON_AVATARS[p.id];
     const avatarInner = hasAvatar
-      ? `<img src="${PERSON_AVATARS[p.id].src}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+      ? `<img src="${getAssetUrl(PERSON_AVATARS[p.id].src)}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
       : `<span>${p.name[0]}</span>`;
 
     return `
