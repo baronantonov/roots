@@ -48,3 +48,7 @@ R-0046,P-0014,father-child,P-0036,biological-and-legal,C-0060,A-0036;A-0042,,IG-
 R-0047,P-0036,sibling,P-0008,biological,C-0060,A-0036;A-0042,,IG-MEMORIAL-RT;IG-CAMO-WW2,corroborated,high,Родной младший брат прабабушки Агриппины Александровны Беловой (1889–1971)
 R-0048,P-0036,sibling,P-0030,biological,C-0060,A-0036;A-0042,,IG-MEMORIAL-RT;IG-CAMO-WW2,corroborated,high,Родной брат репрессированного крестьянина с. Галактионово Фёдора Александровича Белова (род. 1887)
 R-0049,P-0024,father-child,P-0017,biological-and-legal,C-0056,A-0017;A-0018;A-0047,,IG-HIST-KIRISHI-RGIA;IG-RGVIA-BARONOV-POW,corroborated,high,Отец прадеда Василия Николаевича Баронова по кластеру Николаевичей Солецкой волости в РГВИА и РГИА
+R-0050,P-0024,father-child,P-0043,biological-or-hypothesized,C-0070,A-0054,,IG-RGVIA-SOLETSKAYA,single-source,medium,Общее отчество Николаевич и Солецкая волость с Василием Николаевичем (P-0017)
+R-0051,P-0017,sibling,P-0043,biological-or-hypothesized,C-0070,A-0054,,IG-RGVIA-SOLETSKAYA,single-source,medium,Вероятный родной брат Василия Николаевича Баронова (Баринова) из Солецкой волости
+R-0052,P-0017,collateral-kin,P-0044,village-and-box-cluster,C-0071,A-0054,,IG-RGVIA-SOLETSKAYA,single-source,medium,Единый топоним д. Дуброво (Буброво) и единый архивный ящик 207-Б картотеки РГВИА
+R-0053,P-0046,sibling,P-0047,biological,C-0073,A-0056,,IG-RGVIA-OLKHOVATKA,corroborated,high,"Родные братья Иван и Михаил Алексеевичи Шепеленко из Ольховатской волости, однополчане по 123-му Козловскому полку"
